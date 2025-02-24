@@ -13,7 +13,7 @@ export interface IProfileHeaderProps {
   setSelectedItem: (item: string) => void;
 }
 
-function Header({ isOpen, toggleSidebar, setProfileOpen, setSelectedItem, incentive }: IProfileHeaderProps) {
+function Header({ toggleSidebar,setSelectedItem, incentive }: IProfileHeaderProps) {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 

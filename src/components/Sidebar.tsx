@@ -8,7 +8,6 @@ import { IoClose } from "react-icons/io5";
 import { AiOutlineUser } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import Image from "next/image";
-import logo from "@public/logox.svg";
 import { useRouter } from "next/navigation";
 
 
@@ -20,7 +19,7 @@ export interface SidebarProps {
   isMobile: boolean;
 }
 
-function Sidebar({ isOpen, toggleSidebar, setProfileOpen, setSelectedItem, isMobile }: SidebarProps) {
+function Sidebar({ isOpen, toggleSidebar, setProfileOpen, isMobile }: SidebarProps) {
   const [hovered, setHovered] = useState(false);
   const [clickedItem, setClickedItem] = useState("home");
   const [mounted, setMounted] = useState(false);
@@ -38,7 +37,7 @@ function Sidebar({ isOpen, toggleSidebar, setProfileOpen, setSelectedItem, isMob
 
   const handleItem = (item: string) => {
     router.push(item)
-    // setClickedItem(item);
+    setClickedItem(item);
     // setSelectedItem(item);
     if (isMobile) toggleSidebar();
   };
