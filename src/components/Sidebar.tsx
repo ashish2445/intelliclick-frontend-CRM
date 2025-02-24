@@ -13,6 +13,8 @@ import { useRouter } from "next/navigation";
 import { useTheme } from 'next-themes'
 import { Switch, FormControlLabel } from "@mui/material";
 import ThemeToggle from "@/components/ThemeToggle";
+import { TbLogout } from "react-icons/tb";
+
 
 
 export interface SidebarProps {
@@ -86,55 +88,19 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
             </li>
           ))}
         </ul>
-
-        {/* Profile and Logout Items */}
-        {/* <ul className="flex flex-col border-gray-300">
-          {[
-            { icon: <AiOutlineUser size={30} />, path: "profile", label: "Profile" },
-            { icon: <FiLogOut size={30} />, path: "signout", label: "Sign Out" },
-          ].map((item, index) => (
-            <li
-              key={index}
-              onClick={() => handleItem(item.path)}
-              className={`flex items-center gap-4 min-h-[60px] px-4 cursor-pointer transition-colors duration-300
-                ${clickedItem === item.path
-                  ? "bg-purple-100 text-purple-700 font-semibold"
-                  : "hover:bg-gradient-to-r from-purple-600 to-blue-500 hover:text-white"
-                }`}
-            >
-              {item.icon}
-              {(hovered || isOpen) && <span className="whitespace-nowrap">{item.label}</span>}
-            </li>
-          ))}
-        </ul> */}
-        {/* <div>
-          <Image
-            className="dark:invert"
-            src="/sideImg.svg"
-            alt="sidebar image"
-            width={180}
-            height={38}
-            priority
-          />
-        </div> */}
-        <div className="flex items-center gap-2">
-          <FaSun className={`w-5 h-5 ${resolvedTheme === "light" ? "text-yellow-500" : "text-gray-500"}`} />
-          <span>{resolvedTheme === "light" ? "Light mode" : "Dark mode"}</span>
-          
-          <FormControlLabel
-            control={
-              <Switch
-                checked={resolvedTheme === "dark"}
-                onChange={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
-                color="default"
-              />
-            }
-            label={
-              resolvedTheme === "light" ? <FaMoon className="w-5 h-5 text-gray-500" /> : <FaSun className="w-5 h-5 text-yellow-500" />
-            }
-            labelPlacement="start"
-          />
+       
+        <div
+          onClick={() => handleItem("/dashboard/home")}
+          className={`flex items-center gap-4 min-h-[60px] px-4 cursor-pointer transition-colors duration-300
+            ${clickedItem === "/dashboard/home"
+              ? "bg-[#D029D8] text-[#D029D8] font-semibold"
+              : "hover:bg-gradient-to-r from-[#D029D8] to-[#519CDF] hover:text-white"
+            }`}
+        >
+          <TbLogout size={30} />
+          {(hovered || isOpen) && <span className="whitespace-nowrap">Log out</span>}
         </div>
+
         <ThemeToggle />
         {(hovered || isOpen) && (
           <div className="flex justify-center p-4">
