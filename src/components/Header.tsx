@@ -6,14 +6,11 @@ import Image from 'next/image';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 export interface IProfileHeaderProps {
-  isOpen: boolean;
   toggleSidebar: () => void;
   incentive: number | undefined;
-  setProfileOpen: (updater: (prev: boolean) => boolean) => void;
-  setSelectedItem: (item: string) => void;
 }
 
-function Header({ toggleSidebar,setSelectedItem, incentive }: IProfileHeaderProps) {
+function Header({ toggleSidebar, incentive }: IProfileHeaderProps) {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
@@ -46,10 +43,10 @@ function Header({ toggleSidebar,setSelectedItem, incentive }: IProfileHeaderProp
           <Image src="./Ellipse.svg" alt="profile-image" width={100} height={100} className="cursor-pointer h-12 w-12 rounded-full" onClick={handleProfileClick} />
           {isMenuVisible && (
             <div className="absolute top-12 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-50 w-40">
-              <div className="p-2 cursor-pointer text-gray-800 hover:bg-gray-100" onClick={() => setSelectedItem('profile')}>
+              <div className="p-2 cursor-pointer text-gray-800 hover:bg-gray-100" >
                 Profile
               </div>
-              <div className="p-2 cursor-pointer text-gray-800 hover:bg-gray-100" onClick={() => setSelectedItem('logout')}>
+              <div className="p-2 cursor-pointer text-gray-800 hover:bg-gray-100" >
                 Logout
               </div>
             </div>

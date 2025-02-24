@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Install dependencies
 COPY package.json package-lock.json ./
-RUN npm install --omit=dev
+RUN npm ci --legacy-peer-deps
 
 # Copy project files
 COPY . .

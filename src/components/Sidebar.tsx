@@ -14,12 +14,10 @@ import { useRouter } from "next/navigation";
 export interface SidebarProps {
   isOpen: boolean;
   toggleSidebar: () => void;
-  setProfileOpen: (value: boolean | ((prev: boolean) => boolean)) => void;
-  setSelectedItem: (value: string) => void;
   isMobile: boolean;
 }
 
-function Sidebar({ isOpen, toggleSidebar, setProfileOpen, isMobile }: SidebarProps) {
+function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
   const [hovered, setHovered] = useState(false);
   const [clickedItem, setClickedItem] = useState("home");
   const [mounted, setMounted] = useState(false);
@@ -87,7 +85,7 @@ function Sidebar({ isOpen, toggleSidebar, setProfileOpen, isMobile }: SidebarPro
         {/* Profile and Logout Items */}
         <ul className="flex flex-col border-gray-300">
           {[
-            { icon: <AiOutlineUser size={30} />, path: "profile", label: "Profile", onClick: () => setProfileOpen((prev) => !prev) },
+            { icon: <AiOutlineUser size={30} />, path: "profile", label: "Profile" },
             { icon: <FiLogOut size={30} />, path: "signout", label: "Sign Out" },
           ].map((item, index) => (
             <li
@@ -104,6 +102,44 @@ function Sidebar({ isOpen, toggleSidebar, setProfileOpen, isMobile }: SidebarPro
             </li>
           ))}
         </ul>
+        {/* <div>
+          <Image
+            className="dark:invert"
+            src="/sideImg.svg"
+            alt="sidebar image"
+            width={180}
+            height={38}
+            priority
+          />
+        </div> */}
+        {(hovered || isOpen) && (
+          <div className="flex justify-center p-4">
+            <Image
+              className="dark:invert"
+              src="/sideImg.svg"
+              alt="sidebar image"
+              width={180}
+              height={38}
+              priority
+            />
+          </div>
+        )}
+        <div className="flex justify-center align-center border-t gap-x-2 mb-8 p-2">
+          <Image
+            className="dark:invert"
+            src="/sideProfImg.svg"
+            alt="sidebar profile image"
+            width={40}
+            height={40}
+            priority
+          />
+          {(hovered || isOpen) && (
+            <div className="flex flex-col justify-between">
+              <p>Welcome Back</p>
+              <p>Jonathan</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
