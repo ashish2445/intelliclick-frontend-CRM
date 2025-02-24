@@ -3,12 +3,15 @@ import { RiSettings2Line } from "react-icons/ri";
 import { TbBriefcase, TbClipboardText } from "react-icons/tb";
 import { BsHeadset } from "react-icons/bs";
 import { RxShuffle, RxDashboard } from "react-icons/rx";
+import { FaSun, FaMoon } from "react-icons/fa";
 import { BiPieChartAlt2 } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import { AiOutlineUser } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useTheme } from 'next-themes'
+import { Switch, FormControlLabel } from "@mui/material";
 
 
 export interface SidebarProps {
@@ -21,7 +24,8 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
   const [hovered, setHovered] = useState(false);
   const [clickedItem, setClickedItem] = useState("home");
   const [mounted, setMounted] = useState(false);
-    const router = useRouter();
+  const { setTheme, resolvedTheme } = useTheme()
+  const router = useRouter();
 
 
   useEffect(() => {
@@ -42,7 +46,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
 
   return (
     <div
-      className={`${isMobile ? "fixed top-0 left-0 h-full z-50" : "h-[calc(100vh-90px)]"} transition-all duration-300 overflow-hidden border-r border-gray-300 bg-white shadow-lg
+      className={`${isMobile ? "fixed top-0 left-0 h-full z-50" : "h-[calc(100vh-90px)]"} transition-all duration-300 overflow-hidden border-r border-gray-300 shadow-lg
         ${isMobile ? (isOpen ? "w-64 block" : "hidden") : hovered || isOpen ? "w-64" : "w-20"} md:block`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -57,7 +61,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
         )}
 
         {/* Main Menu Items */}
-        <ul className="flex flex-col flex-1">
+        <ul className="flex flex-col flex-1 dark:invert">
           {[
             { icon: <RxDashboard size={30} />, path: "/dashboard/home", label: "Home" },
             { icon: <TbClipboardText size={30} />, path: "/dashboard/uploadQuestion", label: "Leads Management" },
@@ -83,7 +87,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
         </ul>
 
         {/* Profile and Logout Items */}
-        <ul className="flex flex-col border-gray-300">
+        {/* <ul className="flex flex-col border-gray-300">
           {[
             { icon: <AiOutlineUser size={30} />, path: "profile", label: "Profile" },
             { icon: <FiLogOut size={30} />, path: "signout", label: "Sign Out" },
@@ -101,7 +105,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
               {(hovered || isOpen) && <span className="whitespace-nowrap">{item.label}</span>}
             </li>
           ))}
-        </ul>
+        </ul> */}
         {/* <div>
           <Image
             className="dark:invert"
@@ -112,10 +116,27 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
             priority
           />
         </div> */}
+        <div className="flex items-center gap-2">
+          <FaSun className={`w-5 h-5 ${resolvedTheme === "light" ? "text-yellow-500" : "text-gray-500"}`} />
+          <span>{resolvedTheme === "light" ? "Light mode" : "Dark mode"}</span>
+          
+          <FormControlLabel
+            control={
+              <Switch
+                checked={resolvedTheme === "dark"}
+                onChange={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
+                color="default"
+              />
+            }
+            label={
+              resolvedTheme === "light" ? <FaMoon className="w-5 h-5 text-gray-500" /> : <FaSun className="w-5 h-5 text-yellow-500" />
+            }
+            labelPlacement="start"
+          />
+        </div>
         {(hovered || isOpen) && (
           <div className="flex justify-center p-4">
             <Image
-              className="dark:invert"
               src="/sideImg.svg"
               alt="sidebar image"
               width={180}
@@ -124,7 +145,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
             />
           </div>
         )}
-        <div className="flex justify-center align-center border-t gap-x-2 mb-8 p-2">
+        <div className="flex justify-center align-center border-t gap-x-2 mb-8 p-2 dark:invert">
           <Image
             className="dark:invert"
             src="/sideProfImg.svg"

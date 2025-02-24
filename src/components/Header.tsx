@@ -24,7 +24,7 @@ function Header({ toggleSidebar, incentive }: IProfileHeaderProps) {
   };
 
   return (
-    <div className="flex items-center justify-between border-b border-gray-300 p-4">
+    <div className="flex items-center justify-between border-b border-gray-300 p-4 dark:invert">
       
       <div className="hidden md:flex w-60 justify-center items-center">
         <Image src="/logox.svg" alt="logo" priority width={200} height={200} />
@@ -40,7 +40,7 @@ function Header({ toggleSidebar, incentive }: IProfileHeaderProps) {
           )}
         </div>
         <div className="relative flex items-center space-x-4">
-          <Image src="./Ellipse.svg" alt="profile-image" width={100} height={100} className="cursor-pointer h-12 w-12 rounded-full" onClick={handleProfileClick} />
+          <Image src="./Ellipse.svg" alt="profile-image" width={100} height={100} className="cursor-pointer h-12 w-12 rounded-full dark:invert" onClick={handleProfileClick} />
           {isMenuVisible && (
             <div className="absolute top-12 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-50 w-40">
               <div className="p-2 cursor-pointer text-gray-800 hover:bg-gray-100" >
