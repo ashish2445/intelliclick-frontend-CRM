@@ -12,6 +12,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTheme } from 'next-themes'
 import { Switch, FormControlLabel } from "@mui/material";
+import ThemeToggle from "@/components/ThemeToggle";
 
 
 export interface SidebarProps {
@@ -134,6 +135,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
             labelPlacement="start"
           />
         </div>
+        <ThemeToggle />
         {(hovered || isOpen) && (
           <div className="flex justify-center p-4">
             <Image
