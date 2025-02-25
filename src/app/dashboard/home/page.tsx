@@ -24,10 +24,10 @@ const data:IOpenTaskData[]= [
 const Home: React.FC = () => {
   return (
     <div className="grid grid-cols-2 gap-4 p-4">
-      <StatisticsContainer data={data} />
-      <StatisticsContainer data={data} />
-      <StatisticsContainer data={data} />
-      <StatisticsContainer data={data}/>
+      <StatisticsContainer data={data} title={'My open Task'} />
+      <StatisticsContainer data={data} title={'My Meeting'} />
+      <StatisticsContainer data={data} title={'Today Leads'} />
+      <StatisticsContainer data={data} title={'My Deals Closing This Month'} />
     </div>
   );
 };

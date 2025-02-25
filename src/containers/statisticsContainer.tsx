@@ -59,15 +59,16 @@ import { IOpenTaskData } from "@/interfaces";
 
 interface StatisticsContainerProps {
   data: IOpenTaskData[];
+  title:string;
 }
 
-const StatisticsContainer: React.FC<StatisticsContainerProps> = ({ data }) => {
+const StatisticsContainer: React.FC<StatisticsContainerProps> = ({ data,title }) => {
   return (
     <div
       className="border border-black border-r p-4 rounded-lg dark:invert w-full overflow-hidden"
       style={{ height: "400px" }} // Increased height to fit content better
     >
-      <h1 className="text-2xl mb-4">My Meeting</h1>
+      <h1 className="text-2xl mb-4">{title}</h1>
       <div className="flex flex-col h-full">
         {data?.length > 0 ? (
           <>
