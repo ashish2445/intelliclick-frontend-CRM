@@ -102,8 +102,8 @@ const fixedColumns = ["Student Name"]; // Columns to remain fixed
 
 const DynamicTable: React.FC<TableProps> = ({ data, columns }) => {
   return (
-    <div className="w-full overflow-x-auto border border-gray-300 rounded-lg dark:invert">
-      <table className="min-w-[1100px] w-full border-collapse">
+    <div className="w-full overflow-x-auto border border-gray-300 rounded-lg">
+      <table className="min-w-[1100px] w-full border-collapse dark-invert">
         <thead>
           <tr className="bg-gray-100 text-gray-800 text-left text-sm font-semibold h-12">
             {columns.map((col) => (

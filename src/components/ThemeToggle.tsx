@@ -199,6 +199,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ hovered }) => {
     <div
       style={{
         display: "flex",
+        justifyContent:"center",
         alignItems: "center",
         gap: "10px",
         opacity: hovered ? 1 : 0.7, // Example usage of hovered
@@ -209,7 +210,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ hovered }) => {
       {/* {resolvedTheme === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
       <span>{resolvedTheme === "dark" ? "Dark mode" : "Light mode"}</span> */}
       {hovered && (
-        <span>
+        <span className="flex gap-4">
           {resolvedTheme === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
           {resolvedTheme === "dark" ? "Dark mode" : "Light mode"}
         </span>
