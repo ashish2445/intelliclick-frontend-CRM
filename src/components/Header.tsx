@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { IoMenu } from "react-icons/io5";
-// import logox from '@public/logox.svg';
-// import Ellipse from '@public/Ellipse.svg';
 import Image from 'next/image';
 import ClipLoader from 'react-spinners/ClipLoader';
 
@@ -24,13 +22,13 @@ function Header({ toggleSidebar, incentive }: IProfileHeaderProps) {
   };
 
   return (
-    <div className="flex items-center justify-between border-b border-gray-300 p-4 dark:invert">
+    <div className="flex items-center border-b border-gray-300 dark:invert">
       
-      <div className="hidden md:flex w-60 justify-center items-center">
-        <Image src="/logox.svg" alt="logo" priority width={200} height={200} />
+      <div className="hidden md:flex justify-center items-center">
+        <Image src="/logox.svg" alt="logo" priority width={250} height={200} />
       </div>
-      <div className="flex items-center space-x-6">
-        <div className="flex items-center space-x-4 text-lg font-medium">
+      <div className="flex justify-between items-center border-l w-full px-2">
+        <div className="flex items-center text-lg font-medium gap-4">
           <IoMenu size={30} onClick={handleMobileMenuClick} className="cursor-pointer md:hidden" />
           <p>Incentive</p>
           {incentive === undefined ? (
@@ -39,8 +37,8 @@ function Header({ toggleSidebar, incentive }: IProfileHeaderProps) {
             <span className="text-xl text-purple-700">INR {incentive}</span>
           )}
         </div>
-        <div className="relative flex items-center space-x-4">
-          <Image src="./Ellipse.svg" alt="profile-image" width={100} height={100} className="cursor-pointer h-12 w-12 rounded-full dark:invert" onClick={handleProfileClick} />
+        <div className="relative flex items-center">
+          <Image src="/Ellipse.svg" alt="profile-image" width={100} height={100} className="cursor-pointer h-12 w-12 rounded-full dark:invert" onClick={handleProfileClick} />
           {isMenuVisible && (
             <div className="absolute top-12 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-50 w-40">
               <div className="p-2 cursor-pointer text-gray-800 hover:bg-gray-100" >

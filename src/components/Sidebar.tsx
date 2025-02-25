@@ -49,7 +49,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
 
   return (
     <div
-      className={`${isMobile ? "fixed top-0 left-0 h-full z-50" : "h-[calc(100vh-90px)]"} transition-all duration-300 overflow-hidden border-r border-gray-300 shadow-lg
+      className={`${isMobile ? "fixed top-0 left-0 h-full z-50" : "h-[calc(100vh-60px)]"} transition-all duration-300 overflow-hidden border-r border-gray-300 shadow-lg
         ${isMobile ? (isOpen ? "w-64 block" : "hidden") : hovered || isOpen ? "w-64" : "w-20"} md:block`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
