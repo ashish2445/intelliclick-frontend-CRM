@@ -27,7 +27,7 @@ const Home: React.FC = () => {
       <StatisticsContainer data={data} title={'My open Task'} />
       <StatisticsContainer data={data} title={'My Meeting'} />
       <StatisticsContainer data={data} title={'Today Leads'} />
-      <StatisticsContainer data={data} title={'My Deals Closing This Month'} />
+      <StatisticsContainer title={'My Deals Closing This Month'} />
     </div>
   );
 };

@@ -101,7 +101,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
           {(hovered || isOpen) && <span className="whitespace-nowrap">Log out</span>}
         </div>
 
-        <ThemeToggle />
+        <ThemeToggle hovered={hovered} />
         {(hovered || isOpen) && (
           <div className="flex justify-center p-4">
             <Image

@@ -89,8 +89,9 @@ const StatisticsContainer: React.FC<StatisticsContainerProps> = ({ data,title })
           </>
         ) : (
           // Show image when there is no data
-          <div className="flex justify-center items-center h-full">
-            <Image src="/EmptyImg.svg" alt="No data available" priority width={200} height={200} />
+          <div className="flex flex-col justify-center items-center h-full gap-4">
+            <Image src="/EmptyImg.svg" alt="No data available" priority width={400} height={450} />
+            <p>This Folder is Empty</p>
           </div>
         )}
       </div>
