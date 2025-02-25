@@ -10,15 +10,17 @@ const SearchBox: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center border-l border-r border-b border-gray-300 rounded-lg text-gray-500 h-14 width-80 text-base font-normal gap-2 text-center px-2">
-      <IoIosSearch size={20} />
+    // <div className="flex items-center justify-center border-l border-r border-b border-gray-300 rounded-lg text-gray-500 h-16 width-[800px] text-base font-normal gap-2 text-center px-2">
+    <div className="flex items-center justify-center border-l border-r border-b border-[#C6CCE0] rounded-lg text-[#C6CCE0] h-16 w-full text-base font-normal gap-2 text-center px-4">  
+      <IoIosSearch size={32} color="#0D2167" />
       <input
         type="text"
         name="search-leads"
         placeholder="Search"
         value={searchString}
         onChange={handleSearchChange}
-        className="outline-none bg-transparent w-full"
+        // className="outline-none bg-transparent w-full"
+        className="outline-none bg-transparent w-full text-[#5A6793] placeholder-[#5A6793]"
       />
     </div>
   );
