@@ -137,28 +137,7 @@ const data = [
 const TablesContainer: React.FC = () => {
   return (
     <div className="border border-black border-r p-4 rounded-lg dark:invert">
-      <h1 className="text-2xl">My Meeting</h1>
-      <div className="flex flex-col justify-center items-center">
-        {data.length > 0 ? (
-          <>
-            {/* Search and pagination container, only shown when data is available */}
-            <div className="flex justify-center items-center gap-20">
-              <SearchBox />
-              <div className="flex justify-center items-center gap-3">
-                <MdKeyboardArrowLeft />
-                {1}
-                <MdOutlineKeyboardArrowRight />
-              </div>
-              <IoSettingsOutline />
-            </div>
-            {/* Table displayed when data is available */}
-            <DynamicTable columns={columns} data={data} />
-          </>
-        ) : (
-          // Show image when there is no data
-          <Image src="/EmptyImg.svg" alt="No data available" priority width={200} height={200} />
-        )}
-      </div>
+      <h1 className="text-2xl">Main Page</h1>
     </div>
   );
 };
