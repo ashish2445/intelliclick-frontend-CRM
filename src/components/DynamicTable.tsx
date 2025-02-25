@@ -89,10 +89,12 @@
 // };
 
 // export default DynamicTable;
+import { IOpenTaskData } from "@/interfaces";
 import React from "react";
 
 interface TableProps {
-  data: { [key: string]: string }[];
+  // data: { [key: string]: string }[];
+  data: IOpenTaskData[];
   columns: string[];
 }
 
@@ -124,6 +126,9 @@ const DynamicTable: React.FC<TableProps> = ({ data, columns }) => {
                 >
                   {row[col] || "-"}
                 </td>
+                // <td key={col} className={`p-3 ${fixedColumns.includes(col) ? "sticky left-0 bg-white z-10" : ""}`}>
+                //   {row[col as keyof IOpenTaskData] || "-"}
+                // </td>
               ))}
             </tr>
           ))}
