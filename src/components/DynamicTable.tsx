@@ -219,7 +219,7 @@ const DynamicTable: React.FC<TableProps> = ({ data, columns }) => {
   const enableScroll = columns.length > 8; // Enable scrolling when total columns exceed 8
 
   return (
-    <div className="w-full overflow-x-auto border border-gray-300 rounded-lg">
+    <div className="overflow-x-auto w-full border border-gray-300 rounded-lg">
       <table className="min-w-[1100px] w-full border-collapse">
         <thead>
           <tr className="bg-gray-100 text-gray-800 text-left text-sm font-semibold h-12">
@@ -240,6 +240,16 @@ const DynamicTable: React.FC<TableProps> = ({ data, columns }) => {
                   <th
                     key={col}
                     className="p-3 sticky left-[150px] bg-gray-100 z-10 border-r border-gray-300"
+                    style={{ minWidth: "150px" }}
+                  >
+                    {col}
+                  </th>
+                );
+              }else if (col === "CreatedAt") {
+                return (
+                  <th
+                    key={col}
+                    className="p-3 sticky right-0 bg-gray-100 z-10 border-r border-gray-300"
                     style={{ minWidth: "150px" }}
                   >
                     {col}
@@ -274,6 +284,17 @@ const DynamicTable: React.FC<TableProps> = ({ data, columns }) => {
                     <td
                       key={col}
                       className="p-3 sticky left-[150px] bg-white z-10 border-r border-gray-300"
+                      style={{ minWidth: "150px" }}
+                    >
+                      {row[col] || "-"}
+                    </td>
+                  );
+                }
+                else if (col === "CreatedAt") {
+                  return (
+                    <td
+                      key={col}
+                      className="p-3 sticky right-0 bg-white z-10 border-r border-gray-300"
                       style={{ minWidth: "150px" }}
                     >
                       {row[col] || "-"}

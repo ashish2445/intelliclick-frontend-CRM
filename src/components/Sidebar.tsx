@@ -50,7 +50,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
   return (
     <div
       className={`${isMobile ? "fixed top-0 left-0 h-full z-50" : "h-[calc(100vh-60px)]"} transition-all duration-300 overflow-hidden border-r border-gray-300 shadow-lg
-        ${isMobile ? (isOpen ? "w-64 block" : "hidden") : hovered || isOpen ? "w-64" : "w-20"} md:block`}
+        ${isMobile ? (isOpen ? "w-64 block" : "hidden") : hovered || isOpen ? "w-[252px]" : "w-20"} md:block`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -79,7 +79,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
               onClick={() => handleItem(item.path)}
               className={`flex items-center gap-4 min-h-[60px] px-4 cursor-pointer transition-colors duration-300
                 ${clickedItem === item.path
-                  ? "bg-[#D029D8] text-[#D029D8] font-semibold"
+                  ? "bg-[#FBE8FF] text-[#D029D8] font-semibold"
                   : "hover:bg-gradient-to-r from-[#D029D8] to-[#519CDF] hover:text-white"
                 }`}
             >
@@ -92,8 +92,8 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
         <div
           onClick={() => handleItem("/dashboard/home")}
           className={`flex items-center gap-4 min-h-[60px] px-4 cursor-pointer transition-colors duration-300
-            ${clickedItem === "/dashboard/home"
-              ? "bg-[#D029D8] text-[#D029D8] font-semibold"
+            ${clickedItem === "/dashboard/logout"
+              ? "bg-[#FBE8FF] text-[#D029D8] font-semibold"
               : "hover:bg-gradient-to-r from-[#D029D8] to-[#519CDF] hover:text-white"
             }`}
         >

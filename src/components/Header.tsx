@@ -22,13 +22,13 @@ function Header({ toggleSidebar, incentive }: IProfileHeaderProps) {
   };
 
   return (
-    <div className="flex items-center border-b border-gray-300 dark:invert">
+    <div className="flex items-center border-b border-gray-300 dark:invert h-[60px]">
       
-      <div className="hidden md:flex justify-center items-center">
-        <Image src="/logox.svg" alt="logo" priority width={250} height={200} />
+      <div className="hidden md:flex justify-center h-full items-center">
+        <Image src="/logox.svg" alt="logo" priority width={250} height={60} className="h-full" />
       </div>
-      <div className="flex justify-between items-center border-l w-full px-2">
-        <div className="flex items-center text-lg font-medium gap-4">
+      <div className="flex justify-between items-center border-l h-[60px] w-full px-2">
+        <div className="flex items-center text-lg font-medium gap-x-4">
           <IoMenu size={30} onClick={handleMobileMenuClick} className="cursor-pointer md:hidden" />
           <p>Incentive</p>
           {incentive === undefined ? (
