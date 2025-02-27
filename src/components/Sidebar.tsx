@@ -67,7 +67,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
         <ul className="flex flex-col flex-1 dark:invert">
           {[
             { icon: <RxDashboard size={30} />, path: "/dashboard/home", label: "Home" },
-            { icon: <TbClipboardText size={30} />, path: "/dashboard/uploadQuestion", label: "Leads Management" },
+            { icon: <TbClipboardText size={30} />, path: "/dashboard/table", label: "Leads Management" },
             { icon: <BiPieChartAlt2 size={30} />, path: "/dashboard/invoice", label: "Attendance" },
             { icon: <TbBriefcase size={30} />, path: "stores", label: "Stores" },
             { icon: <BsHeadset size={30} />, path: "providers", label: "Providers" },
