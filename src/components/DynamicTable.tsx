@@ -219,7 +219,7 @@ const DynamicTable: React.FC<TableProps> = ({ data, columns }) => {
   const enableScroll = columns.length > 8; // Enable scrolling when total columns exceed 8
 
   return (
-    <div className="overflow-x-auto w-full border border-gray-300 rounded-lg">
+    <div className="overflow-x-auto w-full border border-gray-300 rounded-lg scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-gray-100 text-gray-800 text-left text-sm font-semibold h-12">

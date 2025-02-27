@@ -107,7 +107,84 @@
 // export default MyComponent;
 
 
-"use client";
+// "use client";
+// import React, { useState, useRef, useEffect } from "react";
+// import { FaChevronDown } from "react-icons/fa6";
+
+// interface Option {
+//   label: string;
+//   value: string;
+// }
+
+// interface DropdownProps {
+//   options: Option[];
+//   selectedOptions: string[];
+//   onSelect: (values: string[]) => void;
+// }
+
+// const MultiSelectDropdown: React.FC<DropdownProps> = ({ options, selectedOptions, onSelect }) => {
+//   const [isOpen, setIsOpen] = useState<boolean>(false);
+//   const dropdownRef = useRef<HTMLDivElement>(null);
+
+//   // Close dropdown when clicking outside
+//   useEffect(() => {
+//     const handleClickOutside = (event: MouseEvent) => {
+//       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+//         setIsOpen(false);
+//       }
+//     };
+
+//     document.addEventListener("mousedown", handleClickOutside);
+//     return () => document.removeEventListener("mousedown", handleClickOutside);
+//   }, []);
+
+//   const handleSelect = (value: string) => {
+//     const newSelections = selectedOptions.includes(value)
+//       ? selectedOptions.filter((selected) => selected !== value)
+//       : [...selectedOptions, value];
+
+//     onSelect(newSelections);
+//   };
+
+//   return (
+//     <div className="relative inline-block text-left" ref={dropdownRef}>
+//       {/* Button to toggle dropdown */}
+//       <button
+//         onClick={() => setIsOpen(!isOpen)}
+//         className="dropdown-btn flex items-center justify-between px-4 py-2 border border-gray-300 rounded-md w-48 bg-white shadow-sm"
+//       >
+//         Select options
+//         <FaChevronDown className="ml-2" />
+//       </button>
+
+//       {/* Dropdown menu */}
+//       {isOpen && (
+//         <ul className="absolute left-0 top-full mt-1 w-48 bg-white border border-gray-300 rounded-md shadow-lg z-50">
+//           {options.map((option) => (
+//             <li
+//               key={option.value}
+//               className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center"
+//               onClick={() => handleSelect(option.value)}
+//             >
+//               <input
+//                 type="checkbox"
+//                 checked={selectedOptions.includes(option.value)}
+//                 readOnly
+//                 className="mr-2"
+//               />
+//               {option.label}
+//             </li>
+//           ))}
+//         </ul>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default MultiSelectDropdown;
+
+'use client';
+
 import React, { useState, useRef, useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 
@@ -151,10 +228,10 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({ options, selectedOptions
       {/* Button to toggle dropdown */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="dropdown-btn flex items-center justify-between px-4 py-2 border border-gray-300 rounded-md w-48 bg-white shadow-sm"
+        className="flex items-center justify-between px-4 py-2 border border-gray-300 rounded-md w-48 bg-white shadow-sm hover:bg-gray-100"
       >
-        Select options
-        <FaChevronDown className="ml-2" />
+        {selectedOptions?.length > 0 ? `Selected (${selectedOptions?.length})` : "Select options"}
+        <FaChevronDown className="ml-2 text-gray-600" />
       </button>
 
       {/* Dropdown menu */}
@@ -170,7 +247,7 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({ options, selectedOptions
                 type="checkbox"
                 checked={selectedOptions.includes(option.value)}
                 readOnly
-                className="mr-2"
+                className="mr-2 cursor-pointer"
               />
               {option.label}
             </li>
@@ -182,6 +259,7 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({ options, selectedOptions
 };
 
 export default MultiSelectDropdown;
+
 
 
 
