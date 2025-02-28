@@ -6,6 +6,8 @@ import Dropdown from "@/components/CustomDropdown";
 import MultiSelectDropdown from "@/components/MultiSelectDropDown";
 import { FilterState } from "@/interfaces/tableFilterTypes";
 import { DATA_STATUS } from "@/utils/constants";
+import DateFilter from "@/components/DateFilter";
+import { TIME_RANGE } from "@/utils/constants/timeRanges";
 
 interface TableFiltersProps {
   filterState:FilterState
@@ -24,7 +26,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter}) => {
       </h2>
       <div className="flex items-center space-x-3">        
         <SearchBox placeholder="Type and Press Enter" setFilter={setFilter}/>        
-        <Dropdown />        
+        <DateFilter options={[...TIME_RANGE]} setFilterState={setFilter} />      
         <MultiSelectDropdown options={[...DATA_STATUS]} selectedOptions={filterState.status} onSelect={(values: string[]) => {
           setFilter(prev => ({
             ...prev,
