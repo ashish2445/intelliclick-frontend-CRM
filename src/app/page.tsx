@@ -98,9 +98,9 @@ import { IOpenTaskData } from "@/interfaces";
 import { columns } from "@/utils/constants";
 
 const allOptions = [
-  { label: "Subject", value: "subject" },
-  { label: "Grade", value: "grade" },
-  { label: "Status", value: "status" },
+  { label: "Subject", color: "subject" },
+  { label: "Grade", color: "grade" },
+  { label: "Status", color: "status" },
 ];
 
 const initialData: IOpenTaskData[] = [

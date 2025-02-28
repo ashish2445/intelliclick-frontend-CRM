@@ -190,7 +190,7 @@ import { FaChevronDown } from "react-icons/fa6";
 
 interface Option {
   label: string;
-  value: string;
+  color: string;
 }
 
 interface DropdownProps {
@@ -239,17 +239,23 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({ options, selectedOptions
         <ul className="absolute left-0 top-full mt-1 w-48 bg-white border border-gray-300 rounded-md shadow-lg z-50">
           {options.map((option) => (
             <li
-              key={option.value}
+              key={option.label}
               className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center"
-              onClick={() => handleSelect(option.value)}
+              onClick={() => handleSelect(option.label)}
             >
               <input
                 type="checkbox"
-                checked={selectedOptions.includes(option.value)}
+                checked={selectedOptions.includes(option.label)}
                 readOnly
                 className="mr-2 cursor-pointer"
               />
-              {option.label}
+              <div
+                className="w-4 h-4 rounded"
+                style={{ backgroundColor: option.color }}
+              ></div>
+              <span className="ml-2 text-gray-700 font-medium">
+                {option.label}
+              </span>
             </li>
           ))}
         </ul>
