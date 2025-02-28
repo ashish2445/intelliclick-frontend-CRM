@@ -3,7 +3,7 @@ import React from 'react';
 
 const TablePage = () => {
   return (
-    <div>
+    <div >
       <TableContainer />
     </div>
   )

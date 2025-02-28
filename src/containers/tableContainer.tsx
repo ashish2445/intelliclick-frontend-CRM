@@ -1,5 +1,6 @@
 'use client';
 import DynamicTable from "@/components/DynamicTable";
+import Pagination from "@/components/Pagination";
 import SearchBox from "@/components/SearchBox";
 import TableFilters from "@/containers/filtersContainer";
 import LeadsFilters from "@/containers/filtersContainer";
@@ -123,12 +124,15 @@ const TableContainer: React.FC = () => {
     singleDate: undefined,
     dateRange: { startDate: undefined, endDate: undefined },
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  console.log("filterd",filterState);
+  // const totalPages = (totalLeads/rowsPerPage);
+  const totalPages = 10;
 
   return (
     <div>
-        <div className="p-6 bg-white rounded-[22px] border border-black w-full">
+        <div className="p-6 bg-white rounded-[22px] border border-black w-full dark:invert">
         {/* Header */}
         <div className="flex justify-between items-center pb-2 mb-4">
           <div className="flex space-x-4">
@@ -165,24 +169,34 @@ const TableContainer: React.FC = () => {
             </button>
         </div>
         </div>
-        <div className="flex flex-wrap gap-6 m-5">
-      <button className="flex items-center justify-center bg-blue-100 border border-blue-800 rounded-[25px] px-4 py-2 gap-2 text-blue-800 font-semibold text-base mr-5">
-        Today Leads
-        <span className="bg-blue-800 px-2 py-1 rounded-full text-white text-lg">
-          {/* {todayLeads} */}
-          {1}
-        </span>
-      </button>
-      <button className="flex items-center justify-center bg-white border border-gray-300 rounded-[25px] px-4 py-2 gap-2 text-blue-800 font-semibold text-base">
-        Yesterday Leads
-        <span className="bg-gray-200 px-2 py-1 rounded-full text-gray-500 text-lg">
-          {/* {yesterdayLeads} */}
-          {2}
-        </span>
-      </button>
-    </div>
-    <TableFilters setFilter={setFilterState} filterState={filterState} />
-    <DynamicTable data={tableData} columns={columns} />
+        <div className="flex flex-wrap gap-6 m-5 dark:invert">
+          <button className="flex items-center justify-center border border-blue-800 rounded-[25px] px-4 py-2 gap-2 font-semibold text-base mr-5">
+            <p>Today Leads</p>
+            <span className="bg-blue-800 px-2 py-1 rounded-full text-lg">
+              {/* {todayLeads} */}
+              {1}
+            </span>
+          </button>
+          <button className="flex items-center justify-center border border-gray-300 rounded-[25px] px-4 py-2 gap-2 font-semibold text-base">
+            <p>Yesterday Leads</p>
+            <span className="bg-gray-200 px-2 py-1 rounded-full text-lg">
+              {/* {yesterdayLeads} */}
+              {2}
+            </span>
+          </button>
+        </div>
+        <TableFilters setFilter={setFilterState} filterState={filterState} />
+        <DynamicTable data={tableData} columns={columns} />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          rowsPerPage={rowsPerPage}
+          onPageChange={(page) => setCurrentPage(page)}
+          onRowsPerPageChange={(rows) => {
+            setRowsPerPage(rows);
+            setCurrentPage(1); // Reset to first page when changing rows per page
+          }}
+        />
     </div>
   );
 };

@@ -219,17 +219,17 @@ const DynamicTable: React.FC<TableProps> = ({ data, columns }) => {
   const enableScroll = columns.length > 8; // Enable scrolling when total columns exceed 8
 
   return (
-    <div className="overflow-x-auto w-full border border-gray-300 rounded-lg scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+    <div className="overflow-x-auto w-full dark:invert border border-gray-300 rounded-lg scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
       <table className="w-full border-collapse">
         <thead>
-          <tr className="bg-gray-100 text-gray-800 text-left text-sm font-semibold h-12">
+          <tr className="bg-gray-200 text-left text-sm font-semibold h-12">
             {/* Fixed Start Columns */}
             {columns.map((col, index) => {
               if (col === "StudentName") {
                 return (
                   <th
                     key={col}
-                    className="p-3 sticky left-0 bg-gray-100 z-10 border-r border-gray-300"
+                    className="p-3 sticky left-0 z-10 border-r border-gray-300"
                     style={{ minWidth: "150px" }}
                   >
                     {col}
@@ -239,7 +239,7 @@ const DynamicTable: React.FC<TableProps> = ({ data, columns }) => {
                 return (
                   <th
                     key={col}
-                    className="p-3 sticky left-[150px] bg-gray-100 z-10 border-r border-gray-300"
+                    className="p-3 sticky left-[150px] z-10 border-r border-gray-300"
                     style={{ minWidth: "150px" }}
                   >
                     {col}
@@ -249,7 +249,7 @@ const DynamicTable: React.FC<TableProps> = ({ data, columns }) => {
                 return (
                   <th
                     key={col}
-                    className="p-3 sticky right-0 bg-gray-100 z-10 border-r border-gray-300"
+                    className="p-3 sticky right-0 z-10 border-r border-gray-300"
                     style={{ minWidth: "150px" }}
                   >
                     {col}
@@ -273,7 +273,7 @@ const DynamicTable: React.FC<TableProps> = ({ data, columns }) => {
                   return (
                     <td
                       key={col}
-                      className="p-3 sticky left-0 bg-white z-10 border-r border-gray-300"
+                      className="p-3 sticky left-0 z-10 border-r border-gray-300"
                       style={{ minWidth: "150px" }}
                     >
                       {row[col] || "-"}
@@ -283,7 +283,7 @@ const DynamicTable: React.FC<TableProps> = ({ data, columns }) => {
                   return (
                     <td
                       key={col}
-                      className="p-3 sticky left-[150px] bg-white z-10 border-r border-gray-300"
+                      className="p-3 sticky left-[150px] z-10 border-r border-gray-300"
                       style={{ minWidth: "150px" }}
                     >
                       {row[col] || "-"}
@@ -294,7 +294,7 @@ const DynamicTable: React.FC<TableProps> = ({ data, columns }) => {
                   return (
                     <td
                       key={col}
-                      className="p-3 sticky right-0 bg-white z-10 border-r border-gray-300"
+                      className="p-3 sticky right-0 z-10 border-r border-gray-300"
                       style={{ minWidth: "150px" }}
                     >
                       {row[col] || "-"}

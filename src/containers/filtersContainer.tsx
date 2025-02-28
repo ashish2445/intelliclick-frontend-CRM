@@ -20,7 +20,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter}) => {
   const [status, setStatus] = useState("Status");
 
   return (
-    <div className="flex items-center justify-between p-4 bg-white shadow-md rounded-md">
+    <div className="flex items-center justify-between p-4 dark:invert shadow-md rounded-md">
       <h2 className="text-lg font-semibold">
         Leads <span className="text-gray-500">(All)</span>
       </h2>
