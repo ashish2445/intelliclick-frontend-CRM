@@ -96,6 +96,7 @@ import MultiSelectDropdown from "@/components/MultiSelectDropDown";
 import DynamicTable from "@/components/DynamicTable";
 import { IOpenTaskData } from "@/interfaces";
 import { columns } from "@/utils/constants";
+import DynamicTable2 from "@/components/DynamicTable copy";
 
 const allOptions = [
   { label: "Subject", color: "subject" },
@@ -141,6 +142,9 @@ const Page = () => {
     ];
   }
 
+  console.log("selcol",selectedColumns);
+  console.log("newcol",newColumns);
+
   return (
     <div className="p-4">
       <h2 className="text-xl font-semibold mb-4">Dynamic Table with MultiSelect Dropdown</h2>
@@ -154,7 +158,7 @@ const Page = () => {
 
       {/* Dynamic Table */}
       <div className="mt-4">
-        <DynamicTable data={initialData} columns={newColumns} />
+        <DynamicTable2 data={initialData} columns={newColumns} />
       </div>
     </div>
   );
