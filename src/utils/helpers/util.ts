@@ -37,5 +37,13 @@ export function formatToLocalTime(isoDate: string): string {
   return `${day} ${month}, ${year} ${formattedTime}`;
 }
 
+export const getAllKeys = <T extends Record<string, any>>(data: T[]): (keyof T)[] => {
+  const keysSet = new Set<string>();
+  data.forEach((item) => {
+    Object.keys(item).forEach((key) => keysSet.add(key));
+  });
+  return Array.from(keysSet) as (keyof T)[];
+};
+
 
 
