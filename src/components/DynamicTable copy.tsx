@@ -667,13 +667,13 @@ const fixedEndColumn = "CreatedAt";
 
 const DynamicTable2: React.FC<TableProps> = ({ data, columns }) => {
   const [displayColumns, setDisplayColumns] = useState<string[]>(columns); // Controls visibility
-  const [columnOrder, setColumnOrder] = useState<string[]>(columns); // Controls column order
+  const [columnOrder, setColumnOrder] = useState<string[]>(Array.from(new Set(data.flatMap((row) => Object.keys(row))))); // Controls column order
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setDisplayColumns(columns);
-    setColumnOrder(columns);
+    // setColumnOrder(columns);
   }, [columns]);
 
   const handleCheckboxChange = (key: string) => {
@@ -681,6 +681,11 @@ const DynamicTable2: React.FC<TableProps> = ({ data, columns }) => {
       prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
     );
   };
+
+  const allKeys = Array.from(new Set(data.flatMap((row) => Object.keys(row)))); // Get all keys from data
+
+  console.log("dispcols",displayColumns);
+
 
   const moveColumn = useCallback((index: number, direction: "left" | "right") => {
     setColumnOrder((prevColumns) => {
@@ -734,7 +739,7 @@ const DynamicTable2: React.FC<TableProps> = ({ data, columns }) => {
         {dropdownOpen && (
           <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg z-40">
             <ul className="text-sm text-gray-700">
-              {columns.map((key) => (
+              {allKeys.map((key) => (
                 <li
                   key={key}
                   className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
