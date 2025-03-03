@@ -77,7 +77,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
             <li
               key={index}
               onClick={() => handleItem(item.path)}
-              className={`flex justify-center items-center gap-4 min-h-[60px] px-4 cursor-pointer transition-colors duration-300
+              className={`flex ${hovered?'':'justify-center'} items-center gap-4 min-h-[60px] px-4 cursor-pointer transition-colors duration-300
                 ${clickedItem === item.path
                   ? "bg-[#FBE8FF] text-[#D029D8] font-semibold"
                   : "hover:bg-gradient-to-r from-[#D029D8] to-[#519CDF] hover:text-white"

@@ -1,10 +1,10 @@
-import { Role, StorageKey, Theme } from '@utils/enums';
+// import { Role, StorageKey, Theme } from '@utils/enums';
 
-export const getToken = () => {
-  const role = localStorage.getItem(StorageKey.ROLE) || Role.STUDENT;
-  const token = localStorage.getItem(`${role}${StorageKey.TOKEN}`);
-  return token;
-};
+// export const getToken = () => {
+//   const role = localStorage.getItem(StorageKey.ROLE) || Role.STUDENT;
+//   const token = localStorage.getItem(`${role}${StorageKey.TOKEN}`);
+//   return token;
+// };
 
 export function formatToLocalTime(isoDate: string): string {
   // Ensure `isoDate` is provided and valid
@@ -37,12 +37,16 @@ export function formatToLocalTime(isoDate: string): string {
   return `${day} ${month}, ${year} ${formattedTime}`;
 }
 
-export const getAllKeys = <T extends Record<string, any>>(data: T[]): (keyof T)[] => {
-  const keysSet = new Set<string>();
-  data.forEach((item) => {
-    Object.keys(item).forEach((key) => keysSet.add(key));
-  });
-  return Array.from(keysSet) as (keyof T)[];
+// export const getAllKeys = <T extends Record<string, any>>(data: T[]): (keyof T)[] => {
+//   const keysSet = new Set<string>();
+//   data.forEach((item) => {
+//     Object.keys(item).forEach((key) => keysSet.add(key));
+//   });
+//   return Array.from(keysSet) as (keyof T)[];
+// };
+
+export const getAllKeys = <T extends Record<string, any>>(data: T[]): string[] => {
+  return Array.from(new Set(data.flatMap((row) => Object.keys(row))));
 };
 
 

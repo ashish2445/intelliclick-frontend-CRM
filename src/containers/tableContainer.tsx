@@ -1,6 +1,7 @@
 'use client';
 import DynamicTable from "@/components/DynamicTable";
 import DynamicTable2 from "@/components/DynamicTable copy";
+import FilterComponent from "@/components/FilterCondition";
 import Pagination from "@/components/Pagination";
 import SearchBox from "@/components/SearchBox";
 import TableFilters from "@/containers/filtersContainer";
@@ -9,7 +10,7 @@ import { IOpenTaskData } from "@/interfaces";
 import { FilterState } from "@/interfaces/tableFilterTypes";
 import { ManagerInstance } from "@/services/manager.service";
 import { columns } from "@/utils/constants";
-import { handleError } from "@/utils/helpers";
+import { getAllKeys, handleError } from "@/utils/helpers";
 import { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
 import { FaSearch, FaCog } from "react-icons/fa";
@@ -127,9 +128,20 @@ const TableContainer: React.FC = () => {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [addCondition,setCondition] = useState<boolean>(false);
+  const [filters, setFilters] = useState<string[]>([]);
 
   // const totalPages = (totalLeads/rowsPerPage);
   const totalPages = 10;
+
+  const handleCondition = (key:string) => {
+    setFilters([...filters,key]);
+    setCondition(prev=>!prev);
+  }
+
+  const handleCloseFilter = (filter:string) => {
+    setFilters(filters.filter((each) => each !== filter));
+  };
 
   return (
     <div>
@@ -143,7 +155,7 @@ const TableContainer: React.FC = () => {
         </div>
         <div className="flex justify-between w-full">
           <span>All Leads</span>
-          <button className="bg-blue-700 text-white px-4 py-2 rounded-md">+ Add a Condition</button>
+          <button className="bg-blue-700 px-4 py-2 rounded-md" onClick={()=>setCondition(prev=>!prev)}>+ Add a Condition</button>
         </div>
 
         <div className="flex justify-between items-center gap-10 p-2">
@@ -155,21 +167,34 @@ const TableContainer: React.FC = () => {
           </div>
           <IoSettingsOutline size={24} color="#0D2167" />
         </div>
+        {addCondition && <div>
+          <ul>
+            {getAllKeys(initialData).map((key) => (
+              <li
+                key={key}
+                onClick={() => handleCondition(key)} // Pass the key if needed
+                style={{ cursor: "pointer", padding: "5px" }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+              >
+                {key}
+              </li>
+            ))}
+          </ul>
+        </div>
+        }
 
-        <div className="flex justify-between items-center w-full">
-          <div className="flex gap-2">
-            <button className="border border-black text-sm px-3 py-1 rounded-[6px]">
-              Name: contains auth ×
-              </button>
-                <button className=" border border-black text-sm px-3 py-1 rounded-[6px]">
-                Clear filters
-                </button>
-            </div>
-            <button className="bg-gray-200 px-3 py-1 rounded-[22px] flex items-center gap-2">
-                More options <FaCog />
-            </button>
-        </div>
-        </div>
+        {filters.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {filters.map((filter) => (
+              <FilterComponent
+                key={filter}
+                onClose={() => handleCloseFilter(filter)}
+              />
+            ))}
+          </div>
+        )}
+      </div>
         <div className="flex flex-wrap gap-6 m-5 dark:invert">
           <button className="flex items-center justify-center border border-blue-800 rounded-[25px] px-4 py-2 gap-2 font-semibold text-base mr-5">
             <p>Today Leads</p>

@@ -97,6 +97,7 @@ import DynamicTable from "@/components/DynamicTable";
 import { IOpenTaskData } from "@/interfaces";
 import { columns } from "@/utils/constants";
 import DynamicTable2 from "@/components/DynamicTable copy";
+import FilterComponent from "@/components/FilterCondition";
 
 const allOptions = [
   { label: "Subject", color: "subject" },
@@ -238,6 +239,7 @@ const Page = () => {
 
       {/* Dynamic Table */}
       <div className="mt-4">
+        <FilterComponent />
         <DynamicTable2 data={initialData} columns={newColumns} />
       </div>
     </div>
