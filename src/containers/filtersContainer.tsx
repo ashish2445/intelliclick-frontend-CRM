@@ -8,6 +8,8 @@ import { FilterState } from "@/interfaces/tableFilterTypes";
 import { DATA_STATUS } from "@/utils/constants";
 import DateFilter from "@/components/DateFilter";
 import { TIME_RANGE } from "@/utils/constants/timeRanges";
+import { FaPlus } from "react-icons/fa6";
+import Modal from "@/components/Modal";
 
 interface TableFiltersProps {
   filterState:FilterState
@@ -18,6 +20,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter}) => {
   const [search, setSearch] = useState("");
   // const [filter, setFilter] = useState("All");
   const [status, setStatus] = useState("Status");
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <div className="flex items-center justify-between p-4 dark:invert shadow-md rounded-md">
@@ -33,10 +36,18 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter}) => {
             status: values,
           }));
         }} />
-       <button className="px-4 py-2 border border-[1px] border-black rounded-[20px]" style={{  border: "1px solid #d6d2d2", borderRadius: "8px", height: "40px",width:"280px", fontSize: "14px", fontWeight: "400", gap: "8px" }}
+       {/* <button className="px-4 py-2 border border-[1px] border-black rounded-[20px]" style={{  border: "1px solid #d6d2d2", borderRadius: "8px", height: "40px",width:"280px", fontSize: "14px", fontWeight: "400", gap: "8px" }}
 >
          + Create leads
-       </button>
+       </button> */}
+       <div className="p-4">
+      <button onClick={() => setModalOpen(true)} className="px-4 py-2 bg-green-500 text-white rounded">
+        Open Modal
+      </button>
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+        <p>This is the modal content!</p>
+      </Modal>
+    </div>
       </div>
     </div>
   );

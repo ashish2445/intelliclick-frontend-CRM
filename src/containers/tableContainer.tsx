@@ -1,5 +1,6 @@
 'use client';
 import DynamicTable from "@/components/DynamicTable";
+import DynamicTable2 from "@/components/DynamicTable copy";
 import Pagination from "@/components/Pagination";
 import SearchBox from "@/components/SearchBox";
 import TableFilters from "@/containers/filtersContainer";
@@ -186,7 +187,7 @@ const TableContainer: React.FC = () => {
           </button>
         </div>
         <TableFilters setFilter={setFilterState} filterState={filterState} />
-        <DynamicTable data={tableData} columns={columns} />
+        <DynamicTable2 data={tableData} columns={columns} />
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
