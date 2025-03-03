@@ -42,7 +42,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter}) => {
        </button> */}
        <div className="p-4">
       <button onClick={() => setModalOpen(true)} className="px-4 py-2 bg-green-500 text-white rounded">
-        Open Modal
+        Create
       </button>
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <p>This is the modal content!</p>

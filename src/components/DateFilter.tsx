@@ -225,7 +225,7 @@ const DateFilter = ({ options, onSelectionChange, setFilterState }: DateFilterPr
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 min-w-[250px] bg-white border border-gray-200 rounded-md shadow-md mt-2 z-10">
+        <div className="absolute left-0 min-w-[250px] bg-white border border-gray-200 rounded-md shadow-md mt-2 z-50">
           {selectedOption === "Custom Date" ? (
             <div className="p-4 w-full">
               <CustomCalendar
