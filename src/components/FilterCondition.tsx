@@ -240,7 +240,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ label, onClose }) => 
   const [dateFilter, setDateFilter] = React.useState("any");
 
   return (
-    <div className="relative inline-flex items-center gap-2 bg-red-100 text-gray-800 px-4 py-3 rounded-lg w-auto">
+    <div className="relative inline-flex items-center gap-2 bg-gray-100 text-gray-800 rounded-lg w-auto p-3">
       {/* Close Button (Top Right Corner) */}
       <div className="absolute top-[-14px] right-[-14px]">
         <IconButton
@@ -264,7 +264,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ label, onClose }) => 
       <Select
         value={condition}
         onChange={(e) => setCondition(e.target.value)}
-        className="text-sm bg-white border border-gray-300 rounded px-2 py-1 w-auto"
+        className="text-xs h-8 bg-white border border-gray-300 rounded w-auto"
       >
         <MenuItem value="is">Is</MenuItem>
         <MenuItem value="before">Before</MenuItem>
@@ -275,7 +275,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ label, onClose }) => 
       <Select
         value={dateFilter}
         onChange={(e) => setDateFilter(e.target.value)}
-        className="text-sm bg-white border border-gray-300 rounded px-2 py-1 w-auto"
+        className="text-xs h-8 bg-white border border-gray-300 rounded w-auto"
       >
         <MenuItem value="any">
           <AccessTime fontSize="small" />

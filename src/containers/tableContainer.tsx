@@ -145,12 +145,12 @@ const TableContainer: React.FC = () => {
 
   return (
     <div>
-        <div className="p-6 bg-white rounded-[22px] border border-black rounded w-full dark:invert">
+      <div className="p-6 rounded-[22px] border border-red-600 w-full dark-invert">
         {/* Header */}
         <div className="flex justify-between items-center pb-2 mb-4">
           <div className="flex space-x-4">
-            <span className="text-blue-600 border-b-2 border-blue-600 pb-1">Current View</span>
-            <span className="text-gray-400">Previous View</span>
+            <span className="border-b-2 border-blue-600 pb-1">Current View</span>
+            <span>Previous View</span>
           </div>            
         </div>
         <div className="flex justify-between w-full">
