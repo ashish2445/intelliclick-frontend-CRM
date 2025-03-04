@@ -240,7 +240,8 @@ const DateFilter = ({ options, onSelectionChange, setFilterState }: DateFilterPr
               {options.map((option, index) => (
                 <li
                   key={index}
-                  className="px-4 py-2 cursor-pointer hover:bg-purple-600 hover:text-white"
+                  // className="px-4 py-2 cursor-pointer hover:bg-purple-600 hover:text-white"
+                  className="px-4 py-2 cursor-pointer hover:bg-gradient-to-r from-[#D029D8] to-[#519CDF] hover:text-white"
                   onClick={() => handleOptionChange(option)}
                 >
                   {option}

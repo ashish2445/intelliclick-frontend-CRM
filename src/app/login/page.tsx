@@ -16,6 +16,19 @@ export default function LoginPage() {
     }
     try {
     //   const loginRes = await loginInstance.verify(inputs);
+      const response = await axios.post("/api/login", inputs);
+      const { token, role } = response.data;
+
+      // Store token and role
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+
+      // Redirect user based on role (optional)
+      if (role === "admin") {
+        window.location.href = "/admin-dashboard";
+      } else {
+        window.location.href = "/dashboard";
+      }
     } catch (error) {
     }
   };

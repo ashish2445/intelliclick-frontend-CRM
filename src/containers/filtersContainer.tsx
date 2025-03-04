@@ -42,8 +42,13 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter}) => {
          + Create leads
        </button> */}
        <div className="p-4">
-      <button onClick={() => setModalOpen(true)} className="px-4 py-2 bg-green-500 text-white rounded">
-        Create
+     
+      <button
+        onClick={() => setModalOpen(true)}
+        className="w-[130px] h-[40px] rounded-full border-2 border-black bg-white text-black font-medium flex items-center justify-center shadow-md"
+      >
+        <span className="text-sm">
+        + Create leads</span>
       </button>
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <CreateForm />

@@ -145,17 +145,17 @@ const TableContainer: React.FC = () => {
 
   return (
     <div>
-      <div className="p-6 rounded-[22px] border border-red-600 w-full dark-invert">
+      <div className="p-6 rounded-[22px] border border-black w-full dark-invert">
         {/* Header */}
         <div className="flex justify-between items-center pb-2 mb-4">
           <div className="flex space-x-4">
-            <span className="border-b-2 border-blue-600 pb-1">Current View</span>
+            <span className="border-b-2 border-blue-600 text-blue-600 pb-1">Current View</span>
             <span>Previous View</span>
           </div>            
         </div>
         <div className="flex justify-between w-full">
           <span>All Leads</span>
-          <button className="bg-blue-700 px-4 py-2 rounded-md" onClick={()=>setCondition(prev=>!prev)}>+ Add a Condition</button>
+          <button className="bg-[#0D2167] text-white px-4 py-2 rounded-md" onClick={()=>setCondition(prev=>!prev)}>+ Add a Condition</button>
         </div>
 
         <div className="flex justify-between items-center gap-10 p-2">
@@ -196,20 +196,17 @@ const TableContainer: React.FC = () => {
         )}
       </div>
         <div className="flex flex-wrap gap-6 m-5 dark:invert">
-          <button className="flex items-center justify-center border border-blue-800 rounded-[25px] px-4 py-2 gap-2 font-semibold text-base mr-5">
-            <p>Today Leads</p>
-            <span className="bg-blue-800 px-2 py-1 rounded-full text-lg">
-              {/* {todayLeads} */}
-              {1}
-            </span>
-          </button>
-          <button className="flex items-center justify-center border border-gray-300 rounded-[25px] px-4 py-2 gap-2 font-semibold text-base">
-            <p>Yesterday Leads</p>
-            <span className="bg-gray-200 px-2 py-1 rounded-full text-lg">
-              {/* {yesterdayLeads} */}
-              {2}
-            </span>
-          </button>
+          <button className="relative w-[119px] h-[34px] rounded-full bg-white text-black font-medium">
+          {/* Gradient Border Effect */}
+          <div className="absolute inset-0 rounded-full p-[2px] bg-gradient-to-r from-[#FF2CF7] via-[#FB047BCB] via-[#FF7EBCCF] via-[#FFFFFF00] via-[#49FFE9A6] to-[#130EFF]">
+            <div className="flex h-full w-full items-center justify-center rounded-full bg-white">
+              Today Leads
+            </div>
+          </div>
+        </button>
+          <button className="w-[119px] h-[34px] rounded-full border-2 border-black bg-white text-black font-medium flex items-center justify-center shadow-md">
+          <span className="text-sm">Yesterday Leads</span>
+        </button>
         </div>
         <TableFilters setFilter={setFilterState} filterState={filterState} />
         <DynamicTable2 data={tableData} columns={columns} />

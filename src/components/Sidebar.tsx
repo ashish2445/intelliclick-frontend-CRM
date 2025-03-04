@@ -25,7 +25,7 @@ export interface SidebarProps {
 
 function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
   const [hovered, setHovered] = useState(false);
-  const [clickedItem, setClickedItem] = useState("home");
+  const [clickedItem, setClickedItem] = useState("/dashboard/home");
   const [mounted, setMounted] = useState(false);
   const { setTheme, resolvedTheme } = useTheme()
   const router = useRouter();

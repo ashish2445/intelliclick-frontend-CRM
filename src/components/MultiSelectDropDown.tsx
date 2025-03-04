@@ -240,7 +240,8 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({ options, selectedOptions
           {options.map((option) => (
             <li
               key={option.label}
-              className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center"
+              // className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center"
+              className="px-4 py-2 hover:bg-gradient-to-r from-[#D029D8] to-[#519CDF] cursor-pointer flex items-center hover:text-white"
               onClick={() => handleSelect(option.label)}
             >
               <input
