@@ -10,6 +10,7 @@ import DateFilter from "@/components/DateFilter";
 import { TIME_RANGE } from "@/utils/constants/timeRanges";
 import { FaPlus } from "react-icons/fa6";
 import Modal from "@/components/Modal";
+import CreateForm from "@/components/Form";
 
 interface TableFiltersProps {
   filterState:FilterState
@@ -45,7 +46,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter}) => {
         Create
       </button>
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-        <p>This is the modal content!</p>
+        <CreateForm />
       </Modal>
     </div>
       </div>

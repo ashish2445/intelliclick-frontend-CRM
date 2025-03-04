@@ -98,6 +98,7 @@ import { IOpenTaskData } from "@/interfaces";
 import { columns } from "@/utils/constants";
 import DynamicTable2 from "@/components/DynamicTable copy";
 import FilterComponent from "@/components/FilterCondition";
+import LeadDetails from "@/containers/newContainer";
 
 const allOptions = [
   { label: "Subject", color: "subject" },
@@ -226,24 +227,27 @@ const Page = () => {
   console.log("selcol",selectedColumns);
   console.log("newcol",newColumns);
 
+  // return (
+  //   <div className="p-4">
+  //     <h2 className="text-xl font-semibold mb-4">Dynamic Table with MultiSelect Dropdown</h2>
+
+  //     {/* MultiSelectDropdown to Select Columns */}
+  //     <MultiSelectDropdown
+  //       options={allOptions}
+  //       selectedOptions={selectedColumns}
+  //       onSelect={setSelectedColumns}
+  //     />
+
+  //     {/* Dynamic Table */}
+  //     <div className="mt-4">
+  //       <FilterComponent />
+  //       <DynamicTable2 data={initialData} columns={newColumns} />
+  //     </div>
+  //   </div>
+  // );
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-semibold mb-4">Dynamic Table with MultiSelect Dropdown</h2>
-
-      {/* MultiSelectDropdown to Select Columns */}
-      <MultiSelectDropdown
-        options={allOptions}
-        selectedOptions={selectedColumns}
-        onSelect={setSelectedColumns}
-      />
-
-      {/* Dynamic Table */}
-      <div className="mt-4">
-        <FilterComponent />
-        <DynamicTable2 data={initialData} columns={newColumns} />
-      </div>
-    </div>
-  );
+    <LeadDetails />
+  )
 };
 
 export default Page;

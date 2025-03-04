@@ -267,8 +267,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ label, onClose }) => 
         className="text-xs h-8 bg-white border border-gray-300 rounded w-auto"
       >
         <MenuItem value="is">Is</MenuItem>
-        <MenuItem value="before">Before</MenuItem>
-        <MenuItem value="after">After</MenuItem>
+        <MenuItem value="before">Is Not</MenuItem>
       </Select>
 
       {/* Date Filter Select */}

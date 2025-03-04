@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { leadServiceInstance } from "@/services";
+// import { leadServiceInstance } from "@/services";
 import { AxiosError } from "axios";
 import { handleError } from "@/utils/helpers";
 
@@ -39,7 +39,8 @@ const PhoneInputComponent = ({ onPhoneChange, setOtpSent, setCountry, refCode }:
   const handleSendOtp = async () => {
     try {
       const payload = { phone: "+" + phone };
-      const otpResponse = await leadServiceInstance.sendOtp(payload);
+      // const otpResponse = await leadServiceInstance.sendOtp(payload);
+      const otpResponse = '';
       if (otpResponse.message === "OTP saved successfully!") {
         setResendOtp(true);
       }
