@@ -338,11 +338,153 @@
 // export default DynamicTable3;
 
 
+// import { IOpenTaskData } from "@/interfaces";
+// import React, { useState, useCallback, useEffect, useRef } from "react";
+// import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+// import { PiDotsThreeOutlineVertical } from "react-icons/pi";
+// import { DndProvider } from "react-dnd";
+// import { HTML5Backend } from "react-dnd-html5-backend";
+
+// interface TableProps {
+//   data: IOpenTaskData[];
+//   columns: string[];
+// }
+
+// const fixedStartColumns = ["StudentName", "Class"];
+// const fixedEndColumn = "CreatedAt";
+
+// const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
+//   const [displayColumns, setDisplayColumns] = useState<string[]>(columns);
+//   const [columnOrder, setColumnOrder] = useState<string[]>(Array.from(new Set(data.flatMap((row) => Object.keys(row)))));
+//   const [dropdownOpen, setDropdownOpen] = useState(false);
+//   const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+//   useEffect(() => {
+//     setDisplayColumns(columns);
+//     // setColumnOrder(columns);
+//   }, [columns]);
+
+//   const handleCheckboxChange = (key: string) => {
+//     setDisplayColumns((prev) =>
+//       prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
+//     );
+//   };
+
+//   const moveColumn = useCallback((index: number, direction: "up" | "down") => {
+//     setColumnOrder((prevColumns) => {
+//       const newColumns = [...prevColumns];
+//       const targetIndex = direction === "up" ? index - 1 : index + 1;
+
+//       if (targetIndex < 0 || targetIndex >= newColumns.length) {
+//         return prevColumns;
+//       }
+
+//       [newColumns[index], newColumns[targetIndex]] = [
+//         newColumns[targetIndex],
+//         newColumns[index],
+//       ];
+//       return newColumns;
+//     });
+//   }, []);
+
+//   useEffect(() => {
+//     function handleClickOutside(event: MouseEvent) {
+//       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+//         setDropdownOpen(false);
+//       }
+//     }
+
+//     if (dropdownOpen) {
+//       document.addEventListener("mousedown", handleClickOutside);
+//     } else {
+//       document.removeEventListener("mousedown", handleClickOutside);
+//     }
+
+//     return () => document.removeEventListener("mousedown", handleClickOutside);
+//   }, [dropdownOpen]);
+
+//   return (
+//     <DndProvider backend={HTML5Backend}>
+//       <div className="relative overflow-x-auto w-full dark:invert border-l border-r border-t border-gray-300 rounded-t-lg">
+//         <div ref={dropdownRef} className="absolute top-2 right-2 cursor-pointer z-30">
+//           <button
+//             onClick={() => setDropdownOpen((prev) => !prev)}
+//             className="p-2 rounded-full hover:bg-gray-300"
+//           >
+//             <PiDotsThreeOutlineVertical size={20} className="text-gray-600 hover:text-gray-900" />
+//           </button>
+
+//           {dropdownOpen && (
+//             <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-40 p-2">
+//               <ul className="text-sm text-gray-700">
+//                 {columnOrder.map((key, index) => (
+//                   <li key={key} className="flex items-center justify-between p-2 hover:bg-gray-100 cursor-pointer">
+//                     <input
+//                       type="checkbox"
+//                       checked={displayColumns.includes(key)}
+//                       onChange={() => handleCheckboxChange(key)}
+//                     />
+//                     <span className="flex-grow ml-2">{key}</span>
+//                     <div className="flex flex-col">
+//                       {index > 0 && (
+//                         <button
+//                           onClick={() => moveColumn(index, "up")}
+//                           className="text-gray-600 hover:text-gray-900"
+//                         >
+//                           <FaArrowUp />
+//                         </button>
+//                       )}
+//                       {index < columnOrder.length - 1 && (
+//                         <button
+//                           onClick={() => moveColumn(index, "down")}
+//                           className="text-gray-600 hover:text-gray-900"
+//                         >
+//                           <FaArrowDown />
+//                         </button>
+//                       )}
+//                     </div>
+//                   </li>
+//                 ))}
+//               </ul>
+//             </div>
+//           )}
+//         </div>
+
+//         <table className="w-full border-collapse">
+//           <thead>
+//             <tr className="bg-gray-200 text-left text-sm font-semibold h-12">
+//               {columnOrder.map((col) => {
+//                 if (!displayColumns.includes(col)) return null;
+//                 return (
+//                   <th key={col} className="p-3 border-r border-gray-300 min-w-[150px]">
+//                     {col}
+//                   </th>
+//                 );
+//               })}
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {data.map((row, rowIndex) => (
+//               <tr key={rowIndex} className="border-b border-gray-200 text-sm">
+//                 {columnOrder.map((col) => {
+//                   if (!displayColumns.includes(col)) return null;
+//                   return <td key={col} className="p-3 border-r border-gray-300">{row[col] || "-"}</td>;
+//                 })}
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
+//     </DndProvider>
+//   );
+// };
+
+// export default DynamicTable3;
+
 import { IOpenTaskData } from "@/interfaces";
 import React, { useState, useCallback, useEffect, useRef } from "react";
-import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { PiDotsThreeOutlineVertical } from "react-icons/pi";
-import { DndProvider } from "react-dnd";
+import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 interface TableProps {
@@ -350,8 +492,47 @@ interface TableProps {
   columns: string[];
 }
 
-const fixedStartColumns = ["StudentName", "Class"];
-const fixedEndColumn = "CreatedAt";
+const ItemType = "COLUMN";
+
+interface DragItem {
+  index: number;
+  id: string;
+}
+
+const DraggableItem: React.FC<{
+  id: string;
+  index: number;
+  moveItem: (from: number, to: number) => void;
+  checked: boolean;
+  onCheck: () => void;
+}> = ({ id, index, moveItem, checked, onCheck }) => {
+  const ref = useRef<HTMLLIElement>(null);
+
+  const [, drag] = useDrag({
+    type: ItemType,
+    item: { id, index },
+  });
+
+  const [, drop] = useDrop({
+    accept: ItemType,
+    hover: (draggedItem: DragItem) => {
+      if (draggedItem.index !== index) {
+        moveItem(draggedItem.index, index);
+        draggedItem.index = index;
+      }
+    },
+  });
+
+  drag(drop(ref));
+
+  return (
+    <li ref={ref} className="flex items-center justify-between p-2 hover:bg-gray-100 cursor-pointer border-b">
+      <input type="checkbox" checked={checked} onChange={onCheck} />
+      <span className="flex-grow ml-2">{id}</span>
+      <span className="cursor-grab text-gray-500">&#x2630;</span>
+    </li>
+  );
+};
 
 const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
   const [displayColumns, setDisplayColumns] = useState<string[]>(columns);
@@ -361,31 +542,20 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
 
   useEffect(() => {
     setDisplayColumns(columns);
-    // setColumnOrder(columns);
   }, [columns]);
 
   const handleCheckboxChange = (key: string) => {
-    setDisplayColumns((prev) =>
-      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
-    );
+    setDisplayColumns((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
   };
 
-  const moveColumn = useCallback((index: number, direction: "up" | "down") => {
-    setColumnOrder((prevColumns) => {
-      const newColumns = [...prevColumns];
-      const targetIndex = direction === "up" ? index - 1 : index + 1;
-
-      if (targetIndex < 0 || targetIndex >= newColumns.length) {
-        return prevColumns;
-      }
-
-      [newColumns[index], newColumns[targetIndex]] = [
-        newColumns[targetIndex],
-        newColumns[index],
-      ];
-      return newColumns;
+  const moveItem = (from: number, to: number) => {
+    setColumnOrder((prev) => {
+      const updated = [...prev];
+      const [moved] = updated.splice(from, 1);
+      updated.splice(to, 0, moved);
+      return updated;
     });
-  }, []);
+  };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -407,10 +577,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
     <DndProvider backend={HTML5Backend}>
       <div className="relative overflow-x-auto w-full dark:invert border-l border-r border-t border-gray-300 rounded-t-lg">
         <div ref={dropdownRef} className="absolute top-2 right-2 cursor-pointer z-30">
-          <button
-            onClick={() => setDropdownOpen((prev) => !prev)}
-            className="p-2 rounded-full hover:bg-gray-300"
-          >
+          <button onClick={() => setDropdownOpen((prev) => !prev)} className="p-2 rounded-full hover:bg-gray-300">
             <PiDotsThreeOutlineVertical size={20} className="text-gray-600 hover:text-gray-900" />
           </button>
 
@@ -418,32 +585,14 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
             <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-40 p-2">
               <ul className="text-sm text-gray-700">
                 {columnOrder.map((key, index) => (
-                  <li key={key} className="flex items-center justify-between p-2 hover:bg-gray-100 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={displayColumns.includes(key)}
-                      onChange={() => handleCheckboxChange(key)}
-                    />
-                    <span className="flex-grow ml-2">{key}</span>
-                    <div className="flex flex-col">
-                      {index > 0 && (
-                        <button
-                          onClick={() => moveColumn(index, "up")}
-                          className="text-gray-600 hover:text-gray-900"
-                        >
-                          <FaArrowUp />
-                        </button>
-                      )}
-                      {index < columnOrder.length - 1 && (
-                        <button
-                          onClick={() => moveColumn(index, "down")}
-                          className="text-gray-600 hover:text-gray-900"
-                        >
-                          <FaArrowDown />
-                        </button>
-                      )}
-                    </div>
-                  </li>
+                  <DraggableItem
+                    key={key}
+                    id={key}
+                    index={index}
+                    moveItem={moveItem}
+                    checked={displayColumns.includes(key)}
+                    onCheck={() => handleCheckboxChange(key)}
+                  />
                 ))}
               </ul>
             </div>
@@ -480,6 +629,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
 };
 
 export default DynamicTable3;
+
 
 
 

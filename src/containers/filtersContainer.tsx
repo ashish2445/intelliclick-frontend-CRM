@@ -45,7 +45,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter}) => {
 >
          + Create leads
        </button> */}
-       <div className="p-4">
+       <div className="py-4">
      
       <button
         onClick={() => setModalOpen(true)}
