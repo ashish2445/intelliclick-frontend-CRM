@@ -198,8 +198,8 @@ const TableContainer: React.FC = () => {
           </div>
         )}
       </div>
-        <div className="flex flex-wrap gap-6 m-5 dark:invert">
-          <button className="relative w-[119px] h-[34px] rounded-full bg-white text-black font-medium">
+        <div className="flex flex-wrap gap-6 m-5 ml-0 mb-0 dark:invert">
+          <button className="relative w-[119px] h-[44px] rounded-full bg-white text-black font-medium">
           {/* Gradient Border Effect */}
           <div className="absolute inset-0 rounded-full p-[2px] bg-gradient-to-r from-[#FF2CF7] via-[#FB047BCB] via-[#FF7EBCCF] via-[#FFFFFF00] via-[#49FFE9A6] to-[#130EFF]">
             <div className="flex h-full w-full items-center justify-center rounded-full bg-white">
@@ -207,7 +207,7 @@ const TableContainer: React.FC = () => {
             </div>
           </div>
         </button>
-          <button className="w-[119px] h-[34px] rounded-full border-2 border-black bg-white text-black font-medium flex items-center justify-center shadow-md">
+          <button className="w-[130px] h-[44px] rounded-full border-2 border-black bg-white text-black font-medium flex items-center justify-center shadow-md">
           <span className="text-sm">Yesterday Leads</span>
         </button>
         </div>

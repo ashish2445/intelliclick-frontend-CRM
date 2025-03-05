@@ -24,15 +24,16 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter}) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <div className="flex items-center justify-between p-4 dark:invert shadow-md rounded-md">
+    <div className="flex items-center justify-between px-2 dark:invert">
       <h2 className="text-lg font-semibold">
         Leads <span className="text-gray-500">(All)</span>
       </h2>
       <div className="flex items-center space-x-3">        
         <SearchBox placeholder="Type and Press Enter" setFilter={setFilter} iconSize={28} placeholder='type and Enter'
-  iconColor="#0D2167"
-  height="10px"
-  width="400px"/>        
+          iconColor="#0D2167"
+          height="10px"
+          width="400px"
+        />        
         <DateFilter options={[...TIME_RANGE]} setFilterState={setFilter} />      
         <MultiSelectDropdown options={[...DATA_STATUS]} selectedOptions={filterState.status} onSelect={(values: string[]) => {
           setFilter(prev => ({

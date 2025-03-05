@@ -405,7 +405,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="relative overflow-x-auto w-full dark:invert border border-gray-300 rounded-lg">
+      <div className="relative overflow-x-auto w-full dark:invert border-l border-r border-t border-gray-300 rounded-t-lg">
         <div ref={dropdownRef} className="absolute top-2 right-2 cursor-pointer z-30">
           <button
             onClick={() => setDropdownOpen((prev) => !prev)}
