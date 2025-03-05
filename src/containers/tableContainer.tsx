@@ -162,7 +162,7 @@ const TableContainer: React.FC = () => {
         </div>
 
         <div className="flex justify-between items-center gap-10 p-2">
-          <SearchBox />
+          <SearchBox iconSize={32} placeholder='Search' iconColor="#0D2167" />
           <div className="flex items-center gap-3">
             <MdKeyboardArrowLeft size={24} color="#0D2167" />
               {1}

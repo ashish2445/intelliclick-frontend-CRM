@@ -9,6 +9,10 @@ interface SearchBoxProps<T> {
   // onFilter: (filteredData: T[]) => void;
   placeholder?: string;
   setFilter: (newState: (prev: FilterState) => FilterState) => void;
+  iconSize?: number;
+  iconColor?: string;
+  height?: string | number;
+  width?: string | number;
 }
 
 const SearchBox = <T,>({
@@ -16,7 +20,11 @@ const SearchBox = <T,>({
   // filterFunction,
   // onFilter,
   setFilter,
-  placeholder = "Search...",
+  placeholder,
+  iconSize,
+  iconColor,
+  height,
+  width,
 }: SearchBoxProps<T>) => {
   const [query, setQuery] = useState("");
 
@@ -34,12 +42,12 @@ const SearchBox = <T,>({
   return (
     // <div className="flex items-center justify-center border-l border-r border-b border-gray-300 rounded-lg text-gray-500 h-16 width-[800px] text-base font-normal gap-2 text-center px-2">
     // <div className="flex items-center justify-center border-l border-r border-b border-[#C6CCE0] rounded-lg text-[#C6CCE0] h-10 w-full text-base font-normal gap-2 text-center p-4">  
-    <div className="flex flex-wrap  sm:flex-nowrap items-center w-full mr-4 h-auto min-h-[43.37px] gap-[5.42px] p-[10.84px] rounded-[5.42px] border-[0.68px] border-[#C6CCE0]">
-      <IoIosSearch size={32} color="#0D2167" />
+    <div className={`flex flex-wrap  sm:flex-nowrap items-center w-full mr-4 gap-[5.42px] p-[7px] rounded-[5.42px] border-[0.68px] border-[#C6CCE0]`}>
+      <IoIosSearch size={iconSize} color={iconColor} />
       <input
         type="text"
         name="search-leads"
-        placeholder="Search"
+        placeholder={placeholder}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={handleKeyDown}

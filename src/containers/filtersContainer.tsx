@@ -29,7 +29,10 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter}) => {
         Leads <span className="text-gray-500">(All)</span>
       </h2>
       <div className="flex items-center space-x-3">        
-        <SearchBox placeholder="Type and Press Enter" setFilter={setFilter}/>        
+        <SearchBox placeholder="Type and Press Enter" setFilter={setFilter} iconSize={28} placeholder='type and Enter'
+  iconColor="#0D2167"
+  height="10px"
+  width="400px"/>        
         <DateFilter options={[...TIME_RANGE]} setFilterState={setFilter} />      
         <MultiSelectDropdown options={[...DATA_STATUS]} selectedOptions={filterState.status} onSelect={(values: string[]) => {
           setFilter(prev => ({
