@@ -1,1 +1,1 @@
-export const columns = ["StudentName", "Class", "Status", "CreatedBy", "CreatedAt"];
+export const columns = ["StudentName", "Class", "Status", "CreatedAt"];

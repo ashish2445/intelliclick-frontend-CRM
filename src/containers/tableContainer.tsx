@@ -1,4 +1,5 @@
 'use client';
+import DynamicTable3 from "@/components/DragDropTable";
 import DynamicTable from "@/components/DynamicTable";
 import DynamicTable2 from "@/components/DynamicTable copy";
 import FilterComponent from "@/components/FilterCondition";
@@ -16,6 +17,8 @@ import React, { useEffect, useState } from "react";
 import { FaSearch, FaCog } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const initialData: IOpenTaskData[] = [
   {
@@ -209,7 +212,8 @@ const TableContainer: React.FC = () => {
         </button>
         </div>
         <TableFilters setFilter={setFilterState} filterState={filterState} />
-        <DynamicTable2 data={tableData} columns={columns} />
+        <DndProvider backend={HTML5Backend}>
+        <DynamicTable3 data={tableData} columns={columns} /></DndProvider>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
