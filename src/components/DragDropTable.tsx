@@ -355,13 +355,13 @@ const fixedEndColumn = "CreatedAt";
 
 const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
   const [displayColumns, setDisplayColumns] = useState<string[]>(columns);
-  const [columnOrder, setColumnOrder] = useState<string[]>(columns);
+  const [columnOrder, setColumnOrder] = useState<string[]>(Array.from(new Set(data.flatMap((row) => Object.keys(row)))));
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setDisplayColumns(columns);
-    setColumnOrder(columns);
+    // setColumnOrder(columns);
   }, [columns]);
 
   const handleCheckboxChange = (key: string) => {
