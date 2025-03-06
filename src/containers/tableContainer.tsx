@@ -482,7 +482,7 @@ const TableContainer: React.FC = () => {
           </div>            
         </div> */}
         <div className="flex justify-between w-full">
-          <span>All Leads</span>
+          <span className="text-[17px] font-[700] text-[#0D2167]">All Leads</span>
           <button className="bg-[#0D2167] text-white px-4 py-2 rounded-md" onClick={()=>setCondition(prev=>!prev)}>+ Add a Condition</button>
         </div>
 

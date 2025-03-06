@@ -799,15 +799,15 @@ const columnStyles: Record<string, string> = {
 };
 
 const statusStyles: Record<string, string> = {
-  prospects: "bg-[#D6BCFA] text-[#6B21A8]", // Light purple background with dark purple text
-  qualified: "bg-[#D1FAE5] text-[#065F46]", // Light green background with dark green text
-  disqualified: "bg-[#FEE2E2] text-[#B91C1C]", // Light red background with dark red text
+  prospects: "bg-[#D6BCFA] text-[#6B21A8]",
+  qualified: "bg-[#D1FAE5] text-[#065F46]",
+  disqualified: "bg-[#FEE2E2] text-[#B91C1C]",
 };
 
 
 const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
   const [displayColumns, setDisplayColumns] = useState<string[]>([]);
-  const [columnOrder, setColumnOrder] = useState<string[]>();
+  const [columnOrder, setColumnOrder] = useState<string[]>([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [checkedRows, setCheckedRows] = useState<boolean[]>(Array(data?.length).fill(false));
   const [headerChecked, setHeaderChecked] = useState(false);
@@ -909,7 +909,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
               {columnOrder?.map((col, colIndex) => {
                 if (!displayColumns.includes(col)) return null;
                 return (
-                  <th key={col} className="p-3 border-r border-gray-300 min-w-[150px]">
+                  <th key={col} className="p-3 border-r text-[12px] font-[400] border-gray-300 min-w-[150px]">
                     {colIndex === 0 ? (
                       <div className="flex items-center">
                         <input
@@ -918,10 +918,10 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                           checked={headerChecked}
                           onChange={handleHeaderCheckboxChange}
                         />
-                        {col}
+                          {col.charAt(0).toUpperCase() + col.slice(1)}
                       </div>
                     ) : (
-                      col
+                      col.charAt(0).toUpperCase() + col.slice(1)
                     )}
                   </th>
                 );
@@ -936,7 +936,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                   return (
                     <td key={col} className={`p-3 border-r border-gray-300`}>
                       {colIndex === 0 ? (
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center text-[12px] font-[400] gap-2">
                           <input
                             type="checkbox"
                             className="mr-2"
@@ -951,7 +951,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                           </div>
                         </div>
                       ):col.toLowerCase() === "phonenumber" ? (
-                        <span className="flex gap-3">
+                        <span className="flex gap-3 text-[12px] font-[400] ">
                           {row[col] || "-"} <span><BsFillTelephoneOutboundFill color='#4287f5' />
                         </span>
                             </span>
@@ -961,7 +961,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                         //   {row[col] || "-"}
                         // </span>
                         <span
-                          className={`p-2 rounded-[8px] ${
+                          className={`p-2 rounded-[8px] text-[12px] font-[400]  ${
                             col.toLowerCase() === "status" ? statusStyles[row[col]?.toLowerCase()] || "" : columnStyles[col.toLowerCase()] || ""
                           }`}
                         >

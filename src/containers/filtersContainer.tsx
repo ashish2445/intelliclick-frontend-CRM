@@ -25,7 +25,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter}) => {
 
   return (
     <div className="flex items-center justify-between px-2 dark:invert">
-      <h2 className="text-lg font-semibold">
+      <h2 className="font-semibold text-[20px] font-[300]">
         Leads <span className="text-gray-500">(All)</span>
       </h2>
       <div className="flex items-center space-x-3">        
