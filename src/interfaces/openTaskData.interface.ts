@@ -2,7 +2,7 @@ export interface IOpenTaskData {
     StudentName: string;
     Class: string;
     PhoneNumber: string;
-    Status: "Active" | "Inactive";
+    Status: string;
     CreatedBy: string;
     CreatedAt: string;
   }

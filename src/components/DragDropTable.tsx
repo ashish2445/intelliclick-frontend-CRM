@@ -481,6 +481,155 @@
 
 // export default DynamicTable3;
 
+// import { IOpenTaskData } from "@/interfaces";
+// import React, { useState, useCallback, useEffect, useRef } from "react";
+// import { PiDotsThreeOutlineVertical } from "react-icons/pi";
+// import { DndProvider, useDrag, useDrop } from "react-dnd";
+// import { HTML5Backend } from "react-dnd-html5-backend";
+
+// interface TableProps {
+//   data: IOpenTaskData[];
+//   columns: string[];
+// }
+
+// const ItemType = "COLUMN";
+
+// interface DragItem {
+//   index: number;
+//   id: string;
+// }
+
+// const DraggableItem: React.FC<{
+//   id: string;
+//   index: number;
+//   moveItem: (from: number, to: number) => void;
+//   checked: boolean;
+//   onCheck: () => void;
+// }> = ({ id, index, moveItem, checked, onCheck }) => {
+//   const ref = useRef<HTMLLIElement>(null);
+
+//   const [, drag] = useDrag({
+//     type: ItemType,
+//     item: { id, index },
+//   });
+
+//   const [, drop] = useDrop({
+//     accept: ItemType,
+//     hover: (draggedItem: DragItem) => {
+//       if (draggedItem.index !== index) {
+//         moveItem(draggedItem.index, index);
+//         draggedItem.index = index;
+//       }
+//     },
+//   });
+
+//   drag(drop(ref));
+
+//   return (
+//     <li ref={ref} className="flex items-center justify-between p-2 hover:bg-gray-100 cursor-pointer border-b">
+//       <input type="checkbox" checked={checked} onChange={onCheck} />
+//       <span className="flex-grow ml-2">{id}</span>
+//       <span className="cursor-grab text-gray-500">&#x2630;</span>
+//     </li>
+//   );
+// };
+
+// const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
+//   const [displayColumns, setDisplayColumns] = useState<string[]>(columns);
+//   const [columnOrder, setColumnOrder] = useState<string[]>(Array.from(new Set(data.flatMap((row) => Object.keys(row)))));
+//   const [dropdownOpen, setDropdownOpen] = useState(false);
+//   const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+//   useEffect(() => {
+//     setDisplayColumns(columns);
+//   }, [columns]);
+
+//   const handleCheckboxChange = (key: string) => {
+//     setDisplayColumns((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
+//   };
+
+//   const moveItem = (from: number, to: number) => {
+//     setColumnOrder((prev) => {
+//       const updated = [...prev];
+//       const [moved] = updated.splice(from, 1);
+//       updated.splice(to, 0, moved);
+//       return updated;
+//     });
+//   };
+
+//   useEffect(() => {
+//     function handleClickOutside(event: MouseEvent) {
+//       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+//         setDropdownOpen(false);
+//       }
+//     }
+
+//     if (dropdownOpen) {
+//       document.addEventListener("mousedown", handleClickOutside);
+//     } else {
+//       document.removeEventListener("mousedown", handleClickOutside);
+//     }
+
+//     return () => document.removeEventListener("mousedown", handleClickOutside);
+//   }, [dropdownOpen]);
+
+//   return (
+//     <DndProvider backend={HTML5Backend}>
+//       <div className="relative overflow-x-auto w-full dark:invert border-l border-r border-t border-gray-300 rounded-t-lg">
+//         <div ref={dropdownRef} className="absolute top-2 right-2 cursor-pointer z-30">
+//           <button onClick={() => setDropdownOpen((prev) => !prev)} className="p-2 rounded-full hover:bg-gray-300">
+//             <PiDotsThreeOutlineVertical size={20} className="text-gray-600 hover:text-gray-900" />
+//           </button>
+
+//           {dropdownOpen && (
+//             <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-40 p-2">
+//               <ul className="text-sm text-gray-700">
+//                 {columnOrder.map((key, index) => (
+//                   <DraggableItem
+//                     key={key}
+//                     id={key}
+//                     index={index}
+//                     moveItem={moveItem}
+//                     checked={displayColumns.includes(key)}
+//                     onCheck={() => handleCheckboxChange(key)}
+//                   />
+//                 ))}
+//               </ul>
+//             </div>
+//           )}
+//         </div>
+
+//         <table className="w-full border-collapse">
+//           <thead>
+//             <tr className="bg-gray-200 text-left text-sm font-semibold h-12">
+//               {columnOrder.map((col) => {
+//                 if (!displayColumns.includes(col)) return null;
+//                 return (
+//                   <th key={col} className="p-3 border-r border-gray-300 min-w-[150px]">
+//                     {col}
+//                   </th>
+//                 );
+//               })}
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {data.map((row, rowIndex) => (
+//               <tr key={rowIndex} className="border-b border-gray-200 text-sm">
+//                 {columnOrder.map((col) => {
+//                   if (!displayColumns.includes(col)) return null;
+//                   return <td key={col} className="p-3 border-r border-gray-300">{row[col] || "-"}</td>;
+//                 })}
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
+//     </DndProvider>
+//   );
+// };
+
+// export default DynamicTable3;
+
 import { IOpenTaskData } from "@/interfaces";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { PiDotsThreeOutlineVertical } from "react-icons/pi";
@@ -534,10 +683,134 @@ const DraggableItem: React.FC<{
   );
 };
 
+// const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
+//   const [displayColumns, setDisplayColumns] = useState<string[]>(columns);
+//   const [columnOrder, setColumnOrder] = useState<string[]>(Array.from(new Set(data.flatMap((row) => Object.keys(row)))));
+//   const [dropdownOpen, setDropdownOpen] = useState(false);
+//   const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+//   useEffect(() => {
+//     setDisplayColumns(columns);
+//   }, [columns]);
+
+//   const handleCheckboxChange = (key: string) => {
+//     setDisplayColumns((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
+//   };
+
+//   const moveItem = (from: number, to: number) => {
+//     setColumnOrder((prev) => {
+//       const updated = [...prev];
+//       const [moved] = updated.splice(from, 1);
+//       updated.splice(to, 0, moved);
+//       return updated;
+//     });
+//   };
+
+//   useEffect(() => {
+//     function handleClickOutside(event: MouseEvent) {
+//       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+//         setDropdownOpen(false);
+//       }
+//     }
+
+//     if (dropdownOpen) {
+//       document.addEventListener("mousedown", handleClickOutside);
+//     } else {
+//       document.removeEventListener("mousedown", handleClickOutside);
+//     }
+
+//     return () => document.removeEventListener("mousedown", handleClickOutside);
+//   }, [dropdownOpen]);
+
+//   return (
+//     <DndProvider backend={HTML5Backend}>
+//       <div className="relative overflow-x-auto w-full dark:invert border-l border-r border-t border-gray-300 rounded-t-lg">
+//         <div ref={dropdownRef} className="absolute top-2 right-2 cursor-pointer z-30">
+//           <button onClick={() => setDropdownOpen((prev) => !prev)} className="p-2 rounded-full hover:bg-gray-300">
+//             <PiDotsThreeOutlineVertical size={20} className="text-gray-600 hover:text-gray-900" />
+//           </button>
+
+//           {dropdownOpen && (
+//             <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-40 p-2">
+//               <ul className="text-sm text-gray-700">
+//                 {columnOrder.map((key, index) => (
+//                   <DraggableItem
+//                     key={key}
+//                     id={key}
+//                     index={index}
+//                     moveItem={moveItem}
+//                     checked={displayColumns.includes(key)}
+//                     onCheck={() => handleCheckboxChange(key)}
+//                   />
+//                 ))}
+//               </ul>
+//             </div>
+//           )}
+//         </div>
+
+//         <table className="w-full border-collapse">
+//           <thead>
+//             <tr className="bg-gray-200 text-left text-sm font-semibold h-12">
+//               {columnOrder.map((col) => {
+//                 if (!displayColumns.includes(col)) return null;
+//                 return (
+//                   <th key={col} className="p-3 border-r border-gray-300 min-w-[150px]">
+//                     {col}
+//                   </th>
+//                 );
+//               })}
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {data.map((row, rowIndex) => (
+//               <tr key={rowIndex} className="border-b border-gray-200 text-sm">
+//                 {columnOrder.map((col, colIndex) => {
+//                   if (!displayColumns.includes(col)) return null;
+//                   return (
+//                     <td key={col} className="p-3 border-r border-gray-300">
+//                       {colIndex === 0 ? (
+//                         <div className="flex items-center">
+//                           <input type="checkbox" className="mr-2" />
+//                           {row[col] || "-"}
+//                           <span className="ml-1">⭐</span>
+//                         </div>
+//                       ) : (
+//                         row[col] || "-"
+//                       )}
+//                     </td>
+//                   );
+//                 })}
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
+//     </DndProvider>
+//   );
+// };
+
+// export default DynamicTable3;
+
+const columnStyles: Record<string, string> = {
+  class: "bg-[#FEF2F2] text-[#B91C1C]", // Light red background with dark red text
+  phoneNumber: "bg-[#EFF6FF] text-[#1D4ED8]", // Light blue background with dark blue text
+  createdAt: "bg-[#ECFDF5] text-[#047857]", // Light green background with dark green text
+  Board:"bg-[#FBE8FF] text-[#8E198F]"
+};
+
+const statusStyles: Record<string, string> = {
+  prospects: "bg-[#D6BCFA] text-[#6B21A8]", // Light purple background with dark purple text
+  qualified: "bg-[#D1FAE5] text-[#065F46]", // Light green background with dark green text
+  disqualified: "bg-[#FEE2E2] text-[#B91C1C]", // Light red background with dark red text
+};
+
+
 const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
   const [displayColumns, setDisplayColumns] = useState<string[]>(columns);
   const [columnOrder, setColumnOrder] = useState<string[]>(Array.from(new Set(data.flatMap((row) => Object.keys(row)))));
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [checkedRows, setCheckedRows] = useState<boolean[]>(Array(data.length).fill(false));
+  const [headerChecked, setHeaderChecked] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -573,6 +846,19 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownOpen]);
 
+  const handleHeaderCheckboxChange = () => {
+    const newChecked = !headerChecked;
+    setHeaderChecked(newChecked);
+    setCheckedRows(Array(data.length).fill(newChecked));
+  };
+
+  const handleRowCheckboxChange = (index: number) => {
+    const updatedCheckedRows = [...checkedRows];
+    updatedCheckedRows[index] = !updatedCheckedRows[index];
+    setCheckedRows(updatedCheckedRows);
+    setHeaderChecked(updatedCheckedRows.every(Boolean));
+  };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="relative overflow-x-auto w-full dark:invert border-l border-r border-t border-gray-300 rounded-t-lg">
@@ -602,11 +888,23 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-gray-200 text-left text-sm font-semibold h-12">
-              {columnOrder.map((col) => {
+              {columnOrder.map((col, colIndex) => {
                 if (!displayColumns.includes(col)) return null;
                 return (
                   <th key={col} className="p-3 border-r border-gray-300 min-w-[150px]">
-                    {col}
+                    {colIndex === 0 ? (
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          className="mr-2"
+                          checked={headerChecked}
+                          onChange={handleHeaderCheckboxChange}
+                        />
+                        {col}
+                      </div>
+                    ) : (
+                      col
+                    )}
                   </th>
                 );
               })}
@@ -615,9 +913,36 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
           <tbody>
             {data.map((row, rowIndex) => (
               <tr key={rowIndex} className="border-b border-gray-200 text-sm">
-                {columnOrder.map((col) => {
+                {columnOrder.map((col, colIndex) => {
                   if (!displayColumns.includes(col)) return null;
-                  return <td key={col} className="p-3 border-r border-gray-300">{row[col] || "-"}</td>;
+                  return (
+                    <td key={col} className={`p-3 border-r border-gray-300`}>
+                      {colIndex === 0 ? (
+                        <div className="flex items-center">
+                          <input
+                            type="checkbox"
+                            className="mr-2"
+                            checked={checkedRows[rowIndex]}
+                            onChange={() => handleRowCheckboxChange(rowIndex)}
+                          />
+                          {/* <span className="mr-1">⭐</span> */}
+                          {row[col] || "-"}
+                          <span className="ml-1">⭐</span>
+                        </div>
+                      ): (
+                        // <span className={`${columnStyles[col.toLowerCase()] || ""} p-2 rounded-[8px]`}>
+                        //   {row[col] || "-"}
+                        // </span>
+                        <span
+                          className={`p-2 rounded-[8px] ${
+                            col.toLowerCase() === "status" ? statusStyles[row[col]?.toLowerCase()] || "" : columnStyles[col.toLowerCase()] || ""
+                          }`}
+                        >
+                          {row[col] || "-"}
+                        </span>
+                      )}
+                    </td>
+                  );
                 })}
               </tr>
             ))}
@@ -629,6 +954,8 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
 };
 
 export default DynamicTable3;
+
+
 
 
 
