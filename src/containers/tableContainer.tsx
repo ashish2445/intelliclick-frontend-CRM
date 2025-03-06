@@ -1,7 +1,5 @@
 'use client';
 import DynamicTable3 from "@/components/DragDropTable";
-import DynamicTable from "@/components/DynamicTable";
-import DynamicTable2 from "@/components/DynamicTable copy";
 import FilterComponent from "@/components/FilterCondition";
 import Pagination from "@/components/Pagination";
 import SearchBox from "@/components/SearchBox";
@@ -444,14 +442,16 @@ const TableContainer: React.FC = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [addCondition,setCondition] = useState<boolean>(false);
   const [filters, setFilters] = useState<string[]>([]);
+  const [totalRows, setTotalRows] = useState<number>(0);
 
-  // const totalPages = (totalLeads/rowsPerPage);
-  const totalPages = 10;
+  const totalPages = (totalRows/rowsPerPage);
+  // const totalPages = 10;
 
   const fetchTableData = async () => {
     try {
       // const data = await ManagerInstance.getTableData();
-      const data = responseObject.leads.map(each => each.fields)
+      const data = responseObject.leads.map(each => each.fields);
+      setTotalRows(responseObject?.total);
       setTableData(data);
     } catch (error) {
       handleError(error as AxiosError,true);
@@ -475,12 +475,12 @@ const TableContainer: React.FC = () => {
     <div>
       <div className="p-6 rounded-[22px] border border-black w-full dark-invert">
         {/* Header */}
-        <div className="flex justify-between items-center pb-2 mb-4">
+        {/* <div className="flex justify-between items-center pb-2 mb-4">
           <div className="flex space-x-4">
             <span className="border-b-2 border-blue-600 text-blue-600 pb-1">Current View</span>
             <span>Previous View</span>
           </div>            
-        </div>
+        </div> */}
         <div className="flex justify-between w-full">
           <span>All Leads</span>
           <button className="bg-[#0D2167] text-white px-4 py-2 rounded-md" onClick={()=>setCondition(prev=>!prev)}>+ Add a Condition</button>

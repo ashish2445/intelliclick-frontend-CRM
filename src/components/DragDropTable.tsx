@@ -635,6 +635,8 @@ import React, { useState, useCallback, useEffect, useRef } from "react";
 import { PiDotsThreeOutlineVertical } from "react-icons/pi";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { BsFillTelephoneOutboundFill } from "react-icons/bs";
+import { FaRegStar, FaStar } from "react-icons/fa6";
 
 interface TableProps {
   data: ITableFields[];
@@ -810,6 +812,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
   const [checkedRows, setCheckedRows] = useState<boolean[]>(Array(data?.length).fill(false));
   const [headerChecked, setHeaderChecked] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const [favoriteRows, setFavoriteRows] = useState<Record<number, boolean>>({});
 
   console.log("dis col",displayColumns,columnOrder);
 
@@ -823,6 +826,13 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
       setColumnOrder(tableCols);
     }
   }, [data]);
+
+  const handleFavoriteToggle = (rowIndex: number) => {
+    setFavoriteRows((prev) => ({
+      ...prev,
+      [rowIndex]: !prev[rowIndex], // Toggle only for the clicked row
+    }));
+  };
 
 
   const handleCheckboxChange = (key: string) => {
@@ -926,7 +936,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                   return (
                     <td key={col} className={`p-3 border-r border-gray-300`}>
                       {colIndex === 0 ? (
-                        <div className="flex items-center">
+                        <div className="flex items-center gap-2">
                           <input
                             type="checkbox"
                             className="mr-2"
@@ -935,9 +945,18 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                           />
                           {/* <span className="mr-1">⭐</span> */}
                           {row[col] || "-"}
-                          <span className="ml-1">⭐</span>
+                          {/* <span className="ml-1"><FaRegStar /></span> */}
+                          <div onClick={() => handleFavoriteToggle(rowIndex)} style={{ cursor: "pointer" }}>
+                            {favoriteRows[rowIndex] ? <FaStar color="#fcba03" /> : <FaRegStar color="black" />}
+                          </div>
                         </div>
-                      ): (
+                      ):col.toLowerCase() === "phonenumber" ? (
+                        <span className="flex gap-3">
+                          {row[col] || "-"} <span><BsFillTelephoneOutboundFill color='#4287f5' />
+                        </span>
+                            </span>
+                          ) :
+                       (
                         // <span className={`${columnStyles[col.toLowerCase()] || ""} p-2 rounded-[8px]`}>
                         //   {row[col] || "-"}
                         // </span>
