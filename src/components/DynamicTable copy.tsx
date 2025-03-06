@@ -684,9 +684,6 @@ const DynamicTable2: React.FC<TableProps> = ({ data, columns }) => {
 
   const allKeys = Array.from(new Set(data.flatMap((row) => Object.keys(row)))); // Get all keys from data
 
-  console.log("dispcols",displayColumns);
-
-
   const moveColumn = useCallback((index: number, direction: "left" | "right") => {
     setColumnOrder((prevColumns) => {
       const newColumns = [...prevColumns];

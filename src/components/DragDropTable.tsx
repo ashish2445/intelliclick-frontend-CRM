@@ -630,14 +630,14 @@
 
 // export default DynamicTable3;
 
-import { IOpenTaskData } from "@/interfaces";
+import { ITableFields } from "@/interfaces";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { PiDotsThreeOutlineVertical } from "react-icons/pi";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 interface TableProps {
-  data: IOpenTaskData[];
+  data: ITableFields[];
   columns: string[];
 }
 
@@ -793,9 +793,7 @@ const DraggableItem: React.FC<{
 
 const columnStyles: Record<string, string> = {
   class: "bg-[#FEF2F2] text-[#B91C1C]", // Light red background with dark red text
-  phoneNumber: "bg-[#EFF6FF] text-[#1D4ED8]", // Light blue background with dark blue text
-  createdAt: "bg-[#ECFDF5] text-[#047857]", // Light green background with dark green text
-  Board:"bg-[#FBE8FF] text-[#8E198F]"
+  board:"bg-[#FBE8FF] text-[#8E198F]"
 };
 
 const statusStyles: Record<string, string> = {
@@ -806,16 +804,26 @@ const statusStyles: Record<string, string> = {
 
 
 const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
-  const [displayColumns, setDisplayColumns] = useState<string[]>(columns);
-  const [columnOrder, setColumnOrder] = useState<string[]>(Array.from(new Set(data.flatMap((row) => Object.keys(row)))));
+  const [displayColumns, setDisplayColumns] = useState<string[]>([]);
+  const [columnOrder, setColumnOrder] = useState<string[]>();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [checkedRows, setCheckedRows] = useState<boolean[]>(Array(data.length).fill(false));
+  const [checkedRows, setCheckedRows] = useState<boolean[]>(Array(data?.length).fill(false));
   const [headerChecked, setHeaderChecked] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  console.log("dis col",displayColumns,columnOrder);
 
   useEffect(() => {
     setDisplayColumns(columns);
   }, [columns]);
+
+  useEffect(() => {
+    if (data?.length) {
+      const tableCols = Array.from(new Set(data.flatMap((row) => Object.keys(row))));
+      setColumnOrder(tableCols);
+    }
+  }, [data]);
+
 
   const handleCheckboxChange = (key: string) => {
     setDisplayColumns((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
@@ -870,7 +878,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-40 p-2">
               <ul className="text-sm text-gray-700">
-                {columnOrder.map((key, index) => (
+                {columnOrder?.map((key, index) => (
                   <DraggableItem
                     key={key}
                     id={key}
@@ -888,7 +896,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-gray-200 text-left text-sm font-semibold h-12">
-              {columnOrder.map((col, colIndex) => {
+              {columnOrder?.map((col, colIndex) => {
                 if (!displayColumns.includes(col)) return null;
                 return (
                   <th key={col} className="p-3 border-r border-gray-300 min-w-[150px]">
@@ -911,9 +919,9 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
             </tr>
           </thead>
           <tbody>
-            {data.map((row, rowIndex) => (
+            {data?.map((row, rowIndex) => (
               <tr key={rowIndex} className="border-b border-gray-200 text-sm">
-                {columnOrder.map((col, colIndex) => {
+                {columnOrder?.map((col, colIndex) => {
                   if (!displayColumns.includes(col)) return null;
                   return (
                     <td key={col} className={`p-3 border-r border-gray-300`}>

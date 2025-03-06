@@ -1,1 +1,11 @@
-export const columns = ["StudentName", "Class", "Status", "CreatedAt"];
+export const columns = [
+  "class",
+  "board",
+  "status",
+  "phoneNumber",
+  "email",
+  "fatherOccupation",
+  "schoolName",
+  "state",
+  "interactWith"
+]

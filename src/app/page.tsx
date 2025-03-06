@@ -224,9 +224,6 @@ const Page = () => {
     ];
   }
 
-  console.log("selcol",selectedColumns);
-  console.log("newcol",newColumns);
-
   // return (
   //   <div className="p-4">
   //     <h2 className="text-xl font-semibold mb-4">Dynamic Table with MultiSelect Dropdown</h2>

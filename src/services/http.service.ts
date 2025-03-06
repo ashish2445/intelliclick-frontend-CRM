@@ -6,6 +6,7 @@ export const callApi = async (url: string, method: API, data?: object | null, sh
   // Axios.defaults.headers.common.Authorization = getToken();
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const uri = `${baseUrl}/${url}`;
+  console.log("uri",uri);
   const DEFAULT_HEADER = {
     headers: {
       'Content-Type': 'application/json',
