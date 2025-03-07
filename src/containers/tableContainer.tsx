@@ -495,8 +495,12 @@ const TableContainer: React.FC = () => {
     setCondition(prev=>!prev);
   }
 
-  const handleCloseFilter = (filter:string) => {
-    setFilters(filters.filter((each) => each !== filter));
+  const handleCloseFilter = (columnLabel:string) => {
+    setFilters(filters.filter((each) => each !== columnLabel));
+    setQuery((prevQuery) => ({
+    ...prevQuery,
+    filters: prevQuery.filters.filter((filter) => filter.field !== columnLabel),
+  }));
   };
 
   return (
