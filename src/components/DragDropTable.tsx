@@ -814,8 +814,6 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [favoriteRows, setFavoriteRows] = useState<Record<number, boolean>>({});
 
-  console.log("dis col",displayColumns,columnOrder);
-
   useEffect(() => {
     setDisplayColumns(columns);
   }, [columns]);

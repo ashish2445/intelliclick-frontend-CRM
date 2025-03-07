@@ -124,6 +124,8 @@ import { FaChevronDown } from "react-icons/fa6";
 import { default as CustomCalendar } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { FilterState } from "@/interfaces/tableFilterTypes";
+import { getDateRange } from "@/utils/helpers";
+import { TimeRangeType } from "@/utils/constants/timeRanges";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -146,6 +148,7 @@ const DateFilter = ({ options, onSelectionChange, setFilterState }: DateFilterPr
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    console.log("check");
     if (selectedOption === "Custom Date" && startDate && endDate) {
       onSelectionChange?.("Custom Date", startDate, endDate);
       setFilterState((prev) => ({
@@ -153,6 +156,11 @@ const DateFilter = ({ options, onSelectionChange, setFilterState }: DateFilterPr
         dateRange: { startDate, endDate },
       }));
     } else if (selectedOption && selectedOption !== "Custom Date") {
+      const { startDate, endDate } = getDateRange(selectedOption as TimeRangeType);
+        setFilterState((prev) => ({
+        ...prev,
+        dateRange: { startDate, endDate },
+      }));
       onSelectionChange?.(selectedOption);
     }
   }, [startDate, endDate, selectedOption]);

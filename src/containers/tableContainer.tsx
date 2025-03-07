@@ -17,6 +17,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { FilterInstance } from "@/services/tableFilter.service";
 
 // const initialData: IOpenTaskData[] = [
 //   {
@@ -458,9 +459,30 @@ const TableContainer: React.FC = () => {
     }
   }
 
+  console.log("filters",filterState);
+
   useEffect(()=>{
     fetchTableData();
-  },[])
+  },[]);
+
+  // useEffect(()=>{
+  //   const filterResponse = FilterInstance.getFilterResponse(filterState);
+  //   setTableData(filterResponse);
+  // },[filterState])
+
+  useEffect(() => {
+    const filterData = async () => {
+      try {
+        const filterResponse = await FilterInstance.getFilterResponse(filterState); // Await the response
+        setTableData(filterResponse); // Now it's properly assigned
+      } catch (error) {
+        handleError(error as AxiosError,true);
+      }
+    };
+
+    filterData();
+  }, [filterState]);
+
 
   const handleCondition = (key:string) => {
     setFilters([...filters,key]);

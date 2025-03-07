@@ -8,3 +8,5 @@ export const TIME_RANGE = [
     "Last Month",
     "Custom Date"
 ] as const;
+
+export type TimeRangeType = (typeof TIME_RANGE)[number]; 

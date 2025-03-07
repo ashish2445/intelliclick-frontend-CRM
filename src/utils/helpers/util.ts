@@ -1,5 +1,7 @@
 // import { Role, StorageKey, Theme } from '@utils/enums';
 
+import { TimeRangeType } from "../constants/timeRanges";
+
 // export const getToken = () => {
 //   const role = localStorage.getItem(StorageKey.ROLE) || Role.STUDENT;
 //   const token = localStorage.getItem(`${role}${StorageKey.TOKEN}`);
@@ -48,6 +50,176 @@ export function formatToLocalTime(isoDate: string): string {
 export const getAllKeys = <T extends Record<string, any>>(data: T[]): string[] => {
   return Array.from(new Set(data.flatMap((row) => Object.keys(row))));
 };
+
+// export const getDateRange = (range: "today" | "yesterday" | "lastWeek" | "lastMonth") => {
+//   const today = new Date();
+//   let startDate = new Date();
+//   let endDate = new Date();
+
+//   switch (range) {
+//     case "today":
+//       startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0, 0));
+//       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 23, 59, 59, 999));
+//       break;
+
+//     case "yesterday":
+//       startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 1, 0, 0, 0, 0));
+//       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 1, 23, 59, 59, 999));
+//       break;
+
+//     case "lastWeek":
+//       startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - today.getUTCDay() - 6, 0, 0, 0, 0));
+//       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - today.getUTCDay(), 23, 59, 59, 999));
+//       break;
+
+//     case "lastMonth":
+//       startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 1, 1, 0, 0, 0, 0));
+//       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 0, 23, 59, 59, 999));
+//       break;
+
+//     default:
+//       throw new Error("Invalid range provided");
+//   }
+
+//   return {
+//     startDate: startDate.toISOString(), // ISO 8601 format
+//     endDate: endDate.toISOString(),
+//   };
+// };
+
+// export const getDateRange = (range: TimeRangeType) => {
+//   const today = new Date();
+//   let startDate: Date;
+//   let endDate: Date;
+
+//   switch (range) {
+//     case "today":
+//       startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0, 0));
+//       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 23, 59, 59, 999));
+//       break;
+
+//     case "yesterday":
+//       startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 1, 0, 0, 0, 0));
+//       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 1, 23, 59, 59, 999));
+//       break;
+
+//     case "lastWeek":
+//       startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - today.getUTCDay() - 6, 0, 0, 0, 0));
+//       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - today.getUTCDay(), 23, 59, 59, 999));
+//       break;
+
+//     case "lastMonth":
+//       startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 1, 1, 0, 0, 0, 0));
+//       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 0, 23, 59, 59, 999));
+//       break;
+
+//     default:
+//       throw new Error("Invalid range provided");
+//   }
+
+//   return { startDate, endDate }; // Returns Date objects, not strings
+// };
+
+// export const getDateRange = (range: TimeRangeType) => {
+//   const today = new Date();
+//   let startDate: Date;
+//   let endDate: Date;
+
+//   switch (range) {
+//     case "All":
+//       // Set startDate to a very early date and endDate to the far future
+//       startDate = new Date(1970, 0, 1, 0, 0, 0, 0); // Unix epoch start
+//       endDate = new Date(2099, 11, 31, 23, 59, 59, 999); // Arbitrary far future date
+//       break;
+
+//     case "Today":
+//       startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0, 0));
+//       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 23, 59, 59, 999));
+//       break;
+
+//     case "Yesterday":
+//       startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 1, 0, 0, 0, 0));
+//       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 1, 23, 59, 59, 999));
+//       break;
+
+//     case "This Week":
+//       startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - today.getUTCDay(), 0, 0, 0, 0));
+//       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() + (6 - today.getUTCDay()), 23, 59, 59, 999));
+//       break;
+
+//     case "Last Week":
+//       startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - today.getUTCDay() - 7, 0, 0, 0, 0));
+//       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - today.getUTCDay() - 1, 23, 59, 59, 999));
+//       break;
+
+//     case "This Month":
+//       startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1, 0, 0, 0, 0));
+//       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() + 1, 0, 23, 59, 59, 999));
+//       break;
+
+//     case "Last Month":
+//       startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 1, 1, 0, 0, 0, 0));
+//       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 0, 23, 59, 59, 999));
+//       break;
+
+//     default:
+//       throw new Error(`Invalid range provided: ${range}`);
+//   }
+
+//   return { startDate, endDate };
+// };
+
+export const getDateRange = (range: TimeRangeType) => {
+  const today = new Date();
+  let startDate: Date;
+  let endDate: Date;
+
+  switch (range) {
+    case "All":
+      startDate = new Date(1970, 0, 1, 0, 0, 0, 0); // Unix epoch start
+      endDate = new Date(2099, 11, 31, 23, 59, 59, 999); // Arbitrary far future date
+      break;
+
+    case "Today":
+      startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0, 0));
+      endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 23, 59, 59, 999));
+      break;
+
+    case "Yesterday":
+      startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 1, 0, 0, 0, 0));
+      endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 1, 23, 59, 59, 999));
+      break;
+
+    case "This Week":
+      startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - today.getUTCDay(), 0, 0, 0, 0));
+      endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() + (6 - today.getUTCDay()), 23, 59, 59, 999));
+      break;
+
+    case "Last Week":
+      startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - today.getUTCDay() - 7, 0, 0, 0, 0));
+      endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - today.getUTCDay() - 1, 23, 59, 59, 999));
+      break;
+
+    case "This Month":
+      startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1, 0, 0, 0, 0));
+      endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() + 1, 0, 23, 59, 59, 999));
+      break;
+
+    case "Last Month":
+      startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 1, 1, 0, 0, 0, 0));
+      endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 0, 23, 59, 59, 999));
+      break;
+
+    default:
+      throw new Error(`Invalid range provided: ${range}`);
+  }
+
+  return { startDate, endDate }; // Returns Date objects
+};
+
+
+
+
 
 
 
