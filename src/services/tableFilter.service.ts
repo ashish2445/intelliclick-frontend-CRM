@@ -1,10 +1,10 @@
 import { API } from '@/utils/enum';
 import { callApi } from './http.service';
-import { FilterState } from '@/interfaces/tableFilterTypes';
+import { FilterState, QueryState } from '@/interfaces/tableFilterTypes';
 
 
 class FilterService{
-    getFilterResponse = async (filterState: FilterState) => {
+    getFilterResponse = async (payload: QueryState) => {
     //   const url = `api/leader/read/get-leader-data?userId=${userId}`;
       return await callApi(url,API.GET);
     }

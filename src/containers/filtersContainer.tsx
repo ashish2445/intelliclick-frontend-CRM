@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import Dropdown from "@/components/CustomDropdown";
 import MultiSelectDropdown from "@/components/MultiSelectDropDown";
-import { FilterState } from "@/interfaces/tableFilterTypes";
+import { FilterState, QueryState } from "@/interfaces/tableFilterTypes";
 import { DATA_STATUS } from "@/utils/constants";
 import DateFilter from "@/components/DateFilter";
 import { TIME_RANGE } from "@/utils/constants/timeRanges";
@@ -15,9 +15,10 @@ import CreateForm from "@/components/Form";
 interface TableFiltersProps {
   filterState:FilterState
   setFilter: (newState: (prev: FilterState) => FilterState) => void;
+  setQuery:(query: QueryState | ((prev: QueryState) => QueryState)) => void;
 }
 
-const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter}) => {
+const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,setQuery}) => {
   const [search, setSearch] = useState("");
   // const [filter, setFilter] = useState("All");
   const [status, setStatus] = useState("Status");
@@ -29,12 +30,12 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter}) => {
         Leads <span className="text-gray-500">(All)</span>
       </h2>
       <div className="flex items-center space-x-3">        
-        <SearchBox placeholder="Type and Press Enter" setFilter={setFilter} iconSize={28} placeholder='type and Enter'
+        <SearchBox placeholder="Type and Press Enter" setFilter={setQuery} iconSize={28} placeholder='type and Enter'
           iconColor="#0D2167"
           height="10px"
           width="400px"
         />        
-        <DateFilter options={[...TIME_RANGE]} setFilterState={setFilter} />      
+        <DateFilter options={[...TIME_RANGE]} setDate={setQuery} />      
         <MultiSelectDropdown options={[...DATA_STATUS]} selectedOptions={filterState.status} onSelect={(values: string[]) => {
           setFilter(prev => ({
             ...prev,

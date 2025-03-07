@@ -6,7 +6,7 @@ import SearchBox from "@/components/SearchBox";
 import TableFilters from "@/containers/filtersContainer";
 import LeadsFilters from "@/containers/filtersContainer";
 import { ITableFields } from "@/interfaces";
-import { FilterState } from "@/interfaces/tableFilterTypes";
+import { FilterState,Filter, QueryState } from "@/interfaces/tableFilterTypes";
 import { ManagerInstance } from "@/services/manager.service";
 import { columns } from "@/utils/constants";
 import { getAllKeys, handleError } from "@/utils/helpers";
@@ -439,11 +439,21 @@ const TableContainer: React.FC = () => {
     singleDate: undefined,
     dateRange: { startDate: undefined, endDate: undefined },
   });
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [addCondition,setCondition] = useState<boolean>(false);
   const [filters, setFilters] = useState<string[]>([]);
   const [totalRows, setTotalRows] = useState<number>(0);
+  const [query, setQuery] = useState<QueryState>({
+    filters:[],
+    logic: "AND",
+    pagination: {
+      page: currentPage,
+      limit: rowsPerPage
+    }
+  });
+
 
   const totalPages = (totalRows/rowsPerPage);
   // const totalPages = 10;
@@ -459,29 +469,24 @@ const TableContainer: React.FC = () => {
     }
   }
 
-  console.log("filters",filterState);
+  console.log("filters query",query);
 
   useEffect(()=>{
     fetchTableData();
   },[]);
 
-  // useEffect(()=>{
-  //   const filterResponse = FilterInstance.getFilterResponse(filterState);
-  //   setTableData(filterResponse);
-  // },[filterState])
+  const filterData = async () => {
+    try {
+      const filterResponse = await FilterInstance.getFilterResponse(query); // Await the response
+      setTableData(filterResponse); // Now it's properly assigned
+    } catch (error) {
+      handleError(error as AxiosError,false);
+    }
+  };
 
-  useEffect(() => {
-    const filterData = async () => {
-      try {
-        const filterResponse = await FilterInstance.getFilterResponse(filterState); // Await the response
-        setTableData(filterResponse); // Now it's properly assigned
-      } catch (error) {
-        handleError(error as AxiosError,true);
-      }
-    };
-
+  useEffect(() => {   
     filterData();
-  }, [filterState]);
+  }, [query,currentPage,rowsPerPage]);
 
 
   const handleCondition = (key:string) => {
@@ -558,7 +563,7 @@ const TableContainer: React.FC = () => {
           <span className="text-sm">Yesterday Leads</span>
         </button>
         </div>
-        <TableFilters setFilter={setFilterState} filterState={filterState} />
+        <TableFilters setFilter={setFilterState} setQuery={setQuery} filterState={filterState} />
         <DndProvider backend={HTML5Backend}>
         <DynamicTable3 data={tableData} columns={columns} /></DndProvider>
         <Pagination
