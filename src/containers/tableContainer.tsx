@@ -488,8 +488,9 @@ const TableContainer: React.FC = () => {
     filterData();
   }, [query,currentPage,rowsPerPage]);
 
-
+  console.log("filters condition",filters);
   const handleCondition = (key:string) => {
+    console.log("label key",key);
     setFilters([...filters,key]);
     setCondition(prev=>!prev);
   }
@@ -544,6 +545,8 @@ const TableContainer: React.FC = () => {
             {filters.map((filter) => (
               <FilterComponent
                 key={filter}
+                label={filter}
+                setFiltering={setQuery}
                 onClose={() => handleCloseFilter(filter)}
               />
             ))}

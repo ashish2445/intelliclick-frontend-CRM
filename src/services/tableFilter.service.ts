@@ -8,6 +8,10 @@ class FilterService{
     //   const url = `api/leader/read/get-leader-data?userId=${userId}`;
       return await callApi(url,API.GET);
     }
+
+    getColumnData = async (columnLabel:string) => {
+      return await callApi(url,API.GET);
+    }
 }
 
 export const FilterInstance = new FilterService();
