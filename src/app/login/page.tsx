@@ -4,9 +4,13 @@ import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import loginbg from '@public/loginbg.svg';
 import { AxiosError } from 'axios';
+import { LoginInstance } from "@/services/login.service";
+import { handleError } from "@/utils/helpers";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [inputs, setInputs] = useState({ email: '', password: '' });
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,21 +19,12 @@ export default function LoginPage() {
       return;
     }
     try {
-    //   const loginRes = await loginInstance.verify(inputs);
-      const response = await axios.post("/api/login", inputs);
-      const { token, role } = response.data;
-
-      // Store token and role
+      const response = LoginInstance.getLoginResponse(inputs)
+      const { token } = response.data;
       localStorage.setItem("token", token);
-      localStorage.setItem("role", role);
-
-      // Redirect user based on role (optional)
-      if (role === "admin") {
-        window.location.href = "/admin-dashboard";
-      } else {
-        window.location.href = "/dashboard";
-      }
+      router.push("/dashboard");
     } catch (error) {
+      handleError(error as AxiosError,true);
     }
   };
 

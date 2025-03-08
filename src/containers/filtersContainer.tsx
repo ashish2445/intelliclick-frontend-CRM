@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import Dropdown from "@/components/CustomDropdown";
 import MultiSelectDropdown from "@/components/MultiSelectDropDown";
-import { FilterState, QueryState } from "@/interfaces/tableFilterTypes";
+import { FilterState, IAssignee, QueryState } from "@/interfaces/tableFilterTypes";
 import { DATA_STATUS } from "@/utils/constants";
 import DateFilter from "@/components/DateFilter";
 import { TIME_RANGE } from "@/utils/constants/timeRanges";
@@ -32,15 +32,16 @@ const assignee = [
             "email": "caller@gmail.com",
             "depth": 1
         }
-    ]
+]
 
 interface TableFiltersProps {
   filterState:FilterState
   setFilter: (newState: (prev: FilterState) => FilterState) => void;
   setQuery:(query: QueryState | ((prev: QueryState) => QueryState)) => void;
+  assignee: IAssignee[];
 }
 
-const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,setQuery}) => {
+const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,setQuery,assignee}) => {
   const [search, setSearch] = useState("");
   // const [filter, setFilter] = useState("All");
   const [status, setStatus] = useState("Status");
@@ -58,7 +59,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,setQuer
               height="10px"
               width="400px" 
           />
-          <CustomDropdown users={assignee} />
+          <CustomDropdown users={assignee} selectAssignee={setQuery} />
           <DateFilter options={[...TIME_RANGE]} setDate={setQuery} />
         
         <MultiSelectDropdown options={[...DATA_STATUS]} selectedOptions={filterState.status} onSelect={(values: string[]) => {

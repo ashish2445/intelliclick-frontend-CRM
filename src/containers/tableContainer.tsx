@@ -6,7 +6,7 @@ import SearchBox from "@/components/SearchBox";
 import TableFilters from "@/containers/filtersContainer";
 import LeadsFilters from "@/containers/filtersContainer";
 import { ITableFields } from "@/interfaces";
-import { FilterState,Filter, QueryState } from "@/interfaces/tableFilterTypes";
+import { FilterState,Filter, QueryState, IAssignee } from "@/interfaces/tableFilterTypes";
 import { ManagerInstance } from "@/services/manager.service";
 import { columns } from "@/utils/constants";
 import { getAllKeys, handleError } from "@/utils/helpers";
@@ -18,6 +18,7 @@ import { MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { FilterInstance } from "@/services/tableFilter.service";
+import { DropdownInstance } from "@/services/dropdown.service";
 
 // const initialData: IOpenTaskData[] = [
 //   {
@@ -524,6 +525,7 @@ const TableContainer: React.FC = () => {
       limit: rowsPerPage
     }
   });
+  const [assignee, setGetAssignee] = useState<IAssignee[]>([]);
 
 
   const totalPages = (totalRows/rowsPerPage);
@@ -539,9 +541,19 @@ const TableContainer: React.FC = () => {
       handleError(error as AxiosError,true);
     }
   }
+
+   const fetchAssignees = async () => {
+    try {
+      const response = await DropdownInstance.getAssignee(); // Await the API response
+      setGetAssignee(response); // Set the resolved data
+    } catch (error) {
+      handleError(error as AxiosError,true);
+    }
+  };
   
   useEffect(()=>{
     fetchTableData();
+    fetchAssignees();
   },[]);
 
   const filterData = async () => {
@@ -640,7 +652,7 @@ const TableContainer: React.FC = () => {
           <span className="text-sm">Yesterday Leads</span>
         </button>
         </div>
-        <TableFilters setFilter={setFilterState} setQuery={setQuery} filterState={filterState} />
+        <TableFilters setFilter={setFilterState} setQuery={setQuery} filterState={filterState} assignee={assignee} />
         <DndProvider backend={HTML5Backend}>
         <DynamicTable3 data={tableData} columns={columns} /></DndProvider>
         <Pagination

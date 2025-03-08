@@ -23,3 +23,10 @@ export interface QueryState {
   };
 }
 
+export interface IAssignee {
+  _id: string;
+  name: string;
+  email: string;
+  depth: number;
+}
+
