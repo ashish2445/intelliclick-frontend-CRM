@@ -11,7 +11,7 @@ export type FilterState<T extends Record<string, any> = {}> = T & {
 export interface Filter {
   field?: string;
   operator: string;
-  value: string[];
+  value: string[] | string;
 }
 
 export interface QueryState {

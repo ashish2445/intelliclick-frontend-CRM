@@ -802,6 +802,13 @@ const statusStyles: Record<string, string> = {
   prospects: "bg-[#D6BCFA] text-[#6B21A8]",
   qualified: "bg-[#D1FAE5] text-[#065F46]",
   disqualified: "bg-[#FEE2E2] text-[#B91C1C]",
+  Active: 'bg-green-100 text-green-800',
+      Qualified: 'bg-green-100 text-green-800',
+      Interested: 'bg-yellow-100 text-yellow-800',
+      Disqualified: 'bg-red-100 text-red-800',
+      'Follow Up': 'bg-yellow-100 text-yellow-800',
+      'Trial Booked': 'bg-green-100 text-green-800',
+      'Trial Completed': 'bg-blue-100 text-blue-800'
 };
 
 
@@ -953,11 +960,21 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                           {row[col] || "-"} <span><BsFillTelephoneOutboundFill color='#4287f5' />
                         </span>
                             </span>
-                          ) :
+                          ) :col.toLowerCase() === 'leadScore'? (
+                            <div className="flex justify-center">
+                              <div className="px-2 py-1 rounded bg-[#F0FDF4] text-[#15803D] text-sm font-medium">
+                                {parseInt(row[col]) > 0 ? `+${parseInt(row[col])}` : parseInt(row[col])}
+                              </div>
+                            </div>
+                          ):col.toLowerCase() === 'assignedOwner'? (
+                            <div className="h-full flex items-center">
+                              <div className="w-8 h-8 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-medium">
+                                {row[col]?.split(' ').map((n: string) => n[0]).join('')}
+                              </div>
+                              <span className="ml-2 text-sm text-gray-800">{row[col]}</span>
+                            </div>
+                          ):
                        (
-                        // <span className={`${columnStyles[col.toLowerCase()] || ""} p-2 rounded-[8px]`}>
-                        //   {row[col] || "-"}
-                        // </span>
                         <span
                           className={`p-2 rounded-[8px] text-[12px] font-[400]  ${
                             col.toLowerCase() === "status" ? statusStyles[row[col]?.toLowerCase()] || "" : columnStyles[col.toLowerCase()] || ""

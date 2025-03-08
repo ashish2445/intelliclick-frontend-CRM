@@ -42,7 +42,7 @@ const SearchBox = <T,>({
             ...prev.filters, // Keep existing filters
             {
               operator: "CONTAINS",
-              value: [query],
+              value: query,
             },
           ],
         };
