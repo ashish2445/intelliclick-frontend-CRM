@@ -119,317 +119,388 @@ import { FilterInstance } from "@/services/tableFilter.service";
 // ];
 
 
+// const responseObject = {
+//   "total": 9,
+//   "leads": [
+//       {
+//           "_id": "67c844c9ce78280e8565ea6b",
+//           "name": "John M",
+//           "phone": "3300001867",
+//           "fields": {
+//               "class": "10th Grade",
+//               "board": "CBSE",
+//               "status": "Active",
+//               "leadScore": 85,
+//               "address": "123 Main Street",
+//               "phoneNumber": "9876543210",
+//               "email": "johndoe@example.com",
+//               "fatherOccupation": "Engineer",
+//               "motherOccupation": "Doctor",
+//               "alternativeNumber": "7890123456",
+//               "parentName": "Mr. and Mrs. Doe",
+//               "schoolName": "ABC High School",
+//               "city": "New York",
+//               "state": "NY",
+//               "percentage": "92%",
+//               "interactWith": "Counselor"
+//           },
+//           "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
+//           "region": "67c7df011e3e66164e985253",
+//           "createdAt": "2025-03-05T12:34:17.889Z",
+//           "updatedAt": "2025-03-05T12:48:04.612Z",
+//           "__v": 0,
+//           "assignedOwner": {
+//               "_id": "67c6dfcdca39a9c9c3c3f84b",
+//               "name": "callerD",
+//               "email": "callerd@gmail.com",
+//               "phone": "9876543210"
+//           }
+//       },
+//       {
+//           "_id": "67c844bace78280e8565ea62",
+//           "name": "John l",
+//           "phone": "9900001867",
+//           "fields": {
+//               "class": "10th Grade",
+//               "board": "CBSE",
+//               "status": "Active",
+//               "leadScore": 85,
+//               "address": "123 Main Street",
+//               "phoneNumber": "9876543210",
+//               "email": "johndoe@example.com",
+//               "fatherOccupation": "Engineer",
+//               "motherOccupation": "Doctor",
+//               "alternativeNumber": "7890123456",
+//               "parentName": "Mr. and Mrs. Doe",
+//               "schoolName": "ABC High School",
+//               "city": "New York",
+//               "state": "NY",
+//               "percentage": "92%",
+//               "interactWith": "Counselor"
+//           },
+//           "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
+//           "region": "67c7df011e3e66164e985253",
+//           "createdAt": "2025-03-05T12:34:02.417Z",
+//           "updatedAt": "2025-03-05T12:48:04.612Z",
+//           "__v": 0,
+//           "assignedOwner": {
+//               "_id": "67c6dfcdca39a9c9c3c3f84b",
+//               "name": "callerD",
+//               "email": "callerd@gmail.com",
+//               "phone": "9876543210"
+//           }
+//       },
+//       {
+//           "_id": "67c844b0ce78280e8565ea59",
+//           "name": "John K",
+//           "phone": "8900001867",
+//           "fields": {
+//               "class": "10th Grade",
+//               "board": "CBSE",
+//               "status": "Active",
+//               "leadScore": 85,
+//               "address": "123 Main Street",
+//               "phoneNumber": "9876543210",
+//               "email": "johndoe@example.com",
+//               "fatherOccupation": "Engineer",
+//               "motherOccupation": "Doctor",
+//               "alternativeNumber": "7890123456",
+//               "parentName": "Mr. and Mrs. Doe",
+//               "schoolName": "ABC High School",
+//               "city": "New York",
+//               "state": "NY",
+//               "percentage": "92%",
+//               "interactWith": "Counselor"
+//           },
+//           "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
+//           "region": "67c7df011e3e66164e985253",
+//           "createdAt": "2025-03-05T12:33:52.549Z",
+//           "updatedAt": "2025-03-05T12:48:04.612Z",
+//           "__v": 0,
+//           "assignedOwner": {
+//               "_id": "67c6dfcdca39a9c9c3c3f84b",
+//               "name": "callerD",
+//               "email": "callerd@gmail.com",
+//               "phone": "9876543210"
+//           }
+//       },
+//       {
+//           "_id": "67c844a1ce78280e8565ea50",
+//           "name": "John j",
+//           "phone": "8900007867",
+//           "fields": {
+//               "class": "10th Grade",
+//               "board": "CBSE",
+//               "status": "Active",
+//               "leadScore": 85,
+//               "address": "123 Main Street",
+//               "phoneNumber": "9876543210",
+//               "email": "johndoe@example.com",
+//               "fatherOccupation": "Engineer",
+//               "motherOccupation": "Doctor",
+//               "alternativeNumber": "7890123456",
+//               "parentName": "Mr. and Mrs. Doe",
+//               "schoolName": "ABC High School",
+//               "city": "New York",
+//               "state": "NY",
+//               "percentage": "92%",
+//               "interactWith": "Counselor"
+//           },
+//           "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
+//           "region": "67c7df011e3e66164e985253",
+//           "createdAt": "2025-03-05T12:33:37.798Z",
+//           "updatedAt": "2025-03-05T12:48:04.612Z",
+//           "__v": 0,
+//           "assignedOwner": {
+//               "_id": "67c6dfcdca39a9c9c3c3f84b",
+//               "name": "callerD",
+//               "email": "callerd@gmail.com",
+//               "phone": "9876543210"
+//           }
+//       },
+//       {
+//           "_id": "67c84493ce78280e8565ea47",
+//           "name": "John i",
+//           "phone": "8900007887",
+//           "fields": {
+//               "class": "10th Grade",
+//               "board": "CBSE",
+//               "status": "Active",
+//               "leadScore": 85,
+//               "address": "123 Main Street",
+//               "phoneNumber": "9876543210",
+//               "email": "johndoe@example.com",
+//               "fatherOccupation": "Engineer",
+//               "motherOccupation": "Doctor",
+//               "alternativeNumber": "7890123456",
+//               "parentName": "Mr. and Mrs. Doe",
+//               "schoolName": "ABC High School",
+//               "city": "New York",
+//               "state": "NY",
+//               "percentage": "92%",
+//               "interactWith": "Counselor"
+//           },
+//           "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
+//           "region": "67c7df011e3e66164e985253",
+//           "createdAt": "2025-03-05T12:33:23.334Z",
+//           "updatedAt": "2025-03-05T12:48:04.612Z",
+//           "__v": 0,
+//           "assignedOwner": {
+//               "_id": "67c6dfcdca39a9c9c3c3f84b",
+//               "name": "callerD",
+//               "email": "callerd@gmail.com",
+//               "phone": "9876543210"
+//           }
+//       },
+//       {
+//           "_id": "67c84485ce78280e8565ea3e",
+//           "name": "John H",
+//           "phone": "3900007887",
+//           "fields": {
+//               "class": "10th Grade",
+//               "board": "CBSE",
+//               "status": "Active",
+//               "leadScore": 85,
+//               "address": "123 Main Street",
+//               "phoneNumber": "9876543210",
+//               "email": "johndoe@example.com",
+//               "fatherOccupation": "Engineer",
+//               "motherOccupation": "Doctor",
+//               "alternativeNumber": "7890123456",
+//               "parentName": "Mr. and Mrs. Doe",
+//               "schoolName": "ABC High School",
+//               "city": "New York",
+//               "state": "NY",
+//               "percentage": "92%",
+//               "interactWith": "Counselor"
+//           },
+//           "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
+//           "region": "67c7df011e3e66164e985253",
+//           "createdAt": "2025-03-05T12:33:09.751Z",
+//           "updatedAt": "2025-03-05T12:48:04.612Z",
+//           "__v": 0,
+//           "assignedOwner": {
+//               "_id": "67c6dfcdca39a9c9c3c3f84b",
+//               "name": "callerD",
+//               "email": "callerd@gmail.com",
+//               "phone": "9876543210"
+//           }
+//       },
+//       {
+//           "_id": "67c84477ce78280e8565ea35",
+//           "name": "John G",
+//           "phone": "3900007897",
+//           "fields": {
+//               "class": "10th Grade",
+//               "board": "CBSE",
+//               "status": "Active",
+//               "leadScore": 85,
+//               "address": "123 Main Street",
+//               "phoneNumber": "9876543210",
+//               "email": "johndoe@example.com",
+//               "fatherOccupation": "Engineer",
+//               "motherOccupation": "Doctor",
+//               "alternativeNumber": "7890123456",
+//               "parentName": "Mr. and Mrs. Doe",
+//               "schoolName": "ABC High School",
+//               "city": "New York",
+//               "state": "NY",
+//               "percentage": "92%",
+//               "interactWith": "Counselor"
+//           },
+//           "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
+//           "region": "67c7df011e3e66164e985253",
+//           "createdAt": "2025-03-05T12:32:55.312Z",
+//           "updatedAt": "2025-03-05T12:48:04.612Z",
+//           "__v": 0,
+//           "assignedOwner": {
+//               "_id": "67c6dfcdca39a9c9c3c3f84b",
+//               "name": "callerD",
+//               "email": "callerd@gmail.com",
+//               "phone": "9876543210"
+//           }
+//       },
+//       {
+//           "_id": "67c8446bce78280e8565ea2c",
+//           "name": "John F",
+//           "phone": "3900527897",
+//           "fields": {
+//               "class": "10th Grade",
+//               "board": "CBSE",
+//               "status": "Active",
+//               "leadScore": 85,
+//               "address": "123 Main Street",
+//               "phoneNumber": "9876543210",
+//               "email": "johndoe@example.com",
+//               "fatherOccupation": "Engineer",
+//               "motherOccupation": "Doctor",
+//               "alternativeNumber": "7890123456",
+//               "parentName": "Mr. and Mrs. Doe",
+//               "schoolName": "ABC High School",
+//               "city": "New York",
+//               "state": "NY",
+//               "percentage": "92%",
+//               "interactWith": "Counselor"
+//           },
+//           "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
+//           "region": "67c7df011e3e66164e985253",
+//           "createdAt": "2025-03-05T12:32:43.528Z",
+//           "updatedAt": "2025-03-05T12:48:04.612Z",
+//           "__v": 0,
+//           "assignedOwner": {
+//               "_id": "67c6dfcdca39a9c9c3c3f84b",
+//               "name": "callerD",
+//               "email": "callerd@gmail.com",
+//               "phone": "9876543210"
+//           }
+//       },
+//       {
+//           "_id": "67c84428ce78280e8565ea1a",
+//           "name": "John D",
+//           "phone": "3914567897",
+//           "fields": {
+//               "class": "10th Grade",
+//               "board": "CBSE",
+//               "status": "Active",
+//               "leadScore": 85,
+//               "address": "123 Main Street",
+//               "phoneNumber": "9876543210",
+//               "email": "johndoe@example.com",
+//               "fatherOccupation": "Engineer",
+//               "motherOccupation": "Doctor",
+//               "alternativeNumber": "7890123456",
+//               "parentName": "Mr. and Mrs. Doe",
+//               "schoolName": "ABC High School",
+//               "city": "New York",
+//               "state": "NY",
+//               "percentage": "92%",
+//               "interactWith": "Counselor"
+//           },
+//           "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
+//           "region": "67c7df011e3e66164e985253",
+//           "createdAt": "2025-03-05T12:31:36.230Z",
+//           "updatedAt": "2025-03-05T12:48:04.612Z",
+//           "__v": 0,
+//           "assignedOwner": {
+//               "_id": "67c6dfcdca39a9c9c3c3f84b",
+//               "name": "callerD",
+//               "email": "callerd@gmail.com",
+//               "phone": "9876543210"
+//           }
+//       }
+//   ]
+// };
+
 const responseObject = {
-  "total": 9,
+  "total": 14,
   "leads": [
       {
           "_id": "67c844c9ce78280e8565ea6b",
           "name": "John M",
           "phone": "3300001867",
-          "fields": {
-              "class": "10th Grade",
-              "board": "CBSE",
-              "status": "Active",
-              "leadScore": 85,
-              "address": "123 Main Street",
-              "phoneNumber": "9876543210",
-              "email": "johndoe@example.com",
-              "fatherOccupation": "Engineer",
-              "motherOccupation": "Doctor",
-              "alternativeNumber": "7890123456",
-              "parentName": "Mr. and Mrs. Doe",
-              "schoolName": "ABC High School",
-              "city": "New York",
-              "state": "NY",
-              "percentage": "92%",
-              "interactWith": "Counselor"
-          },
           "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
           "region": "67c7df011e3e66164e985253",
           "createdAt": "2025-03-05T12:34:17.889Z",
-          "updatedAt": "2025-03-05T12:48:04.612Z",
+          "updatedAt": "2025-03-07T16:08:20.109Z",
           "__v": 0,
           "assignedOwner": {
-              "_id": "67c6dfcdca39a9c9c3c3f84b",
-              "name": "callerD",
-              "email": "callerd@gmail.com",
+              "_id": "67cb19dd97eb04cf8489c931",
+              "name": "caller@gmail.com",
+              "email": "caller@gmail.com",
               "phone": "9876543210"
-          }
+          },
+          "class": "10th Grade",
+          "board": "CBSE",
+          "status": "Active",
+          "leadScore": 85,
+          "address": "123 Main Street",
+          "phoneNumber": "9876543210",
+          "email": "johndoe@example.com",
+          "fatherOccupation": "Engineer",
+          "motherOccupation": "Doctor",
+          "alternativeNumber": "7890123456",
+          "parentName": "Mr. and Mrs. Doe",
+          "schoolName": "ABC High School",
+          "city": "New York",
+          "state": "NY",
+          "percentage": "92%",
+          "interactWith": "Counselor"
       },
       {
           "_id": "67c844bace78280e8565ea62",
-          "name": "John l",
+          "name": "John L",
           "phone": "9900001867",
-          "fields": {
-              "class": "10th Grade",
-              "board": "CBSE",
-              "status": "Active",
-              "leadScore": 85,
-              "address": "123 Main Street",
-              "phoneNumber": "9876543210",
-              "email": "johndoe@example.com",
-              "fatherOccupation": "Engineer",
-              "motherOccupation": "Doctor",
-              "alternativeNumber": "7890123456",
-              "parentName": "Mr. and Mrs. Doe",
-              "schoolName": "ABC High School",
-              "city": "New York",
-              "state": "NY",
-              "percentage": "92%",
-              "interactWith": "Counselor"
-          },
           "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
           "region": "67c7df011e3e66164e985253",
           "createdAt": "2025-03-05T12:34:02.417Z",
-          "updatedAt": "2025-03-05T12:48:04.612Z",
+          "updatedAt": "2025-03-07T16:08:20.109Z",
           "__v": 0,
           "assignedOwner": {
-              "_id": "67c6dfcdca39a9c9c3c3f84b",
-              "name": "callerD",
-              "email": "callerd@gmail.com",
+              "_id": "67cb19dd97eb04cf8489c931",
+              "name": "caller@gmail.com",
+              "email": "caller@gmail.com",
               "phone": "9876543210"
-          }
-      },
-      {
-          "_id": "67c844b0ce78280e8565ea59",
-          "name": "John K",
-          "phone": "8900001867",
-          "fields": {
-              "class": "10th Grade",
-              "board": "CBSE",
-              "status": "Active",
-              "leadScore": 85,
-              "address": "123 Main Street",
-              "phoneNumber": "9876543210",
-              "email": "johndoe@example.com",
-              "fatherOccupation": "Engineer",
-              "motherOccupation": "Doctor",
-              "alternativeNumber": "7890123456",
-              "parentName": "Mr. and Mrs. Doe",
-              "schoolName": "ABC High School",
-              "city": "New York",
-              "state": "NY",
-              "percentage": "92%",
-              "interactWith": "Counselor"
           },
-          "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
-          "region": "67c7df011e3e66164e985253",
-          "createdAt": "2025-03-05T12:33:52.549Z",
-          "updatedAt": "2025-03-05T12:48:04.612Z",
-          "__v": 0,
-          "assignedOwner": {
-              "_id": "67c6dfcdca39a9c9c3c3f84b",
-              "name": "callerD",
-              "email": "callerd@gmail.com",
-              "phone": "9876543210"
-          }
-      },
-      {
-          "_id": "67c844a1ce78280e8565ea50",
-          "name": "John j",
-          "phone": "8900007867",
-          "fields": {
-              "class": "10th Grade",
-              "board": "CBSE",
-              "status": "Active",
-              "leadScore": 85,
-              "address": "123 Main Street",
-              "phoneNumber": "9876543210",
-              "email": "johndoe@example.com",
-              "fatherOccupation": "Engineer",
-              "motherOccupation": "Doctor",
-              "alternativeNumber": "7890123456",
-              "parentName": "Mr. and Mrs. Doe",
-              "schoolName": "ABC High School",
-              "city": "New York",
-              "state": "NY",
-              "percentage": "92%",
-              "interactWith": "Counselor"
-          },
-          "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
-          "region": "67c7df011e3e66164e985253",
-          "createdAt": "2025-03-05T12:33:37.798Z",
-          "updatedAt": "2025-03-05T12:48:04.612Z",
-          "__v": 0,
-          "assignedOwner": {
-              "_id": "67c6dfcdca39a9c9c3c3f84b",
-              "name": "callerD",
-              "email": "callerd@gmail.com",
-              "phone": "9876543210"
-          }
-      },
-      {
-          "_id": "67c84493ce78280e8565ea47",
-          "name": "John i",
-          "phone": "8900007887",
-          "fields": {
-              "class": "10th Grade",
-              "board": "CBSE",
-              "status": "Active",
-              "leadScore": 85,
-              "address": "123 Main Street",
-              "phoneNumber": "9876543210",
-              "email": "johndoe@example.com",
-              "fatherOccupation": "Engineer",
-              "motherOccupation": "Doctor",
-              "alternativeNumber": "7890123456",
-              "parentName": "Mr. and Mrs. Doe",
-              "schoolName": "ABC High School",
-              "city": "New York",
-              "state": "NY",
-              "percentage": "92%",
-              "interactWith": "Counselor"
-          },
-          "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
-          "region": "67c7df011e3e66164e985253",
-          "createdAt": "2025-03-05T12:33:23.334Z",
-          "updatedAt": "2025-03-05T12:48:04.612Z",
-          "__v": 0,
-          "assignedOwner": {
-              "_id": "67c6dfcdca39a9c9c3c3f84b",
-              "name": "callerD",
-              "email": "callerd@gmail.com",
-              "phone": "9876543210"
-          }
-      },
-      {
-          "_id": "67c84485ce78280e8565ea3e",
-          "name": "John H",
-          "phone": "3900007887",
-          "fields": {
-              "class": "10th Grade",
-              "board": "CBSE",
-              "status": "Active",
-              "leadScore": 85,
-              "address": "123 Main Street",
-              "phoneNumber": "9876543210",
-              "email": "johndoe@example.com",
-              "fatherOccupation": "Engineer",
-              "motherOccupation": "Doctor",
-              "alternativeNumber": "7890123456",
-              "parentName": "Mr. and Mrs. Doe",
-              "schoolName": "ABC High School",
-              "city": "New York",
-              "state": "NY",
-              "percentage": "92%",
-              "interactWith": "Counselor"
-          },
-          "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
-          "region": "67c7df011e3e66164e985253",
-          "createdAt": "2025-03-05T12:33:09.751Z",
-          "updatedAt": "2025-03-05T12:48:04.612Z",
-          "__v": 0,
-          "assignedOwner": {
-              "_id": "67c6dfcdca39a9c9c3c3f84b",
-              "name": "callerD",
-              "email": "callerd@gmail.com",
-              "phone": "9876543210"
-          }
-      },
-      {
-          "_id": "67c84477ce78280e8565ea35",
-          "name": "John G",
-          "phone": "3900007897",
-          "fields": {
-              "class": "10th Grade",
-              "board": "CBSE",
-              "status": "Active",
-              "leadScore": 85,
-              "address": "123 Main Street",
-              "phoneNumber": "9876543210",
-              "email": "johndoe@example.com",
-              "fatherOccupation": "Engineer",
-              "motherOccupation": "Doctor",
-              "alternativeNumber": "7890123456",
-              "parentName": "Mr. and Mrs. Doe",
-              "schoolName": "ABC High School",
-              "city": "New York",
-              "state": "NY",
-              "percentage": "92%",
-              "interactWith": "Counselor"
-          },
-          "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
-          "region": "67c7df011e3e66164e985253",
-          "createdAt": "2025-03-05T12:32:55.312Z",
-          "updatedAt": "2025-03-05T12:48:04.612Z",
-          "__v": 0,
-          "assignedOwner": {
-              "_id": "67c6dfcdca39a9c9c3c3f84b",
-              "name": "callerD",
-              "email": "callerd@gmail.com",
-              "phone": "9876543210"
-          }
-      },
-      {
-          "_id": "67c8446bce78280e8565ea2c",
-          "name": "John F",
-          "phone": "3900527897",
-          "fields": {
-              "class": "10th Grade",
-              "board": "CBSE",
-              "status": "Active",
-              "leadScore": 85,
-              "address": "123 Main Street",
-              "phoneNumber": "9876543210",
-              "email": "johndoe@example.com",
-              "fatherOccupation": "Engineer",
-              "motherOccupation": "Doctor",
-              "alternativeNumber": "7890123456",
-              "parentName": "Mr. and Mrs. Doe",
-              "schoolName": "ABC High School",
-              "city": "New York",
-              "state": "NY",
-              "percentage": "92%",
-              "interactWith": "Counselor"
-          },
-          "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
-          "region": "67c7df011e3e66164e985253",
-          "createdAt": "2025-03-05T12:32:43.528Z",
-          "updatedAt": "2025-03-05T12:48:04.612Z",
-          "__v": 0,
-          "assignedOwner": {
-              "_id": "67c6dfcdca39a9c9c3c3f84b",
-              "name": "callerD",
-              "email": "callerd@gmail.com",
-              "phone": "9876543210"
-          }
-      },
-      {
-          "_id": "67c84428ce78280e8565ea1a",
-          "name": "John D",
-          "phone": "3914567897",
-          "fields": {
-              "class": "10th Grade",
-              "board": "CBSE",
-              "status": "Active",
-              "leadScore": 85,
-              "address": "123 Main Street",
-              "phoneNumber": "9876543210",
-              "email": "johndoe@example.com",
-              "fatherOccupation": "Engineer",
-              "motherOccupation": "Doctor",
-              "alternativeNumber": "7890123456",
-              "parentName": "Mr. and Mrs. Doe",
-              "schoolName": "ABC High School",
-              "city": "New York",
-              "state": "NY",
-              "percentage": "92%",
-              "interactWith": "Counselor"
-          },
-          "assignedAdmin": "67c6d44eca39a9c9c3c3f82e",
-          "region": "67c7df011e3e66164e985253",
-          "createdAt": "2025-03-05T12:31:36.230Z",
-          "updatedAt": "2025-03-05T12:48:04.612Z",
-          "__v": 0,
-          "assignedOwner": {
-              "_id": "67c6dfcdca39a9c9c3c3f84b",
-              "name": "callerD",
-              "email": "callerd@gmail.com",
-              "phone": "9876543210"
-          }
+          "class": "10th Grade",
+          "board": "CBSE",
+          "status": "Active",
+          "leadScore": 85,
+          "address": "123 Main Street",
+          "phoneNumber": "9876543210",
+          "email": "johndoe@example.com",
+          "fatherOccupation": "Engineer",
+          "motherOccupation": "Doctor",
+          "alternativeNumber": "7890123456",
+          "parentName": "Mr. and Mrs. Doe",
+          "schoolName": "ABC High School",
+          "city": "New York",
+          "state": "NY",
+          "percentage": "92%",
+          "interactWith": "Counselor"
       }
   ]
-};
+}
+
 const TableContainer: React.FC = () => {
 
   const [tableData,setTableData] = useState<ITableFields[]>([]);
@@ -461,7 +532,7 @@ const TableContainer: React.FC = () => {
   const fetchTableData = async () => {
     try {
       // const data = await ManagerInstance.getTableData();
-      const data = responseObject.leads.map(each => each.fields);
+      const data = responseObject.leads;
       setTotalRows(responseObject?.total);
       setTableData(data);
     } catch (error) {
@@ -528,12 +599,13 @@ const TableContainer: React.FC = () => {
           <IoSettingsOutline size={24} color="#0D2167" />
         </div>
         {addCondition && <div>
-          <ul>
+          <ul className="m-3 mt-0 p-3 pt-0">
             {getAllKeys(tableData).map((key) => (
               <li
                 key={key}
                 onClick={() => handleCondition(key)} // Pass the key if needed
                 style={{ cursor: "pointer", padding: "5px" }}
+                className="dark:invert"
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
               >

@@ -1,5 +1,5 @@
 'use client';
-import { FilterState } from "@/interfaces/tableFilterTypes";
+import { Filter, FilterState, QueryState } from "@/interfaces/tableFilterTypes";
 import React, { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 
@@ -8,7 +8,7 @@ interface SearchBoxProps<T> {
   // filterFunction: (item: T, query: string) => boolean;
   // onFilter: (filteredData: T[]) => void;
   placeholder?: string;
-  setFilter: (newState: (prev: FilterState) => FilterState) => void;
+  setFilter:(query: QueryState | ((prev: QueryState) => QueryState)) => void;
   iconSize?: number;
   iconColor?: string;
   height?: string | number;
@@ -35,7 +35,19 @@ const SearchBox = <T,>({
 
    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && query.trim() !== "") {
-      setFilter((prev) => ({ ...prev, searchString: query }));
+      setFilter((prev) => {
+        return {
+          ...prev,
+          filters: [
+            ...prev.filters, // Keep existing filters
+            {
+              operator: "CONTAINS",
+              value: [query],
+            },
+          ],
+        };
+      });
+       
     }
   };
 

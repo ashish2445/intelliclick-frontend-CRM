@@ -9,7 +9,7 @@ export type FilterState<T extends Record<string, any> = {}> = T & {
 // type ProductFilter = FilterState<{ category?: string[]; priceRange?: [number, number] }>;
 
 export interface Filter {
-  field: string;
+  field?: string;
   operator: string;
   value: string[];
 }

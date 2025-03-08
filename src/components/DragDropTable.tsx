@@ -933,7 +933,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                   if (!displayColumns.includes(col)) return null;
                   return (
                     <td key={col} className={`p-3 border-r border-gray-300`}>
-                      {colIndex === 0 ? (
+                      {col.toLocaleLowerCase() === 'name' ? (
                         <div className="flex items-center text-[12px] font-[400] gap-2">
                           <input
                             type="checkbox"

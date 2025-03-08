@@ -30,7 +30,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,setQuer
         Leads <span className="text-gray-500">(All)</span>
       </h2>
       <div className="flex items-center space-x-3">        
-        <SearchBox placeholder="Type and Press Enter" setFilter={setQuery} iconSize={28} placeholder='type and Enter'
+        <SearchBox placeholder="Type and Press Enter" setFilter={setQuery} iconSize={28}
           iconColor="#0D2167"
           height="10px"
           width="400px"
