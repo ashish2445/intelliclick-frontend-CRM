@@ -1,8 +1,9 @@
 export const columns = [
+  "name",
+  "phone",
   "class",
   "board",
-  "status",
-  "phoneNumber",
+  "status",  
   "email",
   "fatherOccupation",
   "schoolName",

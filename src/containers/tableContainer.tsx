@@ -539,9 +539,7 @@ const TableContainer: React.FC = () => {
       handleError(error as AxiosError,true);
     }
   }
-
-  console.log("filters query",query);
-
+  
   useEffect(()=>{
     fetchTableData();
   },[]);
