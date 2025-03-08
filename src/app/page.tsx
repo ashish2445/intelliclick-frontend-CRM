@@ -99,6 +99,8 @@ import { columns } from "@/utils/constants";
 import DynamicTable2 from "@/components/DynamicTable copy";
 import FilterComponent from "@/components/FilterCondition";
 import LeadDetails from "@/containers/newContainer";
+import IconButton from "@/components/StyledButton";
+import DetailedPage from "@/containers/detailedContainer/detailedPage";
 
 const allOptions = [
   { label: "Subject", color: "subject" },
@@ -242,8 +244,12 @@ const Page = () => {
   //     </div>
   //   </div>
   // );
+
+  const handleClick = () => {
+    alert("Button clicked!");
+  };
   return (
-    <LeadDetails />
+    <DetailedPage />
   )
 };
 

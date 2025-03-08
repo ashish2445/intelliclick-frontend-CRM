@@ -104,7 +104,7 @@ const CustomDropdown: React.FC<DropdownProps> = ({ users,selectAssignee }) => {
     selectAssignee((prev) => ({
       ...prev,
       filters: [
-        ...prev.filters.filter((filter) => filter.field !== "createdAt"), // Remove previous "createdAt" filters
+        ...prev.filters.filter((filter) => filter.field !== "Assignee"), // Remove previous "createdAt" filters
         {
           field: "Assignee",
           operator: "IN",
