@@ -34,7 +34,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,setQuer
           iconColor="#0D2167"
           height="10px"
           width="400px"
-        />        
+        />
         <DateFilter options={[...TIME_RANGE]} setDate={setQuery} />      
         <MultiSelectDropdown options={[...DATA_STATUS]} selectedOptions={filterState.status} onSelect={(values: string[]) => {
           setFilter(prev => ({
@@ -48,7 +48,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,setQuer
        </button> */}
        <div className="py-4">
      
-      <button
+      {/* <button
         onClick={() => setModalOpen(true)}
         className="w-[130px] h-[40px] rounded-full border-2 border-black bg-white text-black font-medium flex items-center justify-center shadow-md"
       >
@@ -57,7 +57,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,setQuer
       </button>
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <CreateForm />
-      </Modal>
+      </Modal> */}
     </div>
       </div>
     </div>

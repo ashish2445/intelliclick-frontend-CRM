@@ -80,6 +80,7 @@
 'use client';
 import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
+import { IoMdPerson } from "react-icons/io";
 
 interface Option {
   label: string;
@@ -122,7 +123,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options, selectedOption, onSelect }
               onClick={() => handleSelect(option.value)}
               style={{ padding: "10px", display: "flex", justifyContent: "flex-start", alignItems: "center" }}
             >
-              {option.label}
+              <IoMdPerson />{option.label}
             </li>
           ))}
         </ul>

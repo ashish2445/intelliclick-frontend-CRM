@@ -5,6 +5,7 @@ import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { BsFillTelephoneOutboundFill } from "react-icons/bs";
 import { FaRegStar, FaStar } from "react-icons/fa6";
+import { formatCamelCase } from "@/utils/helpers";
 
 interface TableProps {
   data: ITableFields[];
@@ -195,10 +196,10 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                           checked={headerChecked || false}
                           onChange={handleHeaderCheckboxChange}
                         />
-                          {col.charAt(0).toUpperCase() + col.slice(1)}
+                          <span className="text-[14px]">{formatCamelCase(col)}</span>
                       </div>
                     ) : (
-                      col.charAt(0).toUpperCase() + col.slice(1)
+                      <span className="text-[14px]">{formatCamelCase(col)}</span>
                     )}
                   </th>
                 );
@@ -213,7 +214,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                   return (
                     <td key={col} className={`p-3 border-r border-gray-300`}>
                       {col.toLocaleLowerCase() === 'name' ? (
-                        <div className="flex items-center text-[12px] font-[400] gap-2">
+                        <div className="flex items-center text-[14px] font-[400] gap-2">
                           <input
                             type="checkbox"
                             className="mr-2"
@@ -221,7 +222,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                             onChange={() => handleRowCheckboxChange(rowIndex)}
                           />
                           {/* <span className="mr-1">⭐</span> */}
-                          {row[col] || "-"}
+                          <span className="text-[14px]">{row[col] || "-"}</span>
                           {/* <span className="ml-1"><FaRegStar /></span> */}
                           <div onClick={() => handleFavoriteToggle(rowIndex)} style={{ cursor: "pointer" }}>
                             {favoriteRows[rowIndex] ? <FaStar color="#fcba03" /> : <FaRegStar color="black" />}
@@ -229,12 +230,13 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                         </div>
                       ):col.toLowerCase() === "phonenumber" ? (
                         <span className="flex gap-3 text-[12px] font-[400] ">
-                          {row[col] || "-"} <span><BsFillTelephoneOutboundFill color='#4287f5' />
+                                                    <span className="text-[14px]">{row[col] || "-"}</span>
+ <span><BsFillTelephoneOutboundFill color='#4287f5' />
                         </span>
                             </span>
                           ) :col.toLowerCase() === 'leadScore'? (
                             <div className="flex justify-center">
-                              <div className="px-2 py-1 rounded bg-[#F0FDF4] text-[#15803D] text-sm font-medium">
+                              <div className="px-2 py-1 rounded bg-[#F0FDF4] text-[#15803D] text-[14px] text-sm font-medium">
                                 {parseInt(row[col]) > 0 ? `+${parseInt(row[col])}` : parseInt(row[col])}
                               </div>
                             </div>
@@ -243,16 +245,16 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                               <div className="w-8 h-8 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-medium">
                                 {row[col]?.split(' ').map((n: string) => n[0]).join('')}
                               </div>
-                              <span className="ml-2 text-sm text-gray-800">{row[col]}</span>
+                              <span className="ml-2 text-sm text-gray-800 text-[14px]">{row[col]}</span>
                             </div>
                           ):
                        (
                         <span
-                          className={`p-2 rounded-[8px] text-[12px] font-[400]  ${
+                          className={`p-2 rounded-[8px] text-[14px] font-[400]  ${
                             col.toLowerCase() === "status" ? statusStyles[row[col]?.toLowerCase()] || "" : columnStyles[col.toLowerCase()] || ""
                           }`}
                         >
-                          {row[col] || "-"}
+                          <span className="text-[14px]">{row[col] || "-"}</span>
                         </span>
                       )}
                     </td>

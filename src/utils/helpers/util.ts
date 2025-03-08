@@ -217,6 +217,15 @@ export const getDateRange = (range: TimeRangeType) => {
   return { startDate, endDate }; // Returns Date objects
 };
 
+export const formatCamelCase = (text: string): string => {
+  return text
+    .replace(/([A-Z])/g, " $1") // Add space before capital letters
+    .trim() // Remove leading/trailing spaces
+    .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word
+};
+
+
+
 
 
 
