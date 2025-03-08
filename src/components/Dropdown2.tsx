@@ -61,7 +61,7 @@
 
 // export default CustomDropdown;
 
-import { IAssignee, QueryState } from "@/interfaces/tableFilterTypes";
+import { Filter, IAssignee, QueryState } from "@/interfaces/tableFilterTypes";
 import { DropdownInstance } from "@/services/dropdown.service";
 import { useState, useRef, useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa6";
@@ -101,6 +101,17 @@ const CustomDropdown: React.FC<DropdownProps> = ({ users,selectAssignee }) => {
   const handleUserSelection = (user: IAssignee) => {
     setSelectedUser(user);
     setIsOpen(false);
+    selectAssignee((prev) => ({
+      ...prev,
+      filters: [
+        ...prev.filters.filter((filter) => filter.field !== "createdAt"), // Remove previous "createdAt" filters
+        {
+          field: "Assignee",
+          operator: "IN",
+          value: [selectedUser?._id],
+        } as Filter,
+      ],
+    }));
   };
 
   return (
