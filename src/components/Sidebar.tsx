@@ -68,7 +68,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
           {[
             { icon: <RxDashboard size={30} />, path: "/dashboard/home", label: "Home" },
             { icon: <TbClipboardText size={30} />, path: "/dashboard/table", label: "Leads Management" },
-            { icon: <BiPieChartAlt2 size={30} />, path: "/dashboard/invoice", label: "Attendance" },
+            { icon: <BiPieChartAlt2 size={30} />, path: "/dashboard/form", label: "Create Form" },
             { icon: <TbBriefcase size={30} />, path: "stores", label: "Stores" },
             { icon: <BsHeadset size={30} />, path: "providers", label: "Providers" },
             { icon: <RiSettings2Line size={30} />, path: "developers", label: "Developers" },
