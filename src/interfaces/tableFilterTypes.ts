@@ -30,3 +30,11 @@ export interface IAssignee {
   depth: number;
 }
 
+export interface IStatus {
+    statusid: number;
+    label: string;
+    color: string;
+    _id: string;
+}
+
+

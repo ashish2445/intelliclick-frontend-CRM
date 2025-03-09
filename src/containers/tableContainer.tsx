@@ -6,7 +6,7 @@ import SearchBox from "@/components/SearchBox";
 import TableFilters from "@/containers/filtersContainer";
 import LeadsFilters from "@/containers/filtersContainer";
 import { ITableFields } from "@/interfaces";
-import { FilterState,Filter, QueryState, IAssignee } from "@/interfaces/tableFilterTypes";
+import { FilterState,Filter, QueryState, IAssignee, IStatus } from "@/interfaces/tableFilterTypes";
 import { ManagerInstance } from "@/services/manager.service";
 import { columns } from "@/utils/constants";
 import { getAllKeys, handleError } from "@/utils/helpers";
@@ -526,6 +526,8 @@ const TableContainer: React.FC = () => {
     }
   });
   const [assignee, setGetAssignee] = useState<IAssignee[]>([]);
+  const [statusInfo, setGetStatus] = useState<IStatus[]>([]);
+
 
 
   const totalPages = (totalRows/rowsPerPage);
@@ -547,13 +549,23 @@ const TableContainer: React.FC = () => {
       const response = await DropdownInstance.getAssignee(); // Await the API response
       setGetAssignee(response); // Set the resolved data
     } catch (error) {
-      handleError(error as AxiosError,true);
+      handleError(error as AxiosError,false);
     }
   };
+
+  const fetchStatusInfo = async () => {
+    try {
+      const response = await DropdownInstance.getStatus();
+      setGetStatus(response);
+    } catch (error) {
+      handleError(error as AxiosError,false);
+    }
+  }
   
   useEffect(()=>{
     fetchTableData();
     fetchAssignees();
+    fetchStatusInfo();
   },[]);
 
   const filterData = async () => {
@@ -652,7 +664,7 @@ const TableContainer: React.FC = () => {
           <span className="text-sm">Yesterday Leads</span>
         </button>
         </div>
-        <TableFilters setFilter={setFilterState} setQuery={setQuery} filterState={filterState} assignee={assignee} />
+        <TableFilters setFilter={setFilterState} setQuery={setQuery} filterState={filterState} assignee={assignee} statusInfo={statusInfo} />
         <DndProvider backend={HTML5Backend}>
         <DynamicTable3 data={tableData} columns={columns} /></DndProvider>
         <Pagination
