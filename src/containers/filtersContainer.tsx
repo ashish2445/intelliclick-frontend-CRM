@@ -13,7 +13,7 @@ import Modal from "@/components/Modal";
 import CreateForm from "@/components/Form";
 import CustomDropdown from "@/components/Dropdown2";
 
-const assignee = [
+const assignee1 = [
         {
             "_id": "67cb17f097eb04cf8489c914",
             "name": "admin@gmail.com",
@@ -60,7 +60,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,setQuer
               height="10px"
               width="400px" 
           />
-          <CustomDropdown users={assignee} selectAssignee={setQuery} />
+          <CustomDropdown users={assignee1} selectAssignee={setQuery} />
           <DateFilter options={[...TIME_RANGE]} setDate={setQuery} />
         
         <MultiSelectDropdown options={statusInfo} selectedOptions={filterState.status} onSelect={(values: string[]) => {
