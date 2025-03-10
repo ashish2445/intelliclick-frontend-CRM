@@ -9,6 +9,8 @@ import { formatCamelCase, handleError } from "@/utils/helpers";
 import { IStatus } from "@/interfaces/tableFilterTypes";
 import { ManagerInstance } from "@/services/manager.service";
 import { Axios, AxiosError } from "axios";
+import SlideInPanel from "./SlideInPanel";
+import DetailedPage from "@/containers/detailedContainer/detailedPage";
 
 interface TableProps {
   data: ITableFields[];
@@ -86,6 +88,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   const [headerChecked, setHeaderChecked] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [favoriteRows, setFavoriteRows] = useState<Record<number, boolean>>({});
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
 
   useEffect(() => {
     setDisplayColumns(columns);
@@ -113,7 +116,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   const handleFavoriteToggle = async (rowId: string,favState:boolean) => {
     console.log("favvv",rowId,favState);
     try{
-      await ManagerInstance.toggleFavorite(rowId,favState)
+      // await ManagerInstance.toggleFavorite(rowId,favState)
       setFavoriteRows((prev) => ({
         ...prev,
         [rowId]: !prev[rowId], // Toggle only for the clicked row
@@ -193,6 +196,10 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
     setHeaderChecked(updatedCheckedRows.every(Boolean));
   };
 
+  const handleNameClick = () => {
+    setIsPanelOpen(true);
+  }
+
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -261,9 +268,13 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                             onChange={() => handleRowCheckboxChange(rowIndex)}
                           />
                           {/* <span className="mr-1">⭐</span> */}
-                          <span className="text-[14px]">{row[col]?.name || "-"}</span>
+                          <span className="text-[14px]" onClick={handleNameClick} style={{ cursor: "pointer" }}>{row[col]?.name || "-"}</span>
                           {/* <span className="ml-1"><FaRegStar /></span> */}
-                          <div onClick={() => handleFavoriteToggle(row._id,row.name.favorite)} style={{ cursor: "pointer" }}>
+                          <div onClick={(e) => {
+                              e.stopPropagation();
+                              handleFavoriteToggle(row._id, row.name.favorite);
+                            }}
+                            style={{ cursor: "pointer" }}>
                             {favoriteRows[row._id] ? <FaStar color="#fcba03" /> : <FaRegStar color="black" />}
                           </div>
                         </div>
@@ -310,6 +321,11 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
           </tbody>
         </table>
       </div>
+      {isPanelOpen && (
+        <SlideInPanel isOpen={isPanelOpen} setIsOpen={setIsPanelOpen}>
+          <DetailedPage />
+        </SlideInPanel>
+      )}
     </DndProvider>
   );
 };

@@ -101,6 +101,7 @@ import FilterComponent from "@/components/FilterCondition";
 import LeadDetails from "@/containers/newContainer";
 import IconButton from "@/components/StyledButton";
 import DetailedPage from "@/containers/detailedContainer/detailedPage";
+import Form2 from "@/containers/form2";
 
 const allOptions = [
   { label: "Subject", color: "subject" },
@@ -249,7 +250,7 @@ const Page = () => {
     alert("Button clicked!");
   };
   return (
-    <DetailedPage />
+    <Form2 />
   )
 };
 
