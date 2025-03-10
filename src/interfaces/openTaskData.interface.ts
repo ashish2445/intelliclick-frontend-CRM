@@ -8,6 +8,7 @@
 //   }
 
 export interface ITableFields {
+  name:Object,
   class: string;
   board: string;
   status: string;

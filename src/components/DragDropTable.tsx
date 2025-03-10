@@ -5,8 +5,10 @@ import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { BsFillTelephoneOutboundFill } from "react-icons/bs";
 import { FaRegStar, FaStar } from "react-icons/fa6";
-import { formatCamelCase } from "@/utils/helpers";
+import { formatCamelCase, handleError } from "@/utils/helpers";
 import { IStatus } from "@/interfaces/tableFilterTypes";
+import { ManagerInstance } from "@/services/manager.service";
+import { Axios, AxiosError } from "axios";
 
 interface TableProps {
   data: ITableFields[];
@@ -90,6 +92,17 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   }, [columns]);
 
   useEffect(() => {
+    const initialFavorites: Record<string, boolean> = {};
+
+    data.forEach((item) => {
+      initialFavorites[item._id] = item.name.favorite;
+    });
+
+    setFavoriteRows(initialFavorites);
+  }, [data]);
+
+
+  useEffect(() => {
     if (data?.length) {
       const tableCols = Array.from(new Set(data.flatMap((row) => Object.keys(row))));
       setColumnOrder(tableCols);
@@ -97,11 +110,17 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
     }
   }, [data]);
 
-  const handleFavoriteToggle = (rowIndex: number) => {
-    setFavoriteRows((prev) => ({
-      ...prev,
-      [rowIndex]: !prev[rowIndex], // Toggle only for the clicked row
-    }));
+  const handleFavoriteToggle = async (rowId: string,favState:boolean) => {
+    console.log("favvv",rowId,favState);
+    try{
+      await ManagerInstance.toggleFavorite(rowId,favState)
+      setFavoriteRows((prev) => ({
+        ...prev,
+        [rowId]: !prev[rowId], // Toggle only for the clicked row
+      }));
+    } catch(error){
+      handleError(error as AxiosError,true);
+    }
   };
 
   function extractGrade(value: string): string {
@@ -244,8 +263,8 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                           {/* <span className="mr-1">⭐</span> */}
                           <span className="text-[14px]">{row[col]?.name || "-"}</span>
                           {/* <span className="ml-1"><FaRegStar /></span> */}
-                          <div onClick={() => handleFavoriteToggle(rowIndex)} style={{ cursor: "pointer" }}>
-                            {row[col]?.favorite ? <FaStar color="#fcba03" /> : <FaRegStar color="black" />}
+                          <div onClick={() => handleFavoriteToggle(row._id,row.name.favorite)} style={{ cursor: "pointer" }}>
+                            {favoriteRows[row._id] ? <FaStar color="#fcba03" /> : <FaRegStar color="black" />}
                           </div>
                         </div>
                       ):col.toLowerCase() === "phonenumber" ? (
@@ -273,11 +292,6 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                             </div>
                           ):
                        (
-                        // <span
-                        //   className={`p-2 rounded-[8px] text-[14px] font-[400] ${columnStyles[col]}`}
-                        // >
-                        //   <span className="text-[14px]">{row[col] || "-"}</span>
-                        // </span>
                         <span
   className={`p-2 rounded-[8px] text-[14px] font-[400] ${columnStyles[col]}`}
   style={col === 'status' ? { color: getStatusColor(row[col]) } : undefined}

@@ -16,6 +16,11 @@ class ManagerService{
       const url = '';
       return await callApi(url,API.GET);
     }
+
+    toggleFavorite = async (leadId:string,currentState:boolean) => {
+      const url = '';
+      return await callApi(url,API.GET);
+    }
 }
 
 export const ManagerInstance = new ManagerService();
