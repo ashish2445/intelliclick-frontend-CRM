@@ -31,23 +31,23 @@ const ContactCard: React.FC<ContactCardProps> = ({ name, status, phone, email, l
         <div className="mt-4 space-y-6 text-black">
           <div className="flex items-center gap-2">
             <PiPhoneLight className="text-xl" size={28} />
-            <span>{phone}</span>
+            <span className="text-[18px]">{phone}</span>
           </div>
           <div className="flex items-center gap-2">
             <SlEnvelopeOpen size={28} />
-            <span>{email}</span>
+            <span className="text-[18px]">{email}</span>
           </div>
           <div className="flex items-center gap-2">
             <PiMapPinLine  className="text-xl" size={28} />
-            <span>{location}</span>
+            <span className="text-[18px]">{location}</span>
           </div>
         </div>
       </div>
 
       <div className="flex justify-between items-center bg-[#E446EF26] p-3 border-t border-black rounded-2xl">
-        <div className="flex flex-col items-center gap-2">
-          <MdSpeed className="text-2xl text-green-600" size={28} />
-          <span className="text-lg font-semibold">{rating}</span>
+        <div className="flex flex-col items-center">
+          <MdSpeed className="text-2xl text-green-600" size={36} />
+          <span className="text-[20px]">+{rating}</span>
         </div>
         {/* <button className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-full">
           <RiPhoneFill size={28} />
