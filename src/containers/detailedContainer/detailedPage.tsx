@@ -61,7 +61,7 @@ import SearchBox from "@/components/SearchBox";
 const DetailedPage: React.FC = () => {
   return (
     <div className="flex w-full">
-      <div className="w-1/3 border-black bg-red-400">
+      <div className="border border-black rounded-[22px]">
         <ContactCard
         name="Nilesh Patel"
         status="Enroll"
