@@ -11,6 +11,11 @@ class ManagerService{
       const url = `api/lead/read/leads-without-actions`;
       return await callApi(url,API.POST);
     }
+
+    getStatusInfo = async () => {
+      const url = '';
+      return await callApi(url,API.GET);
+    }
 }
 
 export const ManagerInstance = new ManagerService();

@@ -6,10 +6,12 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { BsFillTelephoneOutboundFill } from "react-icons/bs";
 import { FaRegStar, FaStar } from "react-icons/fa6";
 import { formatCamelCase } from "@/utils/helpers";
+import { IStatus } from "@/interfaces/tableFilterTypes";
 
 interface TableProps {
   data: ITableFields[];
   columns: string[];
+  statusInfo:IStatus[]
 }
 
 const ItemType = "COLUMN";
@@ -73,7 +75,7 @@ const statusStyles: Record<string, string> = {
 };
 
 
-const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
+const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   const [displayColumns, setDisplayColumns] = useState<string[]>([]);
   const [columnOrder, setColumnOrder] = useState<string[]>([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -150,6 +152,16 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
   //   setCheckedRows(updatedCheckedRows);
   //   setHeaderChecked(updatedCheckedRows.every(Boolean));
   // };
+
+  function getStatusColor(id: number): string | undefined {
+    const status = statusInfo.find(s => s.statusid === id);
+    return status ? status.color : undefined;
+  }
+
+  function getStatusLabel(id: number): string | undefined {
+    const status = statusInfo.find(s => s.statusid === id);
+    return status ? status.label : undefined;
+  }
 
   const handleRowCheckboxChange = (index: number) => {
     const updatedCheckedRows = [...checkedRows];
@@ -251,7 +263,11 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                           ):col.toLowerCase() === 'assignedowner'? (
                             <div className="h-full flex items-center">
                               <div className="w-8 h-8 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-medium">
-                                {typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col]?.split(' ').map((n: string) => n[0]).join('')}
+                                {/* {typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col]?.split(' ').map((n: string) => n[0]).join('')} */}
+                                {typeof row[col] === "object" 
+                                  ? row[col]?.[col]?.split(" ").map((word: string) => word[0]?.toUpperCase()).join("") ?? "-" 
+                                  : row[col]?.split(" ").map((word: string) => word[0]?.toUpperCase()).join("")
+                                }
                               </div>
                               <span className="ml-2 text-sm text-gray-800 text-[14px]">{typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col] ?? "-"}</span>
                             </div>
@@ -264,9 +280,10 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                         // </span>
                         <span
   className={`p-2 rounded-[8px] text-[14px] font-[400] ${columnStyles[col]}`}
+  style={col === 'status' ? { color: getStatusColor(row[col]) } : undefined}
 >
   <span className="text-[14px]">
-    {col === "class" ? extractGrade(row[col]) : row[col] || "-"}
+    {col === "class" ? extractGrade(row[col]) : col === 'status' ? getStatusLabel(row[col]) : row[col] || "-"}
   </span>
 </span>
 
@@ -284,192 +301,3 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
 };
 
 export default DynamicTable3;
-
-// import React, { useState, useEffect, useRef, useCallback } from "react";
-// import { PiDotsThreeOutlineVertical } from "react-icons/pi";
-// import { DndProvider, useDrag, useDrop } from "react-dnd";
-// import { HTML5Backend } from "react-dnd-html5-backend";
-// import { FaRegStar, FaStar } from "react-icons/fa6";
-// import { formatCamelCase } from "@/utils/helpers";
-
-// interface Lead {
-//   [key: string]: any; // Allows flexible key-value pairs
-// }
-
-// interface TableProps {
-//   data: Lead[];
-//   columns: string[];
-// }
-
-// const ItemType = "COLUMN";
-
-// interface DragItem {
-//   index: number;
-//   id: string;
-// }
-
-// const DraggableItem: React.FC<{
-//   id: string;
-//   index: number;
-//   moveItem: (from: number, to: number) => void;
-//   checked: boolean;
-//   onCheck: () => void;
-// }> = ({ id, index, moveItem, checked, onCheck }) => {
-//   const ref = useRef<HTMLLIElement>(null);
-
-//   const [, drag] = useDrag({ type: ItemType, item: { id, index } });
-//   const [, drop] = useDrop({
-//     accept: ItemType,
-//     hover: (draggedItem: DragItem) => {
-//       if (draggedItem.index !== index) {
-//         moveItem(draggedItem.index, index);
-//         draggedItem.index = index;
-//       }
-//     },
-//   });
-
-//   drag(drop(ref));
-
-//   return (
-//     <li ref={ref} className="flex items-center justify-between p-2 hover:bg-gray-100 cursor-pointer border-b">
-//       <input type="checkbox" checked={checked} onChange={onCheck} />
-//       <span className="flex-grow ml-2">{id}</span>
-//       <span className="cursor-grab text-gray-500">&#x2630;</span>
-//     </li>
-//   );
-// };
-
-// const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
-//   const [displayColumns, setDisplayColumns] = useState<string[]>(columns);
-//   const [columnOrder, setColumnOrder] = useState<string[]>([]);
-//   const [dropdownOpen, setDropdownOpen] = useState(false);
-//   const [checkedRows, setCheckedRows] = useState<boolean[]>([]);
-//   const [headerChecked, setHeaderChecked] = useState(false);
-//   const dropdownRef = useRef<HTMLDivElement | null>(null);
-//   const [favoriteRows, setFavoriteRows] = useState<Record<number, boolean>>({});
-
-//   useEffect(() => {
-//     setDisplayColumns(columns);
-//   }, [columns]);
-
-//   useEffect(() => {
-//     if (data.length) {
-//       setColumnOrder([...new Set(data.flatMap((row) => Object.keys(row)))]);
-//       setCheckedRows(Array(data.length).fill(false));
-//     }
-//   }, [data]);
-
-//   const handleFavoriteToggle = useCallback((rowIndex: number) => {
-//     setFavoriteRows((prev) => ({ ...prev, [rowIndex]: !prev[rowIndex] }));
-//   }, []);
-
-//   const handleCheckboxChange = useCallback((key: string) => {
-//     setDisplayColumns((prev) =>
-//       prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
-//     );
-//   }, []);
-
-//   const moveItem = useCallback((from: number, to: number) => {
-//     setColumnOrder((prev) => {
-//       const updated = [...prev];
-//       const [moved] = updated.splice(from, 1);
-//       updated.splice(to, 0, moved);
-//       return updated;
-//     });
-//   }, []);
-
-//   useEffect(() => {
-//     function handleClickOutside(event: MouseEvent) {
-//       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-//         setDropdownOpen(false);
-//       }
-//     }
-
-//     document.addEventListener("mousedown", handleClickOutside);
-//     return () => document.removeEventListener("mousedown", handleClickOutside);
-//   }, []);
-
-//   const handleHeaderCheckboxChange = () => {
-//     const newChecked = !headerChecked;
-//     setHeaderChecked(newChecked);
-//     setCheckedRows(Array(data.length).fill(newChecked));
-//   };
-
-//   const handleRowCheckboxChange = (index: number) => {
-//     const updatedCheckedRows = [...checkedRows];
-//     updatedCheckedRows[index] = !updatedCheckedRows[index];
-//     setCheckedRows(updatedCheckedRows);
-//     setHeaderChecked(updatedCheckedRows.every(Boolean));
-//   };
-
-//   return (
-//     <DndProvider backend={HTML5Backend}>
-//       <div className="relative overflow-x-auto w-full dark:invert border rounded-t-lg">
-//         <div ref={dropdownRef} className="absolute top-2 right-2 cursor-pointer z-30">
-//           <button onClick={() => setDropdownOpen((prev) => !prev)} className="p-2 rounded-full hover:bg-gray-300">
-//             <PiDotsThreeOutlineVertical size={20} className="text-gray-600 hover:text-gray-900" />
-//           </button>
-
-//           {dropdownOpen && (
-//             <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-40 p-2">
-//               <ul className="text-sm text-gray-700">
-//                 {columnOrder.map((key, index) => (
-//                   <DraggableItem key={key} id={key} index={index} moveItem={moveItem} checked={displayColumns.includes(key)} onCheck={() => handleCheckboxChange(key)} />
-//                 ))}
-//               </ul>
-//             </div>
-//           )}
-//         </div>
-
-//         <table className="w-full border-collapse">
-//           <thead>
-//             <tr className="bg-gray-200 text-left text-sm font-semibold h-12">
-//               {columnOrder.map((col) => displayColumns.includes(col) && (
-//                 <th key={col} className="p-3 border-gray-300 min-w-[150px]">
-//                   {col.toLowerCase() === "name" ? (
-//                     <div className="flex items-center">
-//                       <input type="checkbox" checked={headerChecked} onChange={handleHeaderCheckboxChange} className="mr-2" />
-//                       <span>{formatCamelCase(col)}</span>
-//                     </div>
-//                   ) : (
-//                     <span>{formatCamelCase(col)}</span>
-//                   )}
-//                 </th>
-//               ))}
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {data.map((row, rowIndex) => (
-//               <tr key={rowIndex} className="border-b">
-//                 {columnOrder.map((col) => displayColumns.includes(col) && (
-//                   <td key={col} className="p-3 border-r">
-//                     {col.toLowerCase() === "name" ? (
-//                       <div className="flex items-center gap-2">
-//                         <input type="checkbox" checked={checkedRows[rowIndex]} onChange={() => handleRowCheckboxChange(rowIndex)} />
-//                         <span>{row[col]?.name || "-"}</span>
-//                         <div onClick={() => handleFavoriteToggle(rowIndex)} style={{ cursor: "pointer" }}>
-//                           {row[col]?.favorite ? <FaStar color="#fcba03" /> : <FaRegStar color="black" />}
-//                         </div>
-//                       </div>
-//                     ) : (
-//                       <span>{typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col] ?? "-"}</span>
-//                     )}
-//                   </td>
-//                 ))}
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </div>
-//     </DndProvider>
-//   );
-// };
-
-// export default DynamicTable3;
-
-
-
-
-
-
-
