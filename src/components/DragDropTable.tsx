@@ -102,6 +102,12 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
     }));
   };
 
+  function extractGrade(value: string): string {
+  const match = value.match(/^(\d{1,2}(?:st|nd|rd|th))/);
+  return match ? match[1] : value;
+}
+
+
 
   const handleCheckboxChange = (key: string) => {
     setDisplayColumns((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
@@ -251,11 +257,19 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns }) => {
                             </div>
                           ):
                        (
+                        // <span
+                        //   className={`p-2 rounded-[8px] text-[14px] font-[400] ${columnStyles[col]}`}
+                        // >
+                        //   <span className="text-[14px]">{row[col] || "-"}</span>
+                        // </span>
                         <span
-                          className={`p-2 rounded-[8px] text-[14px] font-[400]  `}
-                        >
-                          <span className="text-[14px]">{row[col] || "-"}</span>
-                        </span>
+  className={`p-2 rounded-[8px] text-[14px] font-[400] ${columnStyles[col]}`}
+>
+  <span className="text-[14px]">
+    {col === "class" ? extractGrade(row[col]) : row[col] || "-"}
+  </span>
+</span>
+
                       )}
                     </td>
                   );
