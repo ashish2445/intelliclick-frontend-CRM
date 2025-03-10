@@ -5,7 +5,7 @@ import { callApi } from './http.service';
 class FormService{
 
   getRegions = async () => {
-    const url='';
+    const url='api/region/read/regions';
     return await callApi(url,API.GET);
   }
 

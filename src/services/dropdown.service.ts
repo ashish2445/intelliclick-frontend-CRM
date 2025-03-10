@@ -39,11 +39,13 @@ const statusInfo = [
 
 class DropdownService{
     getAssignee = async (): Promise<IAssignee[]> => {
+      const url = 'api/admin/read/get-all-managers'
       return await callApi(url,API.GET);
     }
 
     getStatus = async ():Promise<IStatus[]> => {
-      // return await callApi(url,API.GET);
+      const url = 'api/lead_stage/read/stages';
+    //   return await callApi(url,API.GET)
       return statusInfo;
     }
 }

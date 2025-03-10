@@ -6,10 +6,12 @@ import { FilterState, QueryState } from '@/interfaces/tableFilterTypes';
 class FilterService{
     getFilterResponse = async (payload: QueryState) => {
     //   const url = `api/leader/read/get-leader-data?userId=${userId}`;
-      return await callApi(url,API.GET);
+      const url = 'api/lead/read/leads-without-actions';
+      return await callApi(url,API.POST,payload,true);
     }
 
     getColumnData = async (columnLabel:string) => {
+      const url = '';
       return await callApi(url,API.GET);
     }
 }
