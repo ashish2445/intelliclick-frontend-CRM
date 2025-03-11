@@ -51,6 +51,20 @@ function Pagination({ currentPage, totalPages, onPageChange, rowsPerPage, onRows
           </select>
         </label>
         <p className="text-sm font-light ml-2">of {Math.ceil(totalPages) || 0} pages</p>
+        {
+  (() => {
+    console.log("ccccc", currentPage === Math.max(1, totalPages));
+    return null;
+  })()
+}
+{
+  (() => {
+    console.log("Left-hand side type:", currentPage);
+    console.log("Right-hand side type:", Math.max(1, totalPages));
+    return null;
+  })()
+}
+
 
         {/* Navigation Buttons */}
         <FaChevronLeft
@@ -59,7 +73,7 @@ function Pagination({ currentPage, totalPages, onPageChange, rowsPerPage, onRows
           size={24}
         />
         <FaChevronRight
-          className={`cursor-pointer text-lg px-2 ${currentPage === Math.max(1, totalPages) ? 'text-gray-300 pointer-events-none' : ''}`}
+          className={`cursor-pointer text-lg px-2 ${currentPage === Math.max(1, Math.ceil(totalPages)) ? 'text-gray-300 pointer-events-none' : ''}`}
           onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
           size={22}
         />
