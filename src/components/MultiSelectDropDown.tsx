@@ -228,7 +228,7 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({ options, selectedOptions
       {/* Button to toggle dropdown */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between px-4 py-2 text-[16px] font-[300] border border-gray-300 rounded-md w-48 bg-white shadow-sm hover:bg-gray-100"
+        className="flex items-center justify-between px-4 py-2 text-[16px] font-[300] border border-gray-300 rounded-md bg-white shadow-sm hover:bg-gray-100"
       >
         {selectedOptions?.length > 0 ? `Selected (${selectedOptions?.length})` : "Status"}
         <FaChevronDown className="ml-2 text-gray-600" />
@@ -236,7 +236,7 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({ options, selectedOptions
 
       {/* Dropdown menu */}
       {isOpen && (
-        <ul className="absolute left-0 top-full mt-1 w-48 bg-white text-[16px] font-[300] border border-gray-300 rounded-md shadow-lg z-50">
+        <ul className="absolute right-0 top-full mt-1 w-48 bg-white text-[16px] font-[300] border border-gray-300 rounded-md shadow-lg z-50">
           {options.map((option) => (
             <li
               key={option.label}

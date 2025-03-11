@@ -15,13 +15,13 @@ function Pagination({ currentPage, totalPages, onPageChange, rowsPerPage, onRows
   const rowsOptions = [10, 25, 50, 100];
 
   return (
-    <div className="flex justify-between items-center dark:invert bg-gray-200 px-4 py-2 rounded-b-lg w-full sticky top-0 left-0">
+    <div className="flex justify-between items-center dark:invert bg-gray-200 p-2 rounded-b-lg w-full sticky top-0 left-0">
       {/* Rows Per Page */}
-      <div className="flex items-center space-x-2 text-sm font-light">
+      <div className="flex items-center text-sm font-light">
         <label htmlFor="rows-per-page" className="text-sm font-light">Leads:</label>
         <select
           id="rows-per-page"
-          className="bg-transparent outline-none border-none pr-2"
+          className="bg-transparent outline-none border-none"
           value={rowsPerPage}
           onChange={(e) => onRowsPerPageChange(Number(e.target.value))}
         >
@@ -37,43 +37,30 @@ function Pagination({ currentPage, totalPages, onPageChange, rowsPerPage, onRows
       </div>
 
       {/* Pagination Controls */}
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center">
         <label htmlFor="current-page">
           <select
             id="current-page"
-            className="bg-transparent outline-none border-none"
+            className="bg-transparent outline-none border-none text-sm"
             value={currentPage}
             onChange={(e) => onPageChange(Number(e.target.value))}
           >
             {pages.map((page) => (
-              <option key={page} value={page}>{page.toString().padStart(2, "0")}</option>
+              <option key={page} value={page} className="text-sm">{page.toString().padStart(2, "0")}</option>
             ))}
           </select>
         </label>
-        <p className="text-sm font-light ml-2">of {Math.ceil(totalPages) || 0} pages</p>
-        {
-  (() => {
-    console.log("ccccc", currentPage === Math.max(1, totalPages));
-    return null;
-  })()
-}
-{
-  (() => {
-    console.log("Left-hand side type:", currentPage);
-    console.log("Right-hand side type:", Math.max(1, totalPages));
-    return null;
-  })()
-}
+        <p className="text-sm font-light">of {Math.ceil(totalPages) || 0} pages</p>
 
 
         {/* Navigation Buttons */}
         <FaChevronLeft
-          className={`cursor-pointer text-lg px-2 border-l border-r border-gray-300 ml-6 ${currentPage === 1 ? 'text-gray-300 pointer-events-none' : ''}`}
+          className={`cursor-pointer text-sm px-2 border-l border-r border-gray-300 ${currentPage === 1 ? 'text-gray-300 pointer-events-none' : ''}`}
           onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
           size={24}
         />
         <FaChevronRight
-          className={`cursor-pointer text-lg px-2 ${currentPage === Math.max(1, Math.ceil(totalPages)) ? 'text-gray-300 pointer-events-none' : ''}`}
+          className={`cursor-pointer text-sm px-2 ${currentPage === Math.max(1, Math.ceil(totalPages)) ? 'text-gray-300 pointer-events-none' : ''}`}
           onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
           size={22}
         />

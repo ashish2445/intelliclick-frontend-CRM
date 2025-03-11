@@ -115,7 +115,7 @@ const CustomDropdown: React.FC<DropdownProps> = ({ users,selectAssignee }) => {
   };
 
   return (
-    <div ref={dropdownRef} className="relative w-64">
+    <div ref={dropdownRef} className="relative">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className="w-full px-4 py-2 text-left bg-white border rounded-md shadow-sm focus:outline-none"

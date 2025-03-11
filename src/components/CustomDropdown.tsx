@@ -105,17 +105,17 @@ const Dropdown: React.FC<DropdownProps> = ({ options, selectedOption, onSelect }
     <div className="relative inline-block text-left">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="dropdown-btn flex items-center justify-between w-40 bg-white shadow-sm"
-        style={{ color: "#64748B", padding: "0px 10px", border: "1px solid #d6d2d2", borderRadius: "8px", height: "40px", fontSize: "14px", fontWeight: "400", gap: "8px" }}
+        className="dropdown-btn flex items-center justify-between bg-white shadow-sm"
+        style={{ color: "#64748B", padding: "0px 10px", border: "1px solid #d6d2d2", borderRadius: "8px", height: "40px", fontSize: "14px", fontWeight: "400", }}
       >
         {selectedOption ? options.find((opt) => opt.value === selectedOption)?.label : "Select an option"}
         <span className="ml-2">
-          <FaChevronDown className="down-arrow" style={{ cursor: "pointer", color: "#64748B", width: "10px", fontSize: "16px" }} />
+          <FaChevronDown className="down-arrow" style={{ cursor: "pointer", color: "#64748B", fontSize: "16px" }} />
         </span>
       </button>
 
       {isOpen && (
-        <ul className="style-list absolute z-10 mt-2 w-40 bg-white border border-gray-300 rounded-md shadow-lg">
+        <ul className="style-list absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg">
           {options.map((option) => (
             <li
               key={option.value}
