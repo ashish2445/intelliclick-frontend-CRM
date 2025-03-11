@@ -883,7 +883,7 @@ const TableContainer: React.FC = () => {
           <IoSettingsOutline size={24} color="#0D2167" />
         </div>
         {addCondition && <div>
-          <ul className="m-3 mt-0 p-3 pt-0">
+          <ul className="m-3 mt-0 p-3 pt-0 border border-[#C6CCE0] rounded-md">
             {getAllKeys(tableData).map((key) => (
               <li
                 key={key}
