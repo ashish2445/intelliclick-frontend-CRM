@@ -278,7 +278,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                             {favoriteRows[row._id] ? <FaStar color="#fcba03" /> : <FaRegStar color="black" />}
                           </div>
                         </div>
-                      ):col.toLowerCase() === "phonenumber" ? (
+                      ):col.toLowerCase() === "phone" ? (
                         <span className="flex gap-3 text-[12px] font-[400] ">
                                                     <span className="text-[14px]">{typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col] ?? "-"}</span>
  <span><BsFillTelephoneOutboundFill color='#4287f5' />
