@@ -797,8 +797,8 @@ const TableContainer: React.FC = () => {
 
   const fetchTableData = async () => {
     try {
-      // const data = await ManagerInstance.getTableData();
-      const data = responseObject.leads;
+      const data = await ManagerInstance.getTableData();
+      // const data = responseObject.leads;
       setTotalRows(responseObject?.total);
       setTableData(data);
     } catch (error) {
