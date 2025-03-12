@@ -260,7 +260,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                   return (
                     <td key={col} className={`p-3 border-r border-gray-300`}>
                       {col.toLocaleLowerCase() === 'name' ? (
-                        <div className="flex items-center text-[14px] font-[400] gap-2">
+                        <div className="flex items-center text-[14px] font-[400]">
                           <input
                             type="checkbox"
                             className="mr-2"
@@ -268,7 +268,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                             onChange={() => handleRowCheckboxChange(rowIndex)}
                           />
                           {/* <span className="mr-1">⭐</span> */}
-                          <span className="text-[14px]" onClick={handleNameClick} style={{ cursor: "pointer" }}>{row[col]?.name || "-"}</span>
+                          
                           {/* <span className="ml-1"><FaRegStar /></span> */}
                           <div onClick={(e) => {
                               e.stopPropagation();
@@ -277,6 +277,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                             style={{ cursor: "pointer" }}>
                             {favoriteRows[row._id] ? <FaStar color="#fcba03" /> : <FaRegStar color="black" />}
                           </div>
+                          <span className="text-[14px] ml-2" onClick={handleNameClick} style={{ cursor: "pointer" }}>{row[col]?.name || "-"}</span>
                         </div>
                       ):col.toLowerCase() === "phone" ? (
                         <span className="flex gap-3 text-[12px] font-[400] ">
@@ -310,7 +311,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                           ):
                        (
                         <span
-  className={`p-2 rounded-[8px] text-[14px] font-[400] ${columnStyles[col]}`}
+  className={`rounded-[8px] text-[14px] font-[400] ${columnStyles[col]}`}
   style={col === 'status' ? { color: getStatusColor(row[col]) } : undefined}
 >
   <span className="text-[14px]">
