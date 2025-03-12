@@ -281,14 +281,20 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                       ):col.toLowerCase() === "phone" ? (
                         <span className="flex gap-3 text-[12px] font-[400] ">
                                                     <span className="text-[14px]">{typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col] ?? "-"}</span>
- <span><BsFillTelephoneOutboundFill color='#4287f5' />
+ <span style={{cursor:'pointer'}}><BsFillTelephoneOutboundFill color='#4287f5' />
                         </span>
                             </span>
                           ) :col.toLowerCase() === 'leadscore'? (
                             <div className="flex justify-center">
-                              <div className="px-2 py-1 rounded bg-[#F0FDF4] text-[#15803D] text-[14px] text-sm font-medium">
+                              {/* <div className="px-2 py-1 rounded bg-[#F0FDF4] text-[#15803D] text-[14px] text-sm font-medium">
                                 {parseInt(row[col]) > 0 ? `+${parseInt(row[col])}` : parseInt(row[col])}
-                              </div>
+                              </div> */}
+                              <div className="px-2 py-1 rounded bg-[#F0FDF4] text-[#15803D] text-[14px] text-sm font-medium">
+  {isNaN(Number(row[col])) 
+    ? row[col] 
+    : (Number(row[col]) > 0 ? `+${Number(row[col])}` : Number(row[col]))}
+</div>
+
                             </div>
                           ):col.toLowerCase() === 'assignedowner'? (
                             <div className="h-full flex items-center">

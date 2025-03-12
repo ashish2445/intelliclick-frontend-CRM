@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ContactCard from "./contactCard";
 import LeadDetails from "./detailCard";
 import ButtonContainer from "./buttonContainer";
@@ -6,6 +6,7 @@ import Timeline from "./timeline";
 import { MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import SearchBox from "@/components/SearchBox";
+import AddTask from "./addTask";
 
   const leadData = {
     "Lead Source": "Webinar",
@@ -59,6 +60,16 @@ import SearchBox from "@/components/SearchBox";
   ];
 
 const DetailedPage: React.FC = () => {
+
+  const [btnClicked,setBtnClicked] = useState<string>('');
+
+  const handleTaskSubmit = () => {
+    console.log("submitted");
+  }
+
+  const handleCancelTask = () => {
+    setBtnClicked('');
+  }
   return (
     <div className="flex w-full">
       <div className="border border-black rounded-[22px]">
@@ -73,7 +84,11 @@ const DetailedPage: React.FC = () => {
         <LeadDetails details={leadData} />
       </div>
       <div className="w-2/3 p-5">
-        <ButtonContainer />
+        <ButtonContainer setBtn={setBtnClicked} />
+        {btnClicked ==='CreateTask' && 
+          <div className="p-4">
+            <AddTask onSubmit={handleTaskSubmit} onCancel={handleCancelTask} />
+          </div>}
         <div className="p-6 rounded-[22px] border border-black w-full dark-invert">
         {/* Header */}
         {/* <div className="flex justify-between items-center pb-2 mb-4">

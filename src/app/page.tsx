@@ -250,7 +250,7 @@ const Page = () => {
     alert("Button clicked!");
   };
   return (
-    <Form2 />
+    <DetailedPage />
   )
 };
 
