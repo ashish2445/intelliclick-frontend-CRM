@@ -5,7 +5,7 @@ import { IoIosSearch } from "react-icons/io";
 
 interface SearchBoxProps<T> {
   placeholder?: string;
-  setFilter: (query: QueryState | ((prev: QueryState) => QueryState)) => void;
+  setFilter?: (query: QueryState | ((prev: QueryState) => QueryState)) => void;
   iconSize?: number;
   iconColor?: string;
   height?: string | number;
@@ -39,7 +39,7 @@ const SearchBox = <T,>({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && query.trim() !== "") {
-      setFilter((prev) => ({
+      setFilter?.((prev) => ({
         ...prev,
         filters: [
           ...prev.filters, // Keep existing filters

@@ -7,15 +7,14 @@ import { BsFillTelephoneOutboundFill } from "react-icons/bs";
 import { FaRegStar, FaStar } from "react-icons/fa6";
 import { formatCamelCase, handleError } from "@/utils/helpers";
 import { IStatus } from "@/interfaces/tableFilterTypes";
-import { ManagerInstance } from "@/services/manager.service";
-import { Axios, AxiosError } from "axios";
+import { AxiosError } from "axios";
 import SlideInPanel from "./SlideInPanel";
 import DetailedPage from "@/containers/detailedContainer/detailedPage";
 
 interface TableProps {
   data: ITableFields[];
   columns: string[];
-  statusInfo:IStatus[]
+  statusInfo?:IStatus[]
 }
 
 const ItemType = "COLUMN";
@@ -154,12 +153,12 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   };
 
   function getStatusColor(id: number): string | undefined {
-    const status = statusInfo.find(s => s.statusid === id);
+    const status = statusInfo?.find(s => s.statusid === id);
     return status ? status.color : undefined;
   }
 
   function getStatusLabel(id: number): string | undefined {
-    const status = statusInfo.find(s => s.statusid === id);
+    const status = statusInfo?.find(s => s.statusid === id);
     return status ? status.label : undefined;
   }
 

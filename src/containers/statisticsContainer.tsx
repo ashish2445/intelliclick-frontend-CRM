@@ -26,7 +26,9 @@ const StatisticsContainer: React.FC<StatisticsContainerProps> = ({ data,title })
           <>
             {/* Search and pagination container, only shown when data is available */}
             <div className="flex justify-between items-center gap-10 p-2">
-              <SearchBox />
+              <SearchBox placeholder="Type and Press Enter" iconSize={28} responsive
+                  iconColor="#0D2167"
+              />
               <div className="flex items-center gap-3">
                 <MdKeyboardArrowLeft size={24} color="#0D2167" />
                 {1}
@@ -36,7 +38,8 @@ const StatisticsContainer: React.FC<StatisticsContainerProps> = ({ data,title })
             </div>
             {/* Table wrapper to prevent overflow */}
             <div className="overflow-auto flex-grow">
-              <DynamicTable3 columns={columns} data={data} />
+              {/* <DynamicTable3 columns={columns} data={data} /> */}
+              <DynamicTable3 data={data} columns={columns} />
             </div>
           </>
         ) : (

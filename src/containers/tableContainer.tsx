@@ -378,7 +378,6 @@ const TableContainer: React.FC = () => {
 
 
   const totalPages = (totalRows/rowsPerPage);
-  // const totalPages = 10;
 
   const fetchTableData = async () => {
     try {
@@ -394,7 +393,7 @@ const TableContainer: React.FC = () => {
    const fetchAssignees = async () => {
     try {
       const response = await DropdownInstance.getAssignee(); // Await the API response
-      setGetAssignee(response); // Set the resolved data
+      setGetAssignee(response);
     } catch (error) {
       handleError(error as AxiosError,false);
     }
@@ -418,7 +417,7 @@ const TableContainer: React.FC = () => {
   const filterData = async () => {
     try {
       const filterResponse = await FilterInstance.getFilterResponse(query); // Await the response
-      setTableData(filterResponse); // Now it's properly assigned
+      setTableData(filterResponse);
     } catch (error) {
       handleError(error as AxiosError,false);
     }
@@ -446,20 +445,13 @@ const TableContainer: React.FC = () => {
   return (
     <div>
       <div className="p-6 rounded-[22px] border border-black w-full dark-invert">
-        {/* Header */}
-        {/* <div className="flex justify-between items-center pb-2 mb-4">
-          <div className="flex space-x-4">
-            <span className="border-b-2 border-blue-600 text-blue-600 pb-1">Current View</span>
-            <span>Previous View</span>
-          </div>            
-        </div> */}
         <div className="flex justify-between w-full">
           <span className="text-[17px] font-[700] text-[#0D2167]">All Leads</span>
           <button className="bg-[#0D2167] text-white px-4 py-2 rounded-md" onClick={()=>setCondition(prev=>!prev)}>+ Add a Condition</button>
         </div>
 
         <div className="flex justify-between items-center gap-10 p-2">
-          <SearchBox iconSize={32} placeholder='Search' iconColor="#0D2167" />
+          <SearchBox iconSize={32} placeholder='Search' iconColor="#0D2167" responsive={false} setFilter={setQuery}/>
           <div className="flex items-center gap-3">
             <MdKeyboardArrowLeft size={24} color="#0D2167" />
               {1}
@@ -472,7 +464,7 @@ const TableContainer: React.FC = () => {
             {getAllKeys(tableData).map((key) => (
               <li
                 key={key}
-                onClick={() => handleCondition(key)} // Pass the key if needed
+                onClick={() => handleCondition(key)}
                 style={{ cursor: "pointer", padding: "5px" }}
                 className="dark:invert"
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"}
@@ -521,7 +513,7 @@ const TableContainer: React.FC = () => {
           onPageChange={(page) => setCurrentPage(page)}
           onRowsPerPageChange={(rows) => {
             setRowsPerPage(rows);
-            setCurrentPage(1); // Reset to first page when changing rows per page
+            setCurrentPage(1);
           }}
         />
     </div>
