@@ -277,7 +277,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                        (
                         <span
                           className={`rounded-[8px] text-[14px] font-[400] ${columnStyles[col]}`}
-                          style={col === 'status' ? { background: getStatusColor(row[col]), color: 'white', padding: '5px' } : undefined}
+                          style={col === 'status' ? { background: getStatusColor(row[col]), color: 'white', padding: '5px' } : col.toLowerCase() === 'board' ? {padding:'5px'}:undefined}
                         >
                           <span className="text-[14px]">
                             {col === "class" ? extractGrade(row[col]) : col === 'status' ? getStatusLabel(row[col]) : row[col] || "-"}
