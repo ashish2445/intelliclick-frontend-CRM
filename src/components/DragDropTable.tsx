@@ -65,25 +65,10 @@ const columnStyles: Record<string, string> = {
   board:"bg-[#FBE8FF] text-[#8E198F]"
 };
 
-const statusStyles: Record<string, string> = {
-  prospects: "bg-[#D6BCFA] text-[#6B21A8]",
-  qualified: "bg-[#D1FAE5] text-[#065F46]",
-  disqualified: "bg-[#FEE2E2] text-[#B91C1C]",
-  Active: 'bg-green-100 text-green-800',
-      Qualified: 'bg-green-100 text-green-800',
-      Interested: 'bg-yellow-100 text-yellow-800',
-      Disqualified: 'bg-red-100 text-red-800',
-      'Follow Up': 'bg-yellow-100 text-yellow-800',
-      'Trial Booked': 'bg-green-100 text-green-800',
-      'Trial Completed': 'bg-blue-100 text-blue-800'
-};
-
-
 const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   const [displayColumns, setDisplayColumns] = useState<string[]>([]);
   const [columnOrder, setColumnOrder] = useState<string[]>([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  // const [checkedRows, setCheckedRows] = useState<boolean[]>(Array(data?.length).fill(false));
   const [checkedRows, setCheckedRows] = useState<boolean[]>([]);
   const [headerChecked, setHeaderChecked] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -119,7 +104,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
       // await ManagerInstance.toggleFavorite(rowId,favState)
       setFavoriteRows((prev) => ({
         ...prev,
-        [rowId]: !prev[rowId], // Toggle only for the clicked row
+        [rowId]: !prev[Number(rowId)],
       }));
     } catch(error){
       handleError(error as AxiosError,true);
@@ -127,9 +112,9 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   };
 
   function extractGrade(value: string): string {
-  const match = value.match(/^(\d{1,2}(?:st|nd|rd|th))/);
-  return match ? match[1] : value;
-}
+    const match = value.match(/^(\d{1,2}(?:st|nd|rd|th))/);
+    return match ? match[1] : value;
+  }
 
 
 
@@ -154,12 +139,12 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
     }
 
     if (dropdownOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
+        document.addEventListener("mousedown", handleClickOutside);
+      } else {
+        document.removeEventListener("mousedown", handleClickOutside);
+      }
 
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownOpen]);
 
   const handleHeaderCheckboxChange = () => {
@@ -167,13 +152,6 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
     setHeaderChecked(newChecked);
     setCheckedRows(Array(data.length).fill(newChecked));
   };
-
-  // const handleRowCheckboxChange = (index: number) => {
-  //   const updatedCheckedRows = [...checkedRows];
-  //   updatedCheckedRows[index] = !updatedCheckedRows[index];
-  //   setCheckedRows(updatedCheckedRows);
-  //   setHeaderChecked(updatedCheckedRows.every(Boolean));
-  // };
 
   function getStatusColor(id: number): string | undefined {
     const status = statusInfo.find(s => s.statusid === id);
@@ -188,11 +166,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   const handleRowCheckboxChange = (index: number) => {
     const updatedCheckedRows = [...checkedRows];
     updatedCheckedRows[index] = !updatedCheckedRows[index];
-
-    // Only check the header checkbox if all rows are checked
-    // const allChecked = updatedCheckedRows.every(Boolean);
     setCheckedRows(updatedCheckedRows);
-    // setHeaderChecked(allChecked);
     setHeaderChecked(updatedCheckedRows.every(Boolean));
   };
 
@@ -267,9 +241,6 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                             checked={checkedRows[rowIndex] || false}
                             onChange={() => handleRowCheckboxChange(rowIndex)}
                           />
-                          {/* <span className="mr-1">⭐</span> */}
-                          
-                          {/* <span className="ml-1"><FaRegStar /></span> */}
                           <div onClick={(e) => {
                               e.stopPropagation();
                               handleFavoriteToggle(row._id, row.name.favorite);
@@ -281,21 +252,16 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                         </div>
                       ):col.toLowerCase() === "phone" ? (
                         <span className="flex gap-3 text-[12px] font-[400] ">
-                                                    <span className="text-[14px]">{typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col] ?? "-"}</span>
- <span style={{cursor:'pointer'}}><BsFillTelephoneOutboundFill color='#4287f5' />
+                          <span className="text-[14px]">{typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col] ?? "-"}</span>
+                          <span style={{cursor:'pointer'}}><BsFillTelephoneOutboundFill color='#4287f5' /></span>
                         </span>
-                            </span>
-                          ) :col.toLowerCase() === 'leadscore'? (
+                      ) :col.toLowerCase() === 'leadscore'? (
                             <div className="flex justify-center">
-                              {/* <div className="px-2 py-1 rounded bg-[#F0FDF4] text-[#15803D] text-[14px] text-sm font-medium">
-                                {parseInt(row[col]) > 0 ? `+${parseInt(row[col])}` : parseInt(row[col])}
-                              </div> */}
                               <div className="px-2 py-1 rounded bg-[#F0FDF4] text-[#15803D] text-[14px] text-sm font-medium">
-  {isNaN(Number(row[col])) 
-    ? row[col] 
-    : (Number(row[col]) > 0 ? `+${Number(row[col])}` : Number(row[col]))}
-</div>
-
+                                {isNaN(Number(row[col])) 
+                                  ? row[col] 
+                                  : (Number(row[col]) > 0 ? `+${Number(row[col])}` : Number(row[col]))}
+                              </div>
                             </div>
                           ):col.toLowerCase() === 'assignedowner'? (
                             <div className="h-full flex items-center">
@@ -311,14 +277,13 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                           ):
                        (
                         <span
-  className={`rounded-[8px] text-[14px] font-[400] ${columnStyles[col]}`}
-  style={col === 'status' ? { color: getStatusColor(row[col]) } : undefined}
->
-  <span className="text-[14px]">
-    {col === "class" ? extractGrade(row[col]) : col === 'status' ? getStatusLabel(row[col]) : row[col] || "-"}
-  </span>
-</span>
-
+                          className={`rounded-[8px] text-[14px] font-[400] ${columnStyles[col]}`}
+                          style={col === 'status' ? { background: getStatusColor(row[col]), color: 'white', padding: '5px' } : undefined}
+                        >
+                          <span className="text-[14px]">
+                            {col === "class" ? extractGrade(row[col]) : col === 'status' ? getStatusLabel(row[col]) : row[col] || "-"}
+                          </span>
+                        </span>
                       )}
                     </td>
                   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Select, MenuItem, IconButton, SelectChangeEvent,CircularProgress } from "@mui/material";
 import { CalendarToday, Close, AccessTime } from "@mui/icons-material";
 import Dropdown from "./CustomDropdown";
@@ -114,13 +114,6 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ label,setFiltering, o
           </MenuItem>
         ))
       )}
-        {/* <MenuItem value="any">
-          <AccessTime fontSize="small" />
-          Any
-        </MenuItem>
-        <MenuItem value="today">Today</MenuItem>
-        <MenuItem value="yesterday">Yesterday</MenuItem>
-        <MenuItem value="last7days">Last 7 Days</MenuItem> */}
       </Select>
     </div>
   );

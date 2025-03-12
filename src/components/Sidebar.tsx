@@ -3,15 +3,11 @@ import { RiSettings2Line } from "react-icons/ri";
 import { TbBriefcase, TbClipboardText } from "react-icons/tb";
 import { BsHeadset } from "react-icons/bs";
 import { RxShuffle, RxDashboard } from "react-icons/rx";
-import { FaSun, FaMoon } from "react-icons/fa";
 import { BiPieChartAlt2 } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
-import { AiOutlineUser } from "react-icons/ai";
-import { FiLogOut } from "react-icons/fi";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTheme } from 'next-themes'
-import { Switch, FormControlLabel } from "@mui/material";
 import ThemeToggle from "@/components/ThemeToggle";
 import { TbLogout } from "react-icons/tb";
 
@@ -43,7 +39,6 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
   const handleItem = (item: string) => {
     router.push(item)
     setClickedItem(item);
-    // setSelectedItem(item);
     if (isMobile) toggleSidebar();
   };
 

@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import PhoneInputComponent from "@/components/PhoneInput"
-import ClipLoader from 'react-spinners/ClipLoader';
-import { AxiosError } from "axios";
+import PhoneInputComponent from "@/components/PhoneInput";
 
 interface CreateLeadFormProps {
   onSubmit?: () => void; 
@@ -30,11 +28,6 @@ const CreateForm = ({ onSubmit, closeModal, refCode = '' }: CreateLeadFormProps)
     interactedWith: "",
   });
 
-  const [classDetails, setClassDetails] = useState([]);
-  const [isClassLoading, setClassLoading] = useState(false);
-
-//   const classList = classDetails?.map(eachClass => eachClass.name);
-
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;    
     setFormData(prevData => ({ ...prevData, [name]: value }));
@@ -43,20 +36,7 @@ const CreateForm = ({ onSubmit, closeModal, refCode = '' }: CreateLeadFormProps)
   const handlePhoneChange = (phone: string) => {
     setFormData(prevData => ({ ...prevData, phone }));
   };
-
-//   const handleVerifyOtp = async () => {
-//     try {
-//       const payload = { phone: formData.phone, code: verifyOtp };
-//     //   const otpVerifyResponse = await leadServiceInstance.verifyOtp(payload);
-//       if (otpVerifyResponse.message === "OTP verified successfully!") {
-//         setVerifyOtp("");
-//         setOtpSent(false);
-//       }
-//     } catch (error) {
-//       handleError(error as AxiosError, true);
-//     }
-//   };
-
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let formIsValid = true;

@@ -1,16 +1,10 @@
 'use client';
 import SearchBox from "@/components/SearchBox";
-import { useEffect, useState } from "react";
-import { FiSearch } from "react-icons/fi";
-import Dropdown from "@/components/CustomDropdown";
+import { useState } from "react";
 import MultiSelectDropdown from "@/components/MultiSelectDropDown";
 import { FilterState, IAssignee, IStatus, QueryState } from "@/interfaces/tableFilterTypes";
-import { DATA_STATUS } from "@/utils/constants";
 import DateFilter from "@/components/DateFilter";
 import { TIME_RANGE } from "@/utils/constants/timeRanges";
-import { FaPlus } from "react-icons/fa6";
-import Modal from "@/components/Modal";
-import CreateForm from "@/components/Form";
 import CustomDropdown from "@/components/Dropdown2";
 
 const assignee1 = [
@@ -43,10 +37,6 @@ interface TableFiltersProps {
 }
 
 const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,setQuery,assignee,statusInfo}) => {
-  const [search, setSearch] = useState("");
-  // const [filter, setFilter] = useState("All");
-  const [status, setStatus] = useState("Status");
-  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <div className="flex items-center justify-between dark:invert mb-2">
