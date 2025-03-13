@@ -72,7 +72,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   const [checkedRows, setCheckedRows] = useState<boolean[]>([]);
   const [headerChecked, setHeaderChecked] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const [favoriteRows, setFavoriteRows] = useState<Record<number, boolean>>({});
+  const [favoriteRows, setFavoriteRows] = useState<Record<string, boolean>>({});
   const [isPanelOpen, setIsPanelOpen] = useState(false);
 
   useEffect(() => {
@@ -100,10 +100,10 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
 
   const handleFavoriteToggle = async (rowId: string,favState:boolean) => {
     try{
-      await TableInstance.toggleFavorite(rowId,favState)
+      // await TableInstance.toggleFavorite(rowId,favState)
       setFavoriteRows((prev) => ({
         ...prev,
-        [rowId]: !prev[Number(rowId)],
+        [rowId]: !prev[rowId],
       }));
     } catch(error){
       handleError(error as AxiosError,false);
@@ -277,9 +277,9 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                        (
                         <span
                           className={`rounded-[8px] text-[14px] font-[400] ${columnStyles[col]}`}
-                          style={col === 'status' ? { background: getStatusColor(row[col]), color: 'white', padding: '5px' } : col.toLowerCase() === 'board' ? {padding:'5px'}:undefined}
+                          style={col === 'status' ? { background: getStatusColor(row[col]), color: 'white', padding: '5px' } : col.toLowerCase() === 'board' ? {padding:'5px'}: col.toLowerCase() === 'class' ? {padding:'5px'}:undefined}
                         >
-                          <span className="text-[14px]">
+                          <span className={`text-[14px]`}>
                             {col === "class" ? extractGrade(row[col]) : col === 'status' ? getStatusLabel(row[col]) : row[col] || "-"}
                           </span>
                         </span>
