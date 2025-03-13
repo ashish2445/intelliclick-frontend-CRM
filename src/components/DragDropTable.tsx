@@ -177,44 +177,47 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="relative overflow-x-auto w-full dark:invert border-l border-r border-t border-gray-300 rounded-t-lg">
-        <div ref={dropdownRef} className="absolute top-2 right-2 cursor-pointer z-30">
-          <button onClick={() => setDropdownOpen((prev) => !prev)} className="p-2 rounded-full hover:bg-gray-300">
-            <PiDotsThreeOutlineVertical size={20} className="text-gray-600 hover:text-gray-900" />
-          </button>
+        <div ref={dropdownRef} className="absolute top-2 right-10 cursor-pointer z-30">
+          <div className="fixed">
+            <button onClick={() => setDropdownOpen((prev) => !prev)} className="p-2 rounded-full hover:bg-gray-300">
+              <PiDotsThreeOutlineVertical size={20} className="text-gray-600 hover:text-gray-900" />
+            </button>
 
-          {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-40 p-2">
-              <ul className="text-sm text-gray-700">
-                {columnOrder?.map((key, index) => (
-                  <DraggableItem
-                    key={key}
-                    id={key}
-                    index={index}
-                    moveItem={moveItem}
-                    checked={displayColumns.includes(key)}
-                    onCheck={() => handleCheckboxChange(key)}
-                  />
-                ))}
-              </ul>
-            </div>
-          )}
+            {dropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-40 p-2">
+                <ul className="text-sm text-gray-700">
+                  {columnOrder?.map((key, index) => (
+                    <DraggableItem
+                      key={key}
+                      id={key}
+                      index={index}
+                      moveItem={moveItem}
+                      checked={displayColumns.includes(key)}
+                      onCheck={() => handleCheckboxChange(key)}
+                    />
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
 
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-gray-200 text-left text-sm font-semibold h-12">
+              <th className="p-3 border-r border-gray-300 w-12">            
+                <input
+                  type="checkbox"
+                  checked={headerChecked}
+                  onChange={handleHeaderCheckboxChange}
+                />
+              </th>
               {columnOrder?.map((col, colIndex) => {
                 if (!displayColumns.includes(col)) return null;
                 return (
                   <th key={col} className="p-3 border-r text-[12px] font-[400] border-gray-300 min-w-[150px]">
                     {col.includes('name') ? (
-                      <div className="flex items-center">
-                        <input
-                          type="checkbox"
-                          className="mr-2"
-                          checked={headerChecked}
-                          onChange={handleHeaderCheckboxChange}
-                        />
+                      <div className="flex items-center">                        
                           <span className="text-[14px]">{formatCamelCase(col)}</span>
                       </div>
                     ) : (
@@ -228,18 +231,20 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
           <tbody>
             {data?.map((row, rowIndex) => (
               <tr key={rowIndex} className="border-b border-gray-200 text-sm">
+                <td className="p-3 border-r border-gray-300 w-12 text-center">
+                  <input
+                    type="checkbox"
+                    checked={checkedRows[rowIndex] || false}
+                    onChange={() => handleRowCheckboxChange(rowIndex)}
+                  />
+                </td>
                 {columnOrder?.map((col, colIndex) => {
                   if (!displayColumns.includes(col)) return null;
                   return (
                     <td key={col} className={`p-3 border-r border-gray-300`}>
                       {col.toLocaleLowerCase() === 'name' ? (
                         <div className="flex items-center text-[14px] font-[400] inline-block whitespace-nowrap">
-                          <input
-                            type="checkbox"
-                            className="mr-2"
-                            checked={checkedRows[rowIndex] || false}
-                            onChange={() => handleRowCheckboxChange(rowIndex)}
-                          />
+                          
                           <div onClick={(e) => {
                               e.stopPropagation();
                               handleFavoriteToggle(row._id, row.name.favorite);
