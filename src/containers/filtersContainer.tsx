@@ -7,27 +7,6 @@ import DateFilter from "@/components/DateFilter";
 import { TIME_RANGE } from "@/utils/constants/timeRanges";
 import CustomDropdown from "@/components/Dropdown2";
 
-const assignee1 = [
-        {
-            "_id": "67cb17f097eb04cf8489c914",
-            "name": "admin@gmail.com",
-            "email": "admin@gmail.com",
-            "depth": 0
-        },
-        {
-            "_id": "67cb19be97eb04cf8489c92e",
-            "name": "manager@gmail.com",
-            "email": "manager@gmail.com",
-            "depth": 0
-        },
-        {
-            "_id": "67cb19dd97eb04cf8489c931",
-            "name": "caller@gmail.com",
-            "email": "caller@gmail.com",
-            "depth": 1
-        }
-]
-
 interface TableFiltersProps {
   filterState:FilterState
   setFilter: (newState: (prev: FilterState) => FilterState) => void;
@@ -48,7 +27,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,setQuer
           <SearchBox placeholder="Type and Press Enter" setFilter={setQuery} iconSize={28} responsive
               iconColor="#0D2167"
           />
-          <CustomDropdown users={assignee1} selectAssignee={setQuery} />
+          <CustomDropdown users={assignee} selectAssignee={setQuery} />
           <DateFilter options={[...TIME_RANGE]} setDate={setQuery} />
         
         <MultiSelectDropdown options={statusInfo} selectedOptions={filterState.status} onSelect={(values: string[]) => {

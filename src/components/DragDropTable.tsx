@@ -10,6 +10,7 @@ import { IStatus } from "@/interfaces/tableFilterTypes";
 import { AxiosError } from "axios";
 import SlideInPanel from "./SlideInPanel";
 import DetailedPage from "@/containers/detailedContainer/detailedPage";
+import { TableInstance } from "@/services/table.service";
 
 interface TableProps {
   data: ITableFields[];
@@ -98,15 +99,14 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   }, [data]);
 
   const handleFavoriteToggle = async (rowId: string,favState:boolean) => {
-    console.log("favvv",rowId,favState);
     try{
-      // await ManagerInstance.toggleFavorite(rowId,favState)
+      await TableInstance.toggleFavorite(rowId,favState)
       setFavoriteRows((prev) => ({
         ...prev,
         [rowId]: !prev[Number(rowId)],
       }));
     } catch(error){
-      handleError(error as AxiosError,true);
+      handleError(error as AxiosError,false);
     }
   };
 

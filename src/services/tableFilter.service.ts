@@ -5,7 +5,6 @@ import { FilterState, QueryState } from '@/interfaces/tableFilterTypes';
 
 class FilterService{
     getFilterResponse = async (payload: QueryState) => {
-    //   const url = `api/leader/read/get-leader-data?userId=${userId}`;
       const url = 'api/lead/read/leads-without-actions';
       return await callApi(url,API.POST,payload,true);
     }
