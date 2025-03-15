@@ -283,15 +283,28 @@ export interface TaskData {
 }
 
 const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Nilesh Patel" }) => {
-  const [taskData, setTaskData] = useState<IAddTask>({
-    type: '', // Added missing type property
-    subject: '',
-    description: '',
-    startTime: '',
-    endTime: '',
-    associated_lead: '',
-  });
+  // const [taskData, setTaskData] = useState<IAddTask>({
+  //   type: '',
+  //   dueDate: '',
+  //   time: '',
+  //   note: '',
+  //   remindMe: true,
+  //   startTime: '15 min',
+  //   sendEmailReminder: false,
+  //   assignedUser: 'prashant.kumar@intelliclickin',
+  // });
 
+  const [taskData, setTaskData] = useState<IAddTask>({
+    type: '',
+    Activity: '', // Ensure this field is always defined
+    dueDate: '',
+    time: '',
+    note: '',
+    remindMe: true,
+    startTime: '15 min',
+    sendEmailReminder: false,
+    assignedUser: 'prashant.kumar@intelliclickin',
+  });
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -305,11 +318,11 @@ const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Niles
   };
 
   const handleAddTask = async () => {
-          console.log('Task Created:', response.data);
+          console.log('Task Created:', taskData);
 
     try {
       const response = await TableInstance.createTask(taskData);
-      onSubmit?.(taskData); // Pass data to parent if needed
+      // onSubmit?.(taskData); // Pass data to parent if needed
     } catch (error) {
       handleError(error as AxiosError, false);
     }
@@ -334,7 +347,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Niles
               <input
                 type="text"
                 name="Activity"
-                value={taskData.Activity}
+                value={taskData.Activity || ''} // Ensures it is never undefined
                 onChange={handleInputChange}
                 placeholder="Lead Follow up By Nilesh Patel"
                 className="w-full border border-gray-300 bg-[#F9F9F9] rounded-md px-3 py-2 focus:outline-none"
