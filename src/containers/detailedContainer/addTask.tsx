@@ -283,11 +283,11 @@ export interface TaskData {
 }
 
 const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Nilesh Patel" }) => {
+
   // const [taskData, setTaskData] = useState<IAddTask>({
   //   type: '',
-  //   dueDate: '',
-  //   time: '',
-  //   note: '',
+  //   endTime: '',
+  //   description: '',
   //   remindMe: true,
   //   startTime: '15 min',
   //   sendEmailReminder: false,
@@ -295,19 +295,19 @@ const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Niles
   // });
 
   const [taskData, setTaskData] = useState<IAddTask>({
-    type: '',
-    Activity: '', // Ensure this field is always defined
-    dueDate: '',
-    time: '',
-    note: '',
-    remindMe: true,
-    startTime: '15 min',
-    sendEmailReminder: false,
-    assignedUser: 'prashant.kumar@intelliclickin',
+    activity: '', // Default to an empty string, assuming it's an ID
+    description: '',
+    startTime: '', // Should be an ISO string (e.g., "2025-03-15T11:00:00Z")
+    endTime: '',
+    reminder: '', // Defaulting to 30 minutes
+    emailBy: false, // Defaulting to false
+    associated_lead: '', // Default to an empty string, assuming it's an ID
   });
 
 
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    console.log("sel inp",e.target);
     const { name, value } = e.target;
     setTaskData((prev) => ({ ...prev, [name]: value }));
   };
@@ -339,15 +339,15 @@ const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Niles
         <div className="text-black bg-[#E446EF80] text-lg font-semibold px-4 py-3 border-b border-black">
           Add Task
         </div>
-        <form onSubmit={handleSubmit} className="p-4">
+        <form className="p-4">
           {/* Top Row - Activity, Due Date, Time */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div>
               <label className="block text-sm mb-2 text-[#0D2167]">Activity</label>
               <input
                 type="text"
-                name="Activity"
-                value={taskData.Activity || ''} // Ensures it is never undefined
+                name="activity"
+                value={taskData.activity || ''} // Ensures it is never undefined
                 onChange={handleInputChange}
                 placeholder="Lead Follow up By Nilesh Patel"
                 className="w-full border border-gray-300 bg-[#F9F9F9] rounded-md px-3 py-2 focus:outline-none"
@@ -359,8 +359,8 @@ const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Niles
               <label className="block text-sm mb-2 text-[#0D2167]">Due Date</label>
               <input
                 type="date"
-                name="dueDate"
-                value={taskData.dueDate}
+                name="endTime"
+                value={taskData.endTime}
                 onChange={handleInputChange}
                 className="w-full border border-gray-300 bg-[#F9F9F9] rounded-md px-3 py-2 focus:outline-none"
                 required
@@ -371,8 +371,8 @@ const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Niles
               <label className="block text-sm mb-2 text-[#0D2167]">Time</label>
               <input
                 type="time"
-                name="time"
-                value={taskData.time}
+                name="startTime"
+                value={taskData.startTime}
                 onChange={handleInputChange}
                 className="w-full border border-gray-300 bg-[#F9F9F9] rounded-md px-3 py-2 focus:outline-none"
                 required
@@ -385,8 +385,8 @@ const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Niles
             <div className="flex-grow">
               <label className="block text-sm mb-2 text-[#0D2167]">Note</label>
               <textarea
-                name="note"
-                value={taskData.note}
+                name="description"
+                value={taskData.description}
                 onChange={handleInputChange}
                 rows={3}
                 className="w-full h-20 border border-gray-300 bg-[#F9F9F9] rounded-md px-3 py-2 focus:outline-none"
@@ -396,8 +396,8 @@ const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Niles
             <div className="flex flex-col justify-center w-48">
               <label className="text-sm text-[#0D2167] mb-2">Remind Me</label>
               <select
-                name="reminderTime"
-                value={taskData.reminderTime}
+                name="reminder"
+                value={taskData.reminder}
                 onChange={handleInputChange}
                 className="border border-gray-300 rounded-md px-3 py-1 bg-[#F9F9F9]"
               >
@@ -415,8 +415,8 @@ const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Niles
             <label className="flex items-center">
               <input
                 type="checkbox"
-                name="sendEmailReminder"
-                checked={taskData.sendEmailReminder}
+                name="emailBy"
+                checked={taskData.emailBy}
                 onChange={handleCheckboxChange}
                 className="w-4 h-4 text-[#0D2167] border-gray-300 rounded"
               />
@@ -428,8 +428,8 @@ const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Niles
           <div className="mb-6">
             <label className="text-sm text-[#0D2167]">Assign Task to User</label>
             <select
-              name="assignedUser"
-              value={taskData.assignedUser}
+              name="associated_lead"
+              value={taskData.associated_lead}
               onChange={handleInputChange}
               className="border border-gray-300 rounded-md px-3 py-1 bg-[#F9F9F9] w-full mt-2"
             >
@@ -442,7 +442,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Niles
           <div className="flex gap-4">
             <button
               type="submit"
-              onClick={handleAddTask}
+              onClick={handleSubmit}
               className="px-6 py-2 bg-[#FBE8FF] text-[#8E198F] rounded-md hover:bg-[#F4D5FF] text-sm font-medium"
             >
               Add
