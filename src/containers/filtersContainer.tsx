@@ -24,7 +24,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,setQuer
       </h2>
       <div className="flex items-center">
         <div className="flex space-x-6">
-          <SearchBox placeholder="Type and Press Enter" setFilter={setQuery} iconSize={28} responsive
+          <SearchBox placeholder="Type and Press Enter" setFilter={setQuery} iconSize={24} responsive
               iconColor="#0D2167"
           />
           <CustomDropdown users={assignee} selectAssignee={setQuery} />

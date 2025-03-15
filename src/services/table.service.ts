@@ -1,5 +1,6 @@
 import { API } from '@/utils/enum';
 import { callApi } from './http.service';
+import { IAddTask } from '@/interfaces/addTask.interface';
 
 const responseObject = {
     "total": 19,
@@ -337,7 +338,7 @@ const responseObject = {
 class TableService{
  
     getTableData = async () => {
-      const url = `api/lead/read/leads-without-actions`;
+      const url = 'api/lead/read/leads-without-actions';
       return responseObject;
       // return await callApi(url,API.POST);
     }
@@ -345,6 +346,11 @@ class TableService{
     toggleFavorite = async (leadId:string,currentState:boolean) => {
       const url = `api/lead/write/favorite/${leadId}`;
       return await callApi(url,API.PATCH,{favorite:currentState},true);
+    }
+
+    createTask = async (taskDetails:IAddTask) => {
+      const url = 'api/task/create';
+      return await callApi(url,API.POST,taskDetails,true);
     }
 }
 
