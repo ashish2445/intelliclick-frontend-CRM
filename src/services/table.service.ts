@@ -405,6 +405,11 @@ class TableService{
       return await callApi(url,API.PATCH,{favorite:currentState},true);
     }
 
+    getFullDetails = async (userId:string) => {
+      const url = `api/lead/read/get-lead-by?Id=${userId}`;
+      return await callApi(url,API.GET);
+    } 
+
     createTask = async (taskDetails:IAddTask) => {
       const url = 'api/task/create';
       return await callApi(url,API.POST,taskDetails,true);

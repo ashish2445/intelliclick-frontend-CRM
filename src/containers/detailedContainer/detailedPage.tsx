@@ -207,15 +207,14 @@ const DetailedPage: React.FC = () => {
     async function fetchLeadData() {
       try {
         // Replace with your actual API call
-        const response = await TableInstance.getLeadById(id as string);
+        const response = await TableInstance.getFullDetails(id as string);
         // Process your response
         console.log("Fetched lead data:", response);
         } catch (error) {
         console.error("Error fetching lead:", error);
         handleError(error as AxiosError, false);
       }
-    }
-    
+    }    
     fetchLeadData();
   }, [id]);
 
