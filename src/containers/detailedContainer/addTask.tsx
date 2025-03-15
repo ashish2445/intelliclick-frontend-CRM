@@ -307,7 +307,6 @@ const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Niles
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    console.log("sel inp",e.target);
     const { name, value } = e.target;
     setTaskData((prev) => ({ ...prev, [name]: value }));
   };
@@ -318,8 +317,6 @@ const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Niles
   };
 
   const handleAddTask = async () => {
-          console.log('Task Created:', taskData);
-
     try {
       const response = await TableInstance.createTask(taskData);
       // onSubmit?.(taskData); // Pass data to parent if needed
