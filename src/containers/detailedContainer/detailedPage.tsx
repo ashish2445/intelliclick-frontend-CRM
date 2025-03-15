@@ -120,7 +120,8 @@
 
 // export default DetailedPage;
 
-import React, { useState } from "react";
+'use client';
+import React, { useEffect, useState } from "react";
 import ContactCard from "./contactCard";
 import LeadDetails from "./detailCard";
 import ButtonContainer from "./buttonContainer";
@@ -129,6 +130,10 @@ import { MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md
 import { IoSettingsOutline } from "react-icons/io5";
 import SearchBox from "@/components/SearchBox";
 import AddTask from "./addTask";
+import { useParams } from "next/navigation";
+import { handleError } from "@/utils/helpers";
+import { AxiosError } from "axios";
+import { TableInstance } from "@/services/table.service";
 
 const leadData = {
   "Lead Source": "Webinar",
@@ -183,6 +188,8 @@ const timelineData = [
 
 const DetailedPage: React.FC = () => {
   const [btnClicked, setBtnClicked] = useState<string>("");
+  const params = useParams(); // Use useParams instead of router.query
+  const id = params.id;
 
   const handleTaskSubmit = () => {
     console.log("submitted");
@@ -192,6 +199,25 @@ const DetailedPage: React.FC = () => {
   const handleCancelTask = () => {
     setBtnClicked("");
   };
+
+  useEffect(() => {
+    if (!id) return; // Wait until id is available
+    
+    // Fetch the lead data using the ID
+    async function fetchLeadData() {
+      try {
+        // Replace with your actual API call
+        const response = await TableInstance.getLeadById(id as string);
+        // Process your response
+        console.log("Fetched lead data:", response);
+        } catch (error) {
+        console.error("Error fetching lead:", error);
+        handleError(error as AxiosError, false);
+      }
+    }
+    
+    fetchLeadData();
+  }, [id]);
 
   return (
     <div className="container mx-auto p-8">

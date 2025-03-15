@@ -169,9 +169,17 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
     setHeaderChecked(updatedCheckedRows.every(Boolean));
   };
 
-  const handleNameClick = () => {
-    setIsPanelOpen(true);
-  }
+  // const handleNameClick = () => {
+  //   setIsPanelOpen(true);
+  // }
+
+  const handleNameClick = (rowId: string) => {
+    // Construct the URL for the lead details page
+    const detailsUrl = `/dashboard/table/${rowId}`;
+    
+    // Open the details page in a new tab
+    window.open(detailsUrl, '_blank');
+  };
 
 
   return (
@@ -205,7 +213,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-gray-200 text-left text-sm font-semibold h-12">
-              <th className="p-3 border-r border-gray-300 w-12">            
+              <th className="p-3 border-r border-gray-300 w-12 text-center">            
                 <input
                   type="checkbox"
                   checked={headerChecked}
@@ -243,8 +251,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                   return (
                     <td key={col} className={`p-3 border-r border-gray-300`}>
                       {col.toLocaleLowerCase() === 'name' ? (
-                        <div className="flex items-center text-[14px] font-[400] inline-block whitespace-nowrap">
-                          
+                        <div className="flex items-center text-[14px] font-[400] inline-block whitespace-nowrap">                          
                           <div onClick={(e) => {
                               e.stopPropagation();
                               handleFavoriteToggle(row._id, row.name.favorite);
@@ -252,7 +259,8 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                             style={{ cursor: "pointer" }}>
                             {favoriteRows[row._id] ? <FaStar color="#fcba03" /> : <FaRegStar color="black" />}
                           </div>
-                          <span className="text-[14px] ml-2" onClick={handleNameClick} style={{ cursor: "pointer" }}>{row[col]?.name || "-"}</span>
+                          <span className="text-[14px] ml-2" onClick={() => handleNameClick(row._id)} 
+                            style={{ cursor: "pointer", color: "#0D2167", textDecoration: "underline" }}>{row[col]?.name || "-"}</span>
                         </div>
                       ):col.toLowerCase() === "phone" ? (
                         <span className="flex gap-3 text-[12px] font-[400] ">
@@ -297,11 +305,11 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
           </tbody>
         </table>
       </div>
-      {isPanelOpen && (
+      {/* {isPanelOpen && (
         <SlideInPanel isOpen={isPanelOpen} setIsOpen={setIsPanelOpen}>
           <DetailedPage />
         </SlideInPanel>
-      )}
+      )} */}
     </DndProvider>
   );
 };
