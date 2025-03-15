@@ -251,7 +251,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                   return (
                     <td key={col} className={`p-3 border-r border-gray-300`}>
                       {col.toLocaleLowerCase() === 'name' ? (
-                        <div className="flex items-center text-[14px] font-[400] inline-block whitespace-nowrap">                          
+                        <div className="flex items-center text-[14px] font-[400] gap-2 inline-block whitespace-nowrap">                       
                           <div onClick={(e) => {
                               e.stopPropagation();
                               handleFavoriteToggle(row._id, row.name.favorite);
@@ -259,8 +259,37 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                             style={{ cursor: "pointer" }}>
                             {favoriteRows[row._id] ? <FaStar color="#fcba03" /> : <FaRegStar color="black" />}
                           </div>
-                          <span className="text-[14px] ml-2" onClick={() => handleNameClick(row._id)} 
-                            style={{ cursor: "pointer", color: "#0D2167", textDecoration: "underline" }}>{row[col]?.name || "-"}</span>
+                          {/* <span className="text-[14px] ml-2" onClick={() => handleNameClick(row._id)} 
+                            style={{ cursor: "pointer", color: "#0D2167", textDecoration: "underline" }}>{row[col]?.name || "-"}</span> */}
+                            <div className="relative group">
+                            <span
+                              className="text-[14px] cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px] inline-block"
+                              onClick={() => handleNameClick(row._id)}
+                              style={{
+                                cursor: "pointer",
+                                color: "#0D2167",
+                                textDecoration: "underline",
+                              }}
+                            >
+                              {row[col]?.name || "-"}
+                            </span>
+                            {/* Tooltip for long names */}
+                            {(() => {
+                              const fullName = row[col]?.name || "-";
+                              const nameParts = fullName.split(" ");
+
+                              if (nameParts.length > 2) {
+                                return (
+                                  <div className="absolute left-0 top-full mt-1 hidden group-hover:block bg-white text-black p-2 rounded-md text-sm z-50 whitespace-nowrap shadow-lg">
+                                    <div className="flex items-center text-[14px] cursor-pointer whitespace-nowrap gap-1">
+                                      <span>{fullName}</span>
+                                    </div>
+                                  </div>
+                                );
+                              }
+                              return null;
+                            })()}
+                          </div>  
                         </div>
                       ):col.toLowerCase() === "phone" ? (
                         <span className="flex gap-3 text-[12px] font-[400] ">
