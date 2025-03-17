@@ -1,0 +1,283 @@
+'use client';
+import React, { useState } from 'react';
+import { Edit2, Trash2, ChevronDown, ChevronUp, Plus, Circle, AlertTriangle, Bell, Calendar, Check, ThumbsUp, Star, RefreshCcw } from 'lucide-react';
+
+interface StageProps {
+  className?: string;
+}
+
+interface StageItem {
+  id: string;
+  title: string;
+  color: string;
+  icon: React.ReactNode;
+  deleted?: boolean;
+}
+
+export const ActiveStage: React.FC<StageProps> = ({ className }) => {
+  const [stageItems, setStageItems] = useState<StageItem[]>([
+    { id: '1', title: 'Qualified', color: 'bg-green-100', icon: <Check size={16} className="text-green-600" /> },
+    { id: '2', title: 'Disqualified', color: 'bg-red-100', icon: <AlertTriangle size={16} className="text-red-600" /> },
+    { id: '3', title: 'Follow Up', color: 'bg-yellow-100', icon: <Bell size={16} className="text-yellow-600" /> },
+    { id: '4', title: 'Trial Booked', color: 'bg-green-100', icon: <Calendar size={16} className="text-green-600" /> },
+    { id: '5', title: 'Trial Converted', color: 'bg-purple-100', icon: <Circle size={16} className="text-purple-600" /> },
+    { id: '6', title: 'Trial Follow-up', color: 'bg-yellow-100', icon: <Bell size={16} className="text-yellow-600" /> },
+    { id: '7', title: 'goodfeedback', color: 'bg-green-100', icon: <ThumbsUp size={16} className="text-green-600" /> },
+    { id: '8', title: 'Interested', color: 'bg-green-100', icon: <Star size={16} className="text-green-600" /> }
+  ]);
+  
+  // Deleted status items
+  const [deletedItems, setDeletedItems] = useState<StageItem[]>([
+    { id: 'd1', title: 'Not Interested', color: 'bg-gray-100', icon: <Circle size={16} className="text-gray-600" />, deleted: true },
+    { id: 'd2', title: 'Lost Opportunity', color: 'bg-red-100', icon: <Circle size={16} className="text-red-600" />, deleted: true },
+    { id: 'd3', title: 'Duplicate Lead', color: 'bg-yellow-100', icon: <Circle size={16} className="text-yellow-600" />, deleted: true }
+  ]);
+  
+  const [showDeletedItems, setShowDeletedItems] = useState(false);
+  const [editingItem, setEditingItem] = useState<string | null>(null);
+  const [isAddingNew, setIsAddingNew] = useState(false);
+  const [selectedColor, setSelectedColor] = useState<string>("bg-green-100");
+  const [stageName, setStageName] = useState<string>("");
+
+  const colorOptions = [
+    { name: 'Green', value: 'bg-green-100', icon: <Circle size={16} className="text-green-600" /> },
+    { name: 'Red', value: 'bg-red-100', icon: <Circle size={16} className="text-red-600" /> },
+    { name: 'Yellow', value: 'bg-yellow-100', icon: <Circle size={16} className="text-yellow-600" /> },
+    { name: 'Purple', value: 'bg-purple-100', icon: <Circle size={16} className="text-purple-600" /> },
+    { name: 'Blue', value: 'bg-blue-100', icon: <Circle size={16} className="text-blue-600" /> },
+    { name: 'Orange', value: 'bg-orange-100', icon: <Circle size={16} className="text-orange-600" /> },
+    { name: 'Pink', value: 'bg-pink-100', icon: <Circle size={16} className="text-pink-600" /> },
+    { name: 'Gray', value: 'bg-gray-100', icon: <Circle size={16} className="text-gray-600" /> }
+  ];
+
+  const handleEditClick = (itemId: string, color: string, title: string) => {
+    setEditingItem(itemId);
+    setSelectedColor(color);
+    setStageName(title);
+    setIsAddingNew(false);
+  };
+
+  const handleColorChange = (colorValue: string) => {
+    setSelectedColor(colorValue);
+  };
+
+  const handleSaveChanges = () => {
+    if (stageName.trim() === "") {
+      return; // Don't save if name is empty
+    }
+    
+    if (editingItem) {
+      // Update existing item
+      const updatedItems = stageItems.map(item => {
+        if (item.id === editingItem) {
+          const iconColor = selectedColor.replace('bg-', 'text-').replace('-100', '-600');
+          return {
+            ...item,
+            title: stageName,
+            color: selectedColor,
+            icon: <Circle size={16} className={iconColor} />
+          };
+        }
+        return item;
+      });
+      setStageItems(updatedItems);
+    } else if (isAddingNew) {
+      // Add new item
+      const iconColor = selectedColor.replace('bg-', 'text-').replace('-100', '-600');
+      const newItem = {
+        id: Date.now().toString(),
+        title: stageName,
+        color: selectedColor,
+        icon: <Circle size={16} className={iconColor} />
+      };
+      setStageItems([...stageItems, newItem]);
+    }
+    
+    closePopup();
+  };
+
+  const handleDeleteItem = (itemId: string) => {
+    const itemToDelete = stageItems.find(item => item.id === itemId);
+    if (itemToDelete) {
+      // Remove from active items
+      const updatedItems = stageItems.filter(item => item.id !== itemId);
+      setStageItems(updatedItems);
+      
+      // Add to deleted items
+      setDeletedItems([...deletedItems, {...itemToDelete, deleted: true}]);
+    }
+  };
+
+  const handleRestoreItem = (itemId: string) => {
+    const itemToRestore = deletedItems.find(item => item.id === itemId);
+    if (itemToRestore) {
+      // Remove from deleted items
+      const updatedDeletedItems = deletedItems.filter(item => item.id !== itemId);
+      setDeletedItems(updatedDeletedItems);
+      
+      // Add to active items
+      setStageItems([...stageItems, {...itemToRestore, deleted: false}]);
+    }
+  };
+
+  const handleAddNew = () => {
+    setIsAddingNew(true);
+    setEditingItem(null);
+    setSelectedColor("bg-green-100");
+    setStageName("");
+  };
+
+  const closePopup = () => {
+    setEditingItem(null);
+    setIsAddingNew(false);
+  };
+
+  const toggleDeletedItems = () => {
+    setShowDeletedItems(!showDeletedItems);
+  };
+
+  return (
+    <div className={`flex flex-col w-full ${className}`}>
+      {/* Header styled to match the screenshot */}
+      <div className="bg-green-50 rounded-t-lg p-2 text-center font-medium border border-green-200 border-b-0">
+        Active stage
+      </div>
+      
+      <div className="border border-gray-200 rounded-b-lg p-4">
+        {/* Centered "+ Add" button */}
+        <div className="flex items-center justify-center mb-4">
+          <div 
+            className="flex items-center justify-center w-full border border-gray-300 rounded-md px-4 py-2 cursor-pointer hover:bg-gray-50"
+            onClick={handleAddNew}
+          >
+            <div className="text-black flex items-center justify-center">
+              <span>+ Add</span>
+            </div>
+          </div>
+        </div>
+        
+        <div className="space-y-2">
+          {stageItems.map((item) => (
+            <div 
+              key={item.id} 
+              className={`${item.color} flex items-center justify-between p-2 rounded-md relative`}
+            >
+              <div className="flex items-center space-x-2">
+                {item.icon}
+                <span className="font-medium">{item.title}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <button 
+                  className="text-gray-500 hover:text-gray-700"
+                  onClick={() => handleEditClick(item.id, item.color, item.title)}
+                >
+                  <Edit2 size={16} />
+                </button>
+                <button 
+                  className="text-gray-500 hover:text-red-600"
+                  onClick={() => handleDeleteItem(item.id)}
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        {/* Deleted statuses section */}
+        <div className="mt-4">
+          <button 
+            className="flex items-center text-sm text-gray-500 hover:text-gray-700 cursor-pointer"
+            onClick={toggleDeletedItems}
+          >
+            <span>Deleted statuses ({deletedItems.length})</span>
+            {showDeletedItems ? (
+              <ChevronUp size={16} className="ml-1" />
+            ) : (
+              <ChevronDown size={16} className="ml-1" />
+            )}
+          </button>
+          
+          {/* Deleted items list */}
+          {showDeletedItems && (
+            <div className="mt-2 space-y-2 border-t border-gray-200 pt-2">
+              {deletedItems.map((item) => (
+                <div 
+                  key={item.id} 
+                  className={`${item.color} flex items-center justify-between p-2 rounded-md relative opacity-70`}
+                >
+                  <div className="flex items-center space-x-2">
+                    {item.icon}
+                    <span className="font-medium">{item.title}</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button 
+                      className="text-gray-500 hover:text-green-600"
+                      onClick={() => handleRestoreItem(item.id)}
+                      title="Restore"
+                    >
+                      <RefreshCcw size={16} />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Edit/Add popup */}
+      {(editingItem !== null || isAddingNew) && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-96 shadow-lg">
+            <h3 className="text-lg font-semibold mb-4">
+              {isAddingNew ? "Add New Stage" : "Edit Stage"}
+            </h3>
+            
+            {/* Stage Name input field (now shown for both edit and add) */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Stage Name
+              </label>
+              <input
+                type="text"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={stageName}
+                onChange={(e) => setStageName(e.target.value)}
+                placeholder="Enter stage name"
+              />
+            </div>
+            
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Select Color
+            </label>
+            <div className="grid grid-cols-4 gap-2 mb-6">
+              {colorOptions.map((color) => (
+                <button
+                  key={color.value}
+                  className={`${color.value} h-8 w-8 rounded-full border-2 ${selectedColor === color.value ? 'border-blue-500' : 'border-transparent'}`}
+                  onClick={() => handleColorChange(color.value)}
+                />
+              ))}
+            </div>
+            <div className="flex justify-end space-x-2">
+              <button 
+                className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300"
+                onClick={closePopup}
+              >
+                Cancel
+              </button>
+              <button 
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                onClick={handleSaveChanges}
+                disabled={stageName.trim() === ""}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};

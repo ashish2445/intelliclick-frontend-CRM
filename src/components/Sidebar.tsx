@@ -23,7 +23,8 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
   const [hovered, setHovered] = useState(false);
   const [clickedItem, setClickedItem] = useState("/dashboard/home");
   const [mounted, setMounted] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme()
+  const [devDropdownOpen, setDevDropdownOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
   const router = useRouter();
 
 
@@ -36,11 +37,21 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
   const handleMouseEnter = () => setTimeout(() => setHovered(true), 100);
   const handleMouseLeave = () => setTimeout(() => setHovered(false), 100);
 
-  const handleItem = (item: string) => {
+  const handleItem = (item: string, e?: React.SyntheticEvent) => {
+    if (item === '/dashboard/developers'){
+      setDevDropdownOpen(true);
+      if (e) {
+        setDropdownPosition(e.currentTarget.getBoundingClientRect());
+      }
+      setClickedItem(item);
+      return;
+    }
     router.push(item)
     setClickedItem(item);
     if (isMobile) toggleSidebar();
   };
+
+  console.log("possss",dropdownPosition);
 
   return (
     <div
@@ -65,13 +76,13 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
             { icon: <TbClipboardText size={30} />, path: "/dashboard/table", label: "Leads Management" },
             { icon: <BiPieChartAlt2 size={30} />, path: "/dashboard/form", label: "Create Form" },
             { icon: <TbBriefcase size={30} />, path: "stores", label: "Stores" },
-            { icon: <BsHeadset size={30} />, path: "providers", label: "Providers" },
-            { icon: <RiSettings2Line size={30} />, path: "developers", label: "Developers" },
+            { icon: <BsHeadset size={30} />, path: "/dashboard/home2", label: "Home2" },
+            { icon: <RiSettings2Line size={30} />, path: "/dashboard/developers", label: "Developers" },
             { icon: <RxShuffle size={30} />, path: "workflows", label: "Workflows" },
           ].map((item, index) => (
             <li
               key={index}
-              onClick={() => handleItem(item.path)}
+              onClick={(e) => handleItem(item.path,e)}
               className={`flex ${hovered?'':'justify-center'} items-center gap-4 min-h-[60px] px-4 cursor-pointer transition-colors duration-300
                 ${clickedItem === item.path
                   ? "bg-[#FBE8FF] text-[#D029D8] font-semibold"
@@ -82,6 +93,29 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
               {(hovered || isOpen) && <span className="whitespace-nowrap">{item.label}</span>}
             </li>
           ))}
+          {devDropdownOpen && clickedItem === "/dashboard/developers" && (
+              <ul className={`absolute z-40 w-40 bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-600 rounded-md overflow-hidden`}   style={{ top: `${dropdownPosition.top}px`, left: `80px` }}
+>
+                <li
+                  className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                  onClick={() => handleItem("/dashboard/team")}
+                >
+                  Team
+                </li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                  onClick={() => handleItem("/dashboard/stages")}
+                >
+                  Lead Stage
+                </li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                  onClick={() => handleItem("/developers/docs")}
+                >
+                  Lead Field
+                </li>
+              </ul>
+            )}
         </ul>
        
         <div

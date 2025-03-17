@@ -1,3 +1,4 @@
+'use client';
 import { ITableFields } from "@/interfaces";
 import React, { useState,useEffect, useRef } from "react";
 import { PiDotsThreeOutlineVertical } from "react-icons/pi";
