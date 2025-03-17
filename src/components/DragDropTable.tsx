@@ -8,9 +8,6 @@ import { FaRegStar, FaStar } from "react-icons/fa6";
 import { formatCamelCase, handleError } from "@/utils/helpers";
 import { IStatus } from "@/interfaces/tableFilterTypes";
 import { AxiosError } from "axios";
-import SlideInPanel from "./SlideInPanel";
-import DetailedPage from "@/containers/detailedContainer/detailedPage";
-import { TableInstance } from "@/services/table.service";
 
 interface TableProps {
   data: ITableFields[];
@@ -73,7 +70,6 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   const [headerChecked, setHeaderChecked] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [favoriteRows, setFavoriteRows] = useState<Record<string, boolean>>({});
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
 
   useEffect(() => {
     setDisplayColumns(columns);

@@ -49,9 +49,6 @@ const ContactCard: React.FC<ContactCardProps> = ({ name, status, phone, email, l
           <MdSpeed className="text-2xl text-green-600" size={36} />
           <span className="text-[20px]">+{rating}</span>
         </div>
-        {/* <button className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-full">
-          <RiPhoneFill size={28} />
-        </button> */}
         <div className="flex flex-col justify-center items-center">
           <button className="flex items-center justify-center w-12 h-12 bg-blue-500 text-white rounded-full">
             <RiPhoneFill size={24} />          
@@ -64,12 +61,3 @@ const ContactCard: React.FC<ContactCardProps> = ({ name, status, phone, email, l
 };
 
 export default ContactCard;
-
-{/* <ContactCard
-        name="Nilesh Patel"
-        status="Enroll"
-        phone="India2521160180"
-        email="nileshpatel2@gmail.com"
-        location="Nawada"
-        rating={12}
-      /> */}

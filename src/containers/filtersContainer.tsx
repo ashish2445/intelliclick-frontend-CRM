@@ -1,6 +1,5 @@
 'use client';
 import SearchBox from "@/components/SearchBox";
-import { useState } from "react";
 import MultiSelectDropdown from "@/components/MultiSelectDropDown";
 import { FilterState, IAssignee, IStatus, QueryState } from "@/interfaces/tableFilterTypes";
 import DateFilter from "@/components/DateFilter";

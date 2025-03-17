@@ -1,6 +1,6 @@
 import { API } from '@/utils/enum';
 import { callApi } from './http.service';
-import { FilterState, QueryState } from '@/interfaces/tableFilterTypes';
+import { QueryState } from '@/interfaces/tableFilterTypes';
 
 
 class FilterService{

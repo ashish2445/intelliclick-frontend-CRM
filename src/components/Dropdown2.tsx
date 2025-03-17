@@ -62,22 +62,6 @@ const CustomDropdown: React.FC<DropdownProps> = ({ users,selectAssignee }) => {
 
   return (
     <div ref={dropdownRef} className="relative">
-      {/* <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="w-full px-4 py-2 text-left bg-white border rounded-md shadow-sm focus:outline-none"
-      >
-        {selectedUser ? (
-          <div className="h-full flex items-center">
-            <div className="w-8 h-8 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-medium">
-              {selectedUser.name.split(" ").map((n) => n[0]).join("")}
-            </div>
-            <span className="ml-2 text-sm text-gray-800 text-[14px]">{selectedUser.name}</span>
-          </div>
-        ) : (
-          <span className="flex gap-2 items-center"><GoPerson size={20} />
-          "Assignee"<FaChevronDown className="ml-2 text-gray-600" /></span>
-        )}
-      </button> */}
 
       <button
         onClick={() => setIsOpen((prev) => !prev)}
