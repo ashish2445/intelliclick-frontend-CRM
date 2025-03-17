@@ -12,6 +12,7 @@ import { useParams } from "next/navigation";
 import { handleError } from "@/utils/helpers";
 import { AxiosError } from "axios";
 import { TableInstance } from "@/services/table.service";
+import { IRowDetail } from "@/interfaces";
 
 const leadData = {
   "Lead Source": "Webinar",
@@ -66,6 +67,7 @@ const timelineData = [
 
 const DetailedPage: React.FC = () => {
   const [btnClicked, setBtnClicked] = useState<string>("");
+  const [detailedRow, setDetailedRow] = useState<IRowDetail | null>(null);
   const params = useParams(); // Use useParams instead of router.query
   const id = params.id;
 
@@ -85,6 +87,7 @@ const DetailedPage: React.FC = () => {
     async function fetchLeadData() {
       try {
         const response = await TableInstance.getFullDetails(id as string);
+        setDetailedRow(response);
         } catch (error) {
         handleError(error as AxiosError, false);
       }
@@ -102,12 +105,12 @@ const DetailedPage: React.FC = () => {
             <div className="text-[#000000] text-[18px] font-semibold ml-6">Lead Details</div>
           </div>
           <ContactCard
-            name="Nilesh Patel"
+            name={detailedRow?.name ?? ""}
             status="Enroll"
-            phone="India2521160180"
-            email="nileshpatel2@gmail.com"
-            location="Nawada"
-            rating={12}
+            phone={detailedRow?.phone ?? ""}
+            email={detailedRow?.fields?.email ?? ""}
+            location={detailedRow?.region ?? ""}
+            rating={Number(detailedRow?.fields?.percentage) ?? ""}
           />
           <LeadDetails details={leadData} />
         </div>

@@ -391,6 +391,40 @@ const responseObject = {
     ]
 }
 
+const rowDetail = {
+    "_id": "67c84485ce78280e8565ea3e",
+    "name": "John H",
+    "phone": "3900007887",
+    "fields": {
+        "class": "10th Grade",
+        "board": "CBSE",
+        "address": "123 Main Street",
+        "phoneNumber": "9876543210",
+        "email": "johndoe@example.com",
+        "fatherOccupation": "Engineer",
+        "motherOccupation": "Doctor",
+        "alternativeNumber": "7890123456",
+        "parentName": "Mr. and Mrs. Doe",
+        "schoolName": "ABC High School",
+        "city": "New York",
+        "state": "NY",
+        "percentage": "92%",
+        "interactWith": "Counselor"
+    },
+    "assignedAdmin": null,
+    "region": null,
+    "createdAt": "2025-03-05T12:33:09.751Z",
+    "updatedAt": "2025-03-07T16:08:20.109Z",
+    "__v": 0,
+    "assignedOwner": {
+        "_id": "67cb19dd97eb04cf8489c931",
+        "name": "caller@gmail.com",
+        "email": "caller@gmail.com",
+        "phone": "9876543210"
+    },
+    "favorite": true
+};
+
 
 class TableService{
  
@@ -407,7 +441,8 @@ class TableService{
 
     getFullDetails = async (userId:string) => {
       const url = `api/lead/read/get-lead-by?Id=${userId}`;
-      return await callApi(url,API.GET);
+      return rowDetail;
+    //   return await callApi(url,API.GET);
     } 
 
     createTask = async (taskDetails:IAddTask) => {
