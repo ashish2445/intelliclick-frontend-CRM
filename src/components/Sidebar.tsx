@@ -109,7 +109,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
                 </li>
                 <li
                   className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
-                  onClick={() => handleItem("/developers/docs")}
+                  onClick={() => handleItem("/dashboard/fields")}
                 >
                   Lead Field
                 </li>

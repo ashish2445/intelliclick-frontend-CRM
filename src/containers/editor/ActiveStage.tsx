@@ -5,6 +5,7 @@ import { IEditableStatusBox } from '@/interfaces/root.interface';
 import { RootInstance } from '@/services/root.service';
 
 interface StageProps {
+  className?: string;
   fullObject:{};
 }
 
@@ -16,8 +17,8 @@ interface StageItem {
   deleted?: boolean;
 }
 
-export const ActiveStage: React.FC<StageProps> = ({ fullObject }) => {
-
+export const ActiveStage: React.FC<StageProps> = ({ className,fullObject }) => {
+  
   const [stageItems, setStageItems] = useState<IEditableStatusBox[]>([]);
 
   // Deleted status items
