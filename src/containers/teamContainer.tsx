@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import DynamicTable3 from "@/components/DragDropTable";
-import { AdminInstance } from "@/services/admin.service";
+import { RootInstance } from "@/services/root.service";
 import { handleError } from "@/utils/helpers";
 import { AxiosError } from "axios";
 import { columns } from "@/utils/constants";
@@ -12,7 +12,7 @@ const TeamContainer: React.FC = () => {
 
     const fetchTeam = async () => {
     try {
-      const teamResponse = await AdminInstance.getTeamMembers(); // Await the response
+      const teamResponse = await RootInstance.getTeamMembers(); // Await the response
       setTeam(teamResponse.leads);
     } catch (error) {
       handleError(error as AxiosError,false);

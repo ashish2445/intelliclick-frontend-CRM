@@ -172,14 +172,101 @@ const responseObject = {
     ]
 }
 
+const stages = [
+    {
+        "_id": "67cc0c8b1b37841a58ecfcde",
+        "stageid": "stage_fresh",
+        "stageType": "FRESH",
+        "visibility": true,
+        "activeStatuses": [
+            {
+                "statusid": 1,
+                "label": "Prospects",
+                "color": "#828278",
+                "_id": "67cc0c8b1b37841a58ecfcdf"
+            }
+        ],
+        "archivedStatuses": [],
+        "createdAt": "2025-03-08T09:23:23.338Z",
+        "updatedAt": "2025-03-08T09:23:23.338Z",
+        "__v": 0
+    },
+    {
+        "_id": "67cc0c8b1b37841a58ecfce2",
+        "stageid": "stage_active",
+        "stageType": "ACTIVE",
+        "visibility": true,
+        "activeStatuses": [
+            {
+                "statusid": 2,
+                "label": "Qualified",
+                "color": "#00876c",
+                "_id": "67cc0c8b1b37841a58ecfce3"
+            },
+            {
+                "statusid": 5,
+                "label": "Intrested",
+                "color": "#822278",
+                "_id": "67cc0dfc1b37841a58ecfcf9"
+            }
+        ],
+        "archivedStatuses": [],
+        "createdAt": "2025-03-08T09:23:23.480Z",
+        "updatedAt": "2025-03-08T09:34:20.120Z",
+        "__v": 0
+    },
+    {
+        "_id": "67cc0c8b1b37841a58ecfce6",
+        "stageid": "stage_won",
+        "stageType": "WON",
+        "visibility": true,
+        "activeStatuses": [
+            {
+                "statusid": 3,
+                "label": "Enrolled",
+                "color": "#10de10",
+                "_id": "67cc0c8b1b37841a58ecfce7"
+            }
+        ],
+        "archivedStatuses": [],
+        "createdAt": "2025-03-08T09:23:23.604Z",
+        "updatedAt": "2025-03-08T09:23:23.604Z",
+        "__v": 0
+    },
+    {
+        "_id": "67cc0c8b1b37841a58ecfcea",
+        "stageid": "stage_lost",
+        "stageType": "LOST",
+        "visibility": true,
+        "activeStatuses": [
+            {
+                "statusid": 4,
+                "label": "Not Enrolled",
+                "color": "#fc1414",
+                "_id": "67cc0c8b1b37841a58ecfceb"
+            }
+        ],
+        "archivedStatuses": [],
+        "createdAt": "2025-03-08T09:23:23.723Z",
+        "updatedAt": "2025-03-08T09:23:23.723Z",
+        "__v": 0
+    }
+];
 
-class AdminService{
+
+class RootService{
 
   getTeamMembers = async () => {
     // const url='api/region/read/regions';
     // return await callApi(url,API.GET);
     return responseObject;
   }
+
+  getStages = async () => {
+    // const url='api/lead_stage/read/all-stages';
+    // return await callApi(url,API.GET);
+    return stages;
+  }
 }
 
-export const AdminInstance = new AdminService();
+export const RootInstance = new RootService();

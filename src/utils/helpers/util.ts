@@ -1,6 +1,7 @@
 import { Role, StorageKey } from '@/utils/enum';
 
 import { TimeRangeType } from "../constants/timeRanges";
+import { IStage } from '@/interfaces/root.interface';
 
 export const getToken = () => {
   // const role = localStorage.getItem(StorageKey.ROLE) || Role.STUDENT;
@@ -98,6 +99,13 @@ export const formatCamelCase = (text: string): string => {
     .trim() // Remove leading/trailing spaces
     .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word
 };
+
+export const getActiveStatusesByStageId = (stages: IStage[], stageId: string) => {
+    const stage = stages.find(stage => stage.stageid === stageId);
+    return stage ? stage.activeStatuses : [];
+};
+
+
 
 
 
