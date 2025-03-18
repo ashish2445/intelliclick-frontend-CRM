@@ -210,7 +210,10 @@ const stages = [
                 "_id": "67cc0dfc1b37841a58ecfcf9"
             }
         ],
-        "archivedStatuses": [],
+        "archivedStatuses": [
+            { statusid: 3, label: "In Progress", color: "#FF8C00", _id: "67cc0c9d1b37841a58ecfce5" },
+            { statusid: 4, label: "Not Interested", color: "#822278", _id: "67cc0dfc1b37841a58ecfcf9" },
+        ],
         "createdAt": "2025-03-08T09:23:23.480Z",
         "updatedAt": "2025-03-08T09:34:20.120Z",
         "__v": 0
@@ -266,6 +269,25 @@ class RootService{
     // const url='api/lead_stage/read/all-stages';
     // return await callApi(url,API.GET);
     return stages;
+  }
+
+  editStatus = async (payload:{
+    "statusid":String,
+    "color":String,
+    "label":String
+    }) => {
+        const url='api/lead_stage/write/create-update/stage_fresh';
+        return await callApi(url,API.POST,payload,true);
+    }
+
+  deleteStatus = async (payload:{stageId:String,statusId:String}) => {
+    const url=`api/lead_stage/delete/stage/${payload.stageId}/${payload.statusId}`;
+    return await callApi(url,API.POST);
+  }
+
+  restoreDeletedStatus = async (payload:{stageId:String,statusId:String}) => {
+    const url=`api/lead_stage/write/active/${payload.stageId}/${payload.statusId}`;
+    return await callApi(url,API.POST);
   }
 }
 

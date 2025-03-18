@@ -51,7 +51,6 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
     if (isMobile) toggleSidebar();
   };
 
-  console.log("possss",dropdownPosition);
 
   return (
     <div

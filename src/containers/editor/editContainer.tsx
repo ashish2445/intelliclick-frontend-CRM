@@ -32,7 +32,7 @@ const PipelineDisplay: React.FC<PipelineDisplayProps> = ({ className }) => {
   return (
     <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 ${className}`}>
       <InitialStage initial={getActiveStatusesByStageId(stages,'stage_fresh')} />
-      <ActiveStage activeStatus={getActiveStatusesByStageId(stages,'stage_active')} />
+      <ActiveStage fullObject={getActiveStatusesByStageId(stages,'stage_active')} />
       <ClosedStage won={getActiveStatusesByStageId(stages,'stage_won')} lost={getActiveStatusesByStageId(stages,'stage_lost')} />
     </div>
   );

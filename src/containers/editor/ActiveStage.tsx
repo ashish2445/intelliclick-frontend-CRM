@@ -1,9 +1,11 @@
 'use client';
 import React, { useState } from 'react';
 import { Edit2, Trash2, ChevronDown, ChevronUp, Plus, Circle, AlertTriangle, Bell, Calendar, Check, ThumbsUp, Star, RefreshCcw } from 'lucide-react';
+import { IEditableStatusBox } from '@/interfaces/root.interface';
+import { RootInstance } from '@/services/root.service';
 
 interface StageProps {
-  className?: string;
+  fullObject:{};
 }
 
 interface StageItem {
@@ -14,23 +16,15 @@ interface StageItem {
   deleted?: boolean;
 }
 
-export const ActiveStage: React.FC<StageProps> = ({ className }) => {
-  const [stageItems, setStageItems] = useState<StageItem[]>([
-    { id: '1', title: 'Qualified', color: 'bg-green-100', icon: <Check size={16} className="text-green-600" /> },
-    { id: '2', title: 'Disqualified', color: 'bg-red-100', icon: <AlertTriangle size={16} className="text-red-600" /> },
-    { id: '3', title: 'Follow Up', color: 'bg-yellow-100', icon: <Bell size={16} className="text-yellow-600" /> },
-    { id: '4', title: 'Trial Booked', color: 'bg-green-100', icon: <Calendar size={16} className="text-green-600" /> },
-    { id: '5', title: 'Trial Converted', color: 'bg-purple-100', icon: <Circle size={16} className="text-purple-600" /> },
-    { id: '6', title: 'Trial Follow-up', color: 'bg-yellow-100', icon: <Bell size={16} className="text-yellow-600" /> },
-    { id: '7', title: 'goodfeedback', color: 'bg-green-100', icon: <ThumbsUp size={16} className="text-green-600" /> },
-    { id: '8', title: 'Interested', color: 'bg-green-100', icon: <Star size={16} className="text-green-600" /> }
-  ]);
-  
+export const ActiveStage: React.FC<StageProps> = ({ fullObject }) => {
+
+  const [stageItems, setStageItems] = useState<IEditableStatusBox[]>([]);
+
   // Deleted status items
-  const [deletedItems, setDeletedItems] = useState<StageItem[]>([
-    { id: 'd1', title: 'Not Interested', color: 'bg-gray-100', icon: <Circle size={16} className="text-gray-600" />, deleted: true },
-    { id: 'd2', title: 'Lost Opportunity', color: 'bg-red-100', icon: <Circle size={16} className="text-red-600" />, deleted: true },
-    { id: 'd3', title: 'Duplicate Lead', color: 'bg-yellow-100', icon: <Circle size={16} className="text-yellow-600" />, deleted: true }
+  const [deletedItems, setDeletedItems] = useState<IEditableStatusBox[]>([
+    { statusid: 'd1', label: 'Not Interested', color: 'bg-gray-100',icon:''},
+    { statusid: 'd2', label: 'Lost Opportunity', color: 'bg-red-100',icon:''},
+    { statusid: 'd3', label: 'Duplicate Lead', color: 'bg-yellow-100',icon:''}
   ]);
   
   const [showDeletedItems, setShowDeletedItems] = useState(false);
@@ -51,6 +45,8 @@ export const ActiveStage: React.FC<StageProps> = ({ className }) => {
   ];
 
   const handleEditClick = (itemId: string, color: string, title: string) => {
+    const response = RootInstance.editStatus({"statusid":itemId,"label":stageName,"color":selectedColor})
+    console.log("editable",itemId,color,title);
     setEditingItem(itemId);
     setSelectedColor(color);
     setStageName(title);
@@ -69,13 +65,13 @@ export const ActiveStage: React.FC<StageProps> = ({ className }) => {
     if (editingItem) {
       // Update existing item
       const updatedItems = stageItems.map(item => {
-        if (item.id === editingItem) {
+        if (item.statusid === editingItem) {
           const iconColor = selectedColor.replace('bg-', 'text-').replace('-100', '-600');
           return {
             ...item,
             title: stageName,
             color: selectedColor,
-            icon: <Circle size={16} className={iconColor} />
+            icon: 'Circle'
           };
         }
         return item;
@@ -85,10 +81,10 @@ export const ActiveStage: React.FC<StageProps> = ({ className }) => {
       // Add new item
       const iconColor = selectedColor.replace('bg-', 'text-').replace('-100', '-600');
       const newItem = {
-        id: Date.now().toString(),
-        title: stageName,
+        statusid: Date.now().toString(),
+        label: stageName,
         color: selectedColor,
-        icon: <Circle size={16} className={iconColor} />
+        icon:'Circle'
       };
       setStageItems([...stageItems, newItem]);
     }
@@ -96,27 +92,26 @@ export const ActiveStage: React.FC<StageProps> = ({ className }) => {
     closePopup();
   };
 
-  const handleDeleteItem = (itemId: string) => {
-    const itemToDelete = stageItems.find(item => item.id === itemId);
+  const handleDeleteItem = (stageId: string,statusId:string) => {
+    const response = RootInstance.deleteStatus({stageId,statusId});
+    const itemToDelete = stageItems.find(item => item.statusid === stageId);
     if (itemToDelete) {
       // Remove from active items
-      const updatedItems = stageItems.filter(item => item.id !== itemId);
+      const updatedItems = stageItems.filter(item => item.statusid !== stageId);
       setStageItems(updatedItems);
-      
-      // Add to deleted items
-      setDeletedItems([...deletedItems, {...itemToDelete, deleted: true}]);
     }
   };
 
-  const handleRestoreItem = (itemId: string) => {
-    const itemToRestore = deletedItems.find(item => item.id === itemId);
+  const handleRestoreItem = (stageId:string,statusId: string) => {
+    const response = RootInstance.restoreDeletedStatus({stageId,statusId});
+    const itemToRestore = deletedItems.find(item => item.statusid === statusId);
     if (itemToRestore) {
       // Remove from deleted items
-      const updatedDeletedItems = deletedItems.filter(item => item.id !== itemId);
+      const updatedDeletedItems = deletedItems.filter(item => item.statusid !== statusId);
       setDeletedItems(updatedDeletedItems);
       
       // Add to active items
-      setStageItems([...stageItems, {...itemToRestore, deleted: false}]);
+      // setStageItems([...stageItems, {...itemToRestore, deleted: false}]);
     }
   };
 
@@ -157,25 +152,26 @@ export const ActiveStage: React.FC<StageProps> = ({ className }) => {
         </div>
         
         <div className="space-y-2">
-          {stageItems.map((item) => (
+          {fullObject?.activeStatuses.map((item) => (
             <div 
-              key={item.id} 
-              className={`${item.color} flex items-center justify-between p-2 rounded-md relative`}
+              key={item.statusid} 
+              className={`flex items-center justify-between p-2 rounded-md relative`}
+              style={{ backgroundColor: item.color }}
             >
               <div className="flex items-center space-x-2">
                 {item.icon}
-                <span className="font-medium">{item.title}</span>
+                <span className="font-medium">{item.label}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <button 
                   className="text-gray-500 hover:text-gray-700"
-                  onClick={() => handleEditClick(item.id, item.color, item.title)}
+                  onClick={() => handleEditClick(item.statusid, item.color, item.label)}
                 >
                   <Edit2 size={16} />
                 </button>
                 <button 
                   className="text-gray-500 hover:text-red-600"
-                  onClick={() => handleDeleteItem(item.id)}
+                  onClick={() => handleDeleteItem(fullObject?.stageid,item.statusid)}
                 >
                   <Trash2 size={16} />
                 </button>
@@ -201,19 +197,40 @@ export const ActiveStage: React.FC<StageProps> = ({ className }) => {
           {/* Deleted items list */}
           {showDeletedItems && (
             <div className="mt-2 space-y-2 border-t border-gray-200 pt-2">
-              {deletedItems.map((item) => (
+              {/* {fullObject?.archivedStatuses.map((item) => (
                 <div 
-                  key={item.id} 
+                  key={item.statusid} 
                   className={`${item.color} flex items-center justify-between p-2 rounded-md relative opacity-70`}
                 >
                   <div className="flex items-center space-x-2">
                     {item.icon}
-                    <span className="font-medium">{item.title}</span>
+                    <span className="font-medium">{item.label}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <button 
                       className="text-gray-500 hover:text-green-600"
-                      onClick={() => handleRestoreItem(item.id)}
+                      onClick={() => handleRestoreItem(item.statusid)}
+                      title="Restore"
+                    >
+                      <RefreshCcw size={16} />
+                    </button>
+                  </div>
+                </div>
+              ))} */}
+              {fullObject?.archivedStatuses.map((item) => (
+                <div 
+                  key={item.statusid} 
+                  className="flex items-center justify-between p-2 rounded-md relative opacity-70"
+                  style={{ backgroundColor: item.color }} // ✅ Apply background color here
+                >
+                  <div className="flex items-center space-x-2">
+                    {item.icon}
+                    <span className="font-medium">{item.label}</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button 
+                      className="text-gray-500 hover:text-green-600"
+                      onClick={() => handleRestoreItem(fullObject?.stageid,item.statusid)}
                       title="Restore"
                     >
                       <RefreshCcw size={16} />
@@ -221,6 +238,7 @@ export const ActiveStage: React.FC<StageProps> = ({ className }) => {
                   </div>
                 </div>
               ))}
+
             </div>
           )}
         </div>

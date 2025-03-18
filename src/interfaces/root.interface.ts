@@ -16,3 +16,11 @@ export interface IStage {
     updatedAt: string;
     __v: number;
 }
+
+export interface IEditableStatusBox {
+    statusid: string;
+    label: string;
+    color: string;
+    icon:string;
+}
+  
