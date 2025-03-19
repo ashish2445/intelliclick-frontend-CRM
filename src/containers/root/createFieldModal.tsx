@@ -17,6 +17,7 @@ import { MdOutlineScreenSearchDesktop } from 'react-icons/md';
 import { BsExclamationTriangle } from 'react-icons/bs';
 import { BsInfoCircle } from 'react-icons/bs';
 import { TbArrowsRightLeft } from 'react-icons/tb';
+import { RootInstance } from '@/services/root.service';
 
 interface CreateFieldModalProps {
   isOpen: boolean;
@@ -63,6 +64,12 @@ const CreateFieldModal: React.FC<CreateFieldModalProps> = ({ isOpen, onClose, on
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("form fields",fieldName,fieldType);
+    const payload :any= {name:fieldName,type:fieldType}
+    const response = RootInstance.createLeadField(payload);
+    if (fieldType === "dropdown") {
+      payload.options = selectedProperties; // Assuming selectedProperties holds dropdown options
+    }
     if (fieldName.trim()) {
       onCreateField(fieldName, fieldType, selectedProperties);
       setFieldName('');
@@ -93,7 +100,7 @@ const CreateFieldModal: React.FC<CreateFieldModalProps> = ({ isOpen, onClose, on
           </button>
         </div>
         
-        <form onSubmit={handleSubmit}>
+        <form >
           <div className="p-4">
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
@@ -212,7 +219,7 @@ const CreateFieldModal: React.FC<CreateFieldModalProps> = ({ isOpen, onClose, on
               Cancel
             </button>
             <button
-              type="submit"
+            type="button" onClick={handleSubmit}
               className="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-blue-600"
             >
               Create

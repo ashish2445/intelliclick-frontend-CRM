@@ -289,6 +289,11 @@ class RootService{
     const url=`api/lead_stage/write/active/${payload.stageId}/${payload.statusId}`;
     return await callApi(url,API.POST);
   }
+
+  createLeadField = async (payload:{name:String,type:String}) => {
+    const url=`api/lead_field/write/create-or-update`;
+    return await callApi(url,API.POST,payload,true);
+  }
 }
 
 export const RootInstance = new RootService();
