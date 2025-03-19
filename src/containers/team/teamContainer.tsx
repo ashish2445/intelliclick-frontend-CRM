@@ -5,6 +5,7 @@ import { RootInstance } from "@/services/root.service";
 import { handleError } from "@/utils/helpers";
 import { AxiosError } from "axios";
 import { columns } from "@/utils/constants";
+import TeamFilters from "./teamFilters";
 
 const TeamContainer: React.FC = () => {
 
@@ -23,7 +24,12 @@ const TeamContainer: React.FC = () => {
   useEffect(() => {   
     fetchTeam();
   }, []);
-  return <DynamicTable3 data={team} columns={columns} />;
+  return (
+    <div>
+      <TeamFilters />
+      <DynamicTable3 data={team} columns={columns} />
+    </div>
+  );
 };
 
 export default TeamContainer;
