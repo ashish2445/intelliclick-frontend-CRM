@@ -6,6 +6,7 @@ interface DropdownOption {
   value: string;
   icon?: string; // Icon name as string
   color?: string;
+  addDeco?:boolean;
   showCheckbox?: boolean;
 }
 
@@ -118,6 +119,9 @@ const CustomDropdown2: React.FC<CustomDropdownProps> = ({
                 )}
 
                 {/* Label */}
+                <div className="w-8 h-8 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-medium">
+                  {option.addDeco && option.label.split(" ").map((n) => n[0].toUpperCase()).join("")}
+                </div>
                 <span>{option.label}</span>
               </li>
             );
