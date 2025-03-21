@@ -30,7 +30,8 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,setQuer
           <DateFilter options={[...TIME_RANGE]} setDate={setQuery} />
         
         <MultiSelectDropdown options={statusInfo} selectedOptions={filterState.status} onSelect={(values: string[]) => {
-          setFilter(prev => ({
+          console.log("filter state",values)
+          setQuery(prev => ({
             ...prev,
             status: values,
           }));

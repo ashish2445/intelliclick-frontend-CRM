@@ -8,7 +8,7 @@ import { ITableFields } from "@/interfaces";
 import { FilterState,QueryState, IAssignee, IStatus } from "@/interfaces/tableFilterTypes";
 import { getAllKeys, handleError } from "@/utils/helpers";
 import { AxiosError } from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { DndProvider } from 'react-dnd';
@@ -29,7 +29,7 @@ const TableContainer: React.FC = () => {
   });
   
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
   const [addCondition,setCondition] = useState<boolean>(false);
   const [filters, setFilters] = useState<string[]>([]);
   const [totalRows, setTotalRows] = useState<number>(0);
@@ -43,15 +43,12 @@ const TableContainer: React.FC = () => {
   });
   const [assignee, setGetAssignee] = useState<IAssignee[]>([]);
   const [statusInfo, setGetStatus] = useState<IStatus[]>([]);
-
-
-
+  const isInitialRender = useRef(true);
   const totalPages = (totalRows/rowsPerPage);
 
   const fetchTableData = async () => {
     try {
       const data = await TableInstance.getTableData();
-      console.log("data table",data);
       // const data = responseObject.leads;
       setTotalRows(data?.total);
       setTableData(data?.leads);
@@ -79,7 +76,7 @@ const TableContainer: React.FC = () => {
   }
   
   useEffect(()=>{
-    fetchTableData();
+    // fetchTableData();
     fetchAssignees();
     fetchStatusInfo();
   },[]);
@@ -87,22 +84,27 @@ const TableContainer: React.FC = () => {
   const filterData = async () => {
     try {
       const filterResponse = await FilterInstance.getFilterResponse(query); // Await the response
-      setTableData(filterResponse);
+      console.log("filter response222",query);
+      setTableData(filterResponse?.leads);
     } catch (error) {
       handleError(error as AxiosError,false);
     }
   };
 
-  useEffect(() => {   
+  useEffect(() => {
+    // if (isInitialRender.current) {
+    //   isInitialRender.current = false;
+    //   return; // Prevents the first execution
+    // }
     filterData();
-  }, [query,currentPage,rowsPerPage]);
+  }, [query, currentPage, rowsPerPage]);
 
-  console.log("filters condition",filters);
   const handleCondition = (key:string) => {
-    console.log("label key",key);
     setFilters([...filters,key]);
     setCondition(prev=>!prev);
   }
+
+  console.log("current page",currentPage);
 
   const handleCloseFilter = (columnLabel:string) => {
     setFilters(filters.filter((each) => each !== columnLabel));
@@ -180,7 +182,26 @@ const TableContainer: React.FC = () => {
           currentPage={currentPage}
           totalPages={totalPages}
           rowsPerPage={rowsPerPage}
-          onPageChange={(page) => setCurrentPage(page)}
+          // onPageChange={(page) => setQuery(prevQuery => ({
+          //   ...prevQuery,
+          //   pagination: {
+          //     ...prevQuery.pagination,
+          //     page: page // Replace `newPage` with the actual page number
+          //   }
+          // })),
+          // setCurrentPage(page),
+          // }
+          onPageChange={(page) => {
+  setQuery(prevQuery => ({
+    ...prevQuery,
+    pagination: {
+      ...prevQuery.pagination,
+      page: page
+    }
+  }));
+  setCurrentPage(page);
+}}
+
           onRowsPerPageChange={(rows) => {
             setRowsPerPage(rows);
             setCurrentPage(1);

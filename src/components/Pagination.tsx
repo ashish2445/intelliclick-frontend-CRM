@@ -12,7 +12,7 @@ interface PaginationProps {
 function Pagination({ currentPage, totalPages, onPageChange, rowsPerPage, onRowsPerPageChange }: PaginationProps) {
   const adjustedTotalPages = Math.max(1, Math.ceil(totalPages));
   const pages = Array.from({ length: adjustedTotalPages }, (_, index) => index + 1);
-  const rowsOptions = [10, 25, 50, 100];
+  const rowsOptions = [25, 50, 100,250];
 
   return (
     <div className="flex justify-between items-center dark:invert bg-gray-200 p-2 rounded-b-lg w-full sticky top-0 left-0">
@@ -32,7 +32,7 @@ function Pagination({ currentPage, totalPages, onPageChange, rowsPerPage, onRows
         <p className="text-sm font-light">
           {totalPages > 0
             ? `${(currentPage - 1) * rowsPerPage + 1}-${Math.min(currentPage * rowsPerPage, totalPages * rowsPerPage)}`
-            : "0-0"} of {totalPages > 0 ? totalPages * rowsPerPage : 0}
+            : "0-1"} of {totalPages > 0 ? totalPages * rowsPerPage : 1}
         </p>
       </div>
 
@@ -50,7 +50,7 @@ function Pagination({ currentPage, totalPages, onPageChange, rowsPerPage, onRows
             ))}
           </select>
         </label>
-        <p className="text-sm font-light">of {Math.ceil(totalPages) || 0} pages</p>
+        <p className="text-sm font-light">of {Math.ceil(totalPages) || 1} pages</p>
 
 
         {/* Navigation Buttons */}

@@ -6,7 +6,7 @@ import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { BsFillTelephoneOutboundFill } from "react-icons/bs";
 import { FaRegStar, FaStar } from "react-icons/fa6";
-import { formatCamelCase, handleError } from "@/utils/helpers";
+import { formatCamelCase, formatDate, handleError } from "@/utils/helpers";
 import { IStatus } from "@/interfaces/tableFilterTypes";
 import { AxiosError } from "axios";
 
@@ -72,6 +72,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [favoriteRows, setFavoriteRows] = useState<Record<string, boolean>>({});
 
+
   useEffect(() => {
     setDisplayColumns(columns);
   }, [columns]);
@@ -79,7 +80,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   useEffect(() => {
     const initialFavorites: Record<string, boolean> = {};
 
-    data.forEach((item) => {
+    data?.forEach((item) => {
       initialFavorites[item._id] = item.name.favorite;
     });
 
@@ -293,7 +294,11 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                           <span className="text-[14px]">{typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col] ?? "-"}</span>
                           <span style={{cursor:'pointer'}}><BsFillTelephoneOutboundFill color='#4287f5' /></span>
                         </span>
-                      ) :col.toLowerCase() === 'leadscore'? (
+                      ) :col.toLowerCase() === "updatedat" ? (
+                        <span className="flex gap-3 text-[12px] font-[400] ">
+                          <span className="text-[14px]">{formatDate(row[col])}</span>
+                        </span>
+                      ):col.toLowerCase() === 'leadscore'? (
                             <div className="flex justify-center">
                               <div className="px-2 py-1 rounded bg-[#F0FDF4] text-[#15803D] text-[14px] text-sm font-medium">
                                 {isNaN(Number(row[col])) 

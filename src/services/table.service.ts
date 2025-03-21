@@ -623,8 +623,8 @@ class TableService{
  
     getTableData = async () => {
       const url = 'api/lead/read/leads-without-actions';
-      return responseObject;
-      // return await callApi(url,API.POST);
+    //   return responseObject;
+      return await callApi(url,API.POST);
     }
 
     toggleFavorite = async (leadId:string,currentState:boolean) => {

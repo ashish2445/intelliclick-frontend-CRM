@@ -10,7 +10,7 @@ export const callApi = async (url: string, method: API, data?: object | null, sh
   const DEFAULT_HEADER = {
     headers: {
       'Content-Type': 'application/json',
-      "Authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNmM2MyMTYwMjgzMmQ1ZDU5NmM4NmEiLCJyb2xlIjoiQkRBIiwibW9kZXJhdG9yIjpmYWxzZSwiZW1haWwiOiJ0ZXN0LnN0dWRlbnRAZ21haWwuY29tIiwibmFtZSI6IlRlc3QgQkRBIiwiaWF0IjoxNzMyOTU5ODEyfQ.9zD5QqdxlazCoQVLSRIfJ5IcBB__eu0YRMMBgIf5YVE",
+      "Authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M2ZDJlM2NhMzlhOWM5YzNjM2Y4MjQiLCJyb2xlIjoicm9vdCIsInBlcm1pc3Npb24iOiI2N2M2OTA5MzFkZGM3YWIyNThkMTU3NzIiLCJlbWFpbCI6InJlZXRlYXNocGFuZGV5QGdtYWlsLmNvbSIsInBob25lIjoiMTg3MjQ0MDg5MCIsIm5hbWUiOiJSZWV0ZXNoIFBhbmRleSIsImRlcGFydG1lbnQiOiJTYWxlcyIsImlhdCI6MTc0MjQ0NzM4NH0.U7sa8FQZWE_bSXen6WyD6ZJsyJ7qMjd5Fw35v0ptOE8",
     },
   };
   try {

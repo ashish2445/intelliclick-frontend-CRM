@@ -1,260 +1,65 @@
-// 'use client';
-// import MultiSelectDropdown from "@/components/MultiSelectDropDown";
-// import { useState } from "react";
-
-// const options = [
-//   { label: "Option 1", value: "opt1" },
-//   { label: "Option 2", value: "opt2" },
-//   { label: "Option 3", value: "opt3" },
-// ];
-
-// const MyComponent = () => {
-//   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-
-//   return (
-//     <div>
-//       <MultiSelectDropdown
-//         options={options}
-//         selectedOptions={selectedOptions}
-//         onSelect={setSelectedOptions}
-//       />
-
-//       {/* Display selected options here */}
-//       {selectedOptions.length > 0 && (
-//         <div className="mt-2">
-//           <strong>Selected:</strong> {selectedOptions.map((opt) => options.find(o => o.value === opt)?.label).join(", ")}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default MyComponent;
-
-// "use client";
-// import React, { useState } from "react";
-// import MultiSelectDropdown from "@/components/MultiSelectDropDown";
-// import DynamicTable from "@/components/DynamicTable";
-// import { IOpenTaskData } from "@/interfaces";
-// import { columns } from "@/utils/constants";
-
-// const allOptions = [
-//   { label: "Subject", value: "subject" },
-//   { label: "Grade", value: "grade" },
-//   { label: "Status", value: "status" },
-// ];
-
-// const initialData: IOpenTaskData[] = [
-//   {
-//     "StudentName": "John Doe",
-//     "Class": "10th Grade",
-//     "PhoneNumber": "123-456-7890",
-//     "Status": "Active",
-//     "CreatedBy": "Admin",
-//     "CreatedAt": "2025-02-24",
-//   },
-//   {
-//     "StudentName": "Jane Smith",
-//     "Class": "9th Grade",
-//     "PhoneNumber": "987-654-3210",
-//     "Status": "Inactive",
-//     "CreatedBy": "Teacher B",
-//     "CreatedAt": "2025-02-23",
-//   },
-// ];
-
-// const Page = () => {
-//   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
-  
-//   // Always include "Student Name" as a default column
-//   const newColumns = [...columns, ...selectedColumns];
-
-//   return (
-//     <div className="p-4">
-//       <h2 className="text-xl font-semibold mb-4">Dynamic Table with MultiSelect Dropdown</h2>
-      
-//       {/* MultiSelectDropdown to Select Columns */}
-//       <MultiSelectDropdown 
-//         options={allOptions} 
-//         selectedOptions={selectedColumns} 
-//         onSelect={setSelectedColumns} 
-//       />
-
-//       {/* Dynamic Table */}
-//       <div className="mt-4">
-//         <DynamicTable data={initialData} columns={newColumns} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Page;
-
-"use client";
+'use client';
 import React, { useState } from "react";
-import MultiSelectDropdown from "@/components/MultiSelectDropDown";
-import DynamicTable from "@/components/DynamicTable";
-import { IOpenTaskData } from "@/interfaces";
-import { columns } from "@/utils/constants";
-import DynamicTable2 from "@/components/DynamicTable copy";
-import FilterComponent from "@/components/FilterCondition";
-import LeadDetails from "@/containers/newContainer";
-import IconButton from "@/components/StyledButton";
-import DetailedPage from "@/containers/detailedContainer/detailedPage";
-import Form2 from "@/containers/form2";
+import CustomDropdown2 from "@/components/MyDropdown2";
 
-const allOptions = [
-  { label: "Subject", color: "subject" },
-  { label: "Grade", color: "grade" },
-  { label: "Status", color: "status" },
-];
+const DropdownExample: React.FC = () => {
+  // State management for different dropdown instances
+  const [selectedSingle, setSelectedSingle] = useState<string[]>([]);
+  const [selectedMulti, setSelectedMulti] = useState<string[]>([]);
+  const [selectedWithIcons, setSelectedWithIcons] = useState<string[]>([]);
+  const [selectedWithCheckbox, setSelectedWithCheckbox] = useState<string[]>([]);
+  const [selectedWithColor, setSelectedWithColor] = useState<string[]>([]);
 
-const initialData: IOpenTaskData[] = [
-  {
-    StudentName: "John Doe",
-    Class: "10th Grade",
-    PhoneNumber: "123-456-7890",
-    Status: "Active",
-    CreatedBy: "Admin",
-    CreatedAt: "2025-02-24",
-  },
-  {
-    StudentName: "Jane Smith",
-    Class: "9th Grade",
-    PhoneNumber: "987-654-3210",
-    Status: "Inactive",
-    CreatedBy: "Teacher B",
-    CreatedAt: "2025-02-23",
-  },
-  {
-    StudentName: "Alice Johnson",
-    Class: "8th Grade",
-    PhoneNumber: "555-123-6789",
-    Status: "Active",
-    CreatedBy: "Admin",
-    CreatedAt: "2025-02-22",
-  },
-  {
-    StudentName: "Bob Williams",
-    Class: "11th Grade",
-    PhoneNumber: "444-987-6543",
-    Status: "Active",
-    CreatedBy: "Teacher A",
-    CreatedAt: "2025-02-21",
-  },
-  {
-    StudentName: "Charlie Brown",
-    Class: "7th Grade",
-    PhoneNumber: "333-222-1111",
-    Status: "Inactive",
-    CreatedBy: "Teacher C",
-    CreatedAt: "2025-02-20",
-  },
-  {
-    StudentName: "David Miller",
-    Class: "12th Grade",
-    PhoneNumber: "666-555-4444",
-    Status: "Active",
-    CreatedBy: "Admin",
-    CreatedAt: "2025-02-19",
-  },
-  {
-    StudentName: "Emma Davis",
-    Class: "9th Grade",
-    PhoneNumber: "777-888-9999",
-    Status: "Inactive",
-    CreatedBy: "Teacher B",
-    CreatedAt: "2025-02-18",
-  },
-  {
-    StudentName: "Frank Thomas",
-    Class: "10th Grade",
-    PhoneNumber: "111-222-3333",
-    Status: "Active",
-    CreatedBy: "Teacher A",
-    CreatedAt: "2025-02-17",
-  },
-  {
-    StudentName: "Grace Lee",
-    Class: "11th Grade",
-    PhoneNumber: "999-000-1111",
-    Status: "Active",
-    CreatedBy: "Admin",
-    CreatedAt: "2025-02-16",
-  },
-  {
-    StudentName: "Henry Wilson",
-    Class: "8th Grade",
-    PhoneNumber: "222-333-4444",
-    Status: "Inactive",
-    CreatedBy: "Teacher C",
-    CreatedAt: "2025-02-15",
-  },
-  {
-    StudentName: "Isabella Martinez",
-    Class: "12th Grade",
-    PhoneNumber: "555-666-7777",
-    Status: "Active",
-    CreatedBy: "Teacher A",
-    CreatedAt: "2025-02-14",
-  },
-  {
-    StudentName: "Jack Robinson",
-    Class: "7th Grade",
-    PhoneNumber: "888-777-6666",
-    Status: "Inactive",
-    CreatedBy: "Admin",
-    CreatedAt: "2025-02-13",
-  },
-];
+  // Dropdown options
+  const options = [
+    { label: "Option 1", value: "option1" },
+    { label: "Option 2", value: "option2" },
+    { label: "Option 3", value: "option3" },
+  ];
 
-const Page = () => {
-  const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
+  const optionsWithIcons = [
+    { label: "Home", value: "home", icon: "check" },
+    { label: "Settings", value: "settings", icon: "chevronDown" },
+    { label: "Profile", value: "profile", icon: "check" },
+  ];
 
-  // Always include "Student Name" as a default column
-  const baseColumns = [...columns];
+  const optionsWithCheckbox = [
+    { label: "Red", value: "red", showCheckbox: true },
+    { label: "Green", value: "green", showCheckbox: true },
+    { label: "Blue", value: "blue", showCheckbox: true },
+  ];
 
-  // Find index of "Class" column
-  const classIndex = baseColumns.indexOf("Class");
+  const optionsWithColor = [
+    { label: "Apple", value: "apple", color: "red" },
+    { label: "Banana", value: "banana", color: "yellow" },
+    { label: "Grape", value: "grape", color: "purple" },
+  ];
+  console.log("selectsingle",selectedSingle);
 
-  // Insert selected columns after "Class"
-  let newColumns = [...baseColumns];
-  if (classIndex !== -1) {
-    newColumns = [
-      ...baseColumns.slice(0, classIndex + 1), // Keep columns before and including "Class"
-      ...selectedColumns, // Insert new selected columns here
-      ...baseColumns.slice(classIndex + 1), // Keep remaining columns after "Class"
-    ];
-  }
-
-  // return (
-  //   <div className="p-4">
-  //     <h2 className="text-xl font-semibold mb-4">Dynamic Table with MultiSelect Dropdown</h2>
-
-  //     {/* MultiSelectDropdown to Select Columns */}
-  //     <MultiSelectDropdown
-  //       options={allOptions}
-  //       selectedOptions={selectedColumns}
-  //       onSelect={setSelectedColumns}
-  //     />
-
-  //     {/* Dynamic Table */}
-  //     <div className="mt-4">
-  //       <FilterComponent />
-  //       <DynamicTable2 data={initialData} columns={newColumns} />
-  //     </div>
-  //   </div>
-  // );
-
-  const handleClick = () => {
-    alert("Button clicked!");
-  };
   return (
-    <DetailedPage />
-  )
+    <div className="space-y-4">
+      <h2>Single Select</h2>
+      <CustomDropdown2 options={options} selectedValues={selectedSingle} onChange={setSelectedSingle} />
+
+      <h2>Multi Select</h2>
+      <CustomDropdown2 options={options} selectedValues={selectedMulti} onChange={setSelectedMulti} multiSelect />
+
+      <h2>With Icons</h2>
+      <CustomDropdown2 options={optionsWithIcons} selectedValues={selectedWithIcons} onChange={setSelectedWithIcons} />
+
+      <h2>With Checkboxes</h2>
+      <CustomDropdown2 options={optionsWithCheckbox} selectedValues={selectedWithCheckbox} onChange={setSelectedWithCheckbox} multiSelect />
+
+      <h2>With Colors</h2>
+      <CustomDropdown2 options={optionsWithColor} selectedValues={selectedWithColor} onChange={setSelectedWithColor} />
+    </div>
+  );
 };
 
-export default Page;
+export default DropdownExample;
+
+
+
 
 
 
