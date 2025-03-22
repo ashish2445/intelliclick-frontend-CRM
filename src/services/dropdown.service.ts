@@ -67,8 +67,8 @@ class DropdownService{
 
     getStatus = async ():Promise<IStatus[]> => {
       const url = 'api/lead_stage/read/stages';
-    //   return await callApi(url,API.GET)
-      return statusInfo;
+      return await callApi(url,API.GET)
+    //   return statusInfo;
     }
 }
 

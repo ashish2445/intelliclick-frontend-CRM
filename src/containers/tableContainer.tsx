@@ -175,7 +175,7 @@ const TableContainer: React.FC = () => {
           <span className="text-sm">Yesterday Leads</span>
         </button>
         </div>
-        <TableFilters setFilter={setFilterState} setQuery={setQuery} filterState={filterState} assignee={assignee} statusInfo={statusInfo} />
+        <TableFilters setFilter={setFilterState} query={query} setQuery={setQuery} filterState={filterState} assignee={assignee} statusInfo={statusInfo} />
         <DndProvider backend={HTML5Backend}>
         <DynamicTable3 data={tableData} columns={columns} statusInfo={statusInfo} /></DndProvider>
         <Pagination

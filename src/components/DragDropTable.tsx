@@ -183,29 +183,29 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="relative overflow-x-auto w-full dark:invert border-l border-r border-t border-gray-300 rounded-t-lg">
-        <div ref={dropdownRef} className="absolute top-2 right-10 cursor-pointer z-30">
-          <div className="fixed">
-            <button onClick={() => setDropdownOpen((prev) => !prev)} className="p-2 rounded-full hover:bg-gray-300">
-              <PiDotsThreeOutlineVertical size={20} className="text-gray-600 hover:text-gray-900" />
-            </button>
+        <div ref={dropdownRef} className="absolute top-2 right-2 cursor-pointer z-30">
+            <div className="sticky top-2">            
+              <button onClick={() => setDropdownOpen((prev) => !prev)} className="p-2 rounded-full hover:bg-gray-300">
+                <PiDotsThreeOutlineVertical size={20} className="text-gray-600 hover:text-gray-900" />
+              </button>
 
-            {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-40 p-2">
-                <ul className="text-sm text-gray-700">
-                  {columnOrder?.map((key, index) => (
-                    <DraggableItem
-                      key={key}
-                      id={key}
-                      index={index}
-                      moveItem={moveItem}
-                      checked={displayColumns.includes(key)}
-                      onCheck={() => handleCheckboxChange(key)}
-                    />
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-40 p-2">
+                  <ul className="text-sm text-gray-700">
+                    {columnOrder?.map((key, index) => (
+                      <DraggableItem
+                        key={key}
+                        id={key}
+                        index={index}
+                        moveItem={moveItem}
+                        checked={displayColumns.includes(key)}
+                        onCheck={() => handleCheckboxChange(key)}
+                      />
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
         </div>
 
         <table className="w-full border-collapse">

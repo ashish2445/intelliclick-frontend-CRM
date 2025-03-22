@@ -2,6 +2,7 @@ import { Role, StorageKey } from '@/utils/enum';
 
 import { TimeRangeType } from "../constants/timeRanges";
 import { IStage } from '@/interfaces/root.interface';
+import { IAssignee, IStatus } from '@/interfaces/tableFilterTypes';
 
 export const getToken = () => {
   // const role = localStorage.getItem(StorageKey.ROLE) || Role.STUDENT;
@@ -118,6 +119,39 @@ export const formatDate = (isoString: string): string => {
     hour12: true,
   });
 };
+
+interface DropdownOption {
+  label: string;
+  value: string | Number;
+  icon?: string; // Icon name as string
+  color?: string;
+  addDeco?:boolean;
+  showCheckbox?: boolean;
+}
+
+export const mapStatusToDropdownOptions = (
+    statuses: IStatus[],
+    options?: { addDeco?: boolean; showCheckbox?: boolean }
+): DropdownOption[] => {
+    return statuses.map(({ label, _id, color, statusid }) => ({
+        label,
+        value:statusid,
+        color,
+        statusid,
+        ...options,
+    }));
+};
+
+export const mapAssigneeToDropdownOptions = (
+  assignee:IAssignee[],
+  options?: { addDeco?: boolean; showCheckbox?: boolean }
+) => {
+  return assignee.map(({name,email,depth,_id}) => ({
+    label:name,
+    value:email,
+    ...options
+  }))
+}
 
 
 
