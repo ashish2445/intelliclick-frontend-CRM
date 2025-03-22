@@ -27,6 +27,8 @@ const TableContainer: React.FC = () => {
     singleDate: undefined,
     dateRange: { startDate: undefined, endDate: undefined },
   });
+
+  console.log("columns",columns);
   
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(25);
