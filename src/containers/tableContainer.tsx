@@ -84,7 +84,6 @@ const TableContainer: React.FC = () => {
   const filterData = async () => {
     try {
       const filterResponse = await FilterInstance.getFilterResponse(query); // Await the response
-      console.log("filter response222",query);
       setTableData(filterResponse?.leads);
     } catch (error) {
       handleError(error as AxiosError,false);
@@ -103,8 +102,6 @@ const TableContainer: React.FC = () => {
     setFilters([...filters,key]);
     setCondition(prev=>!prev);
   }
-
-  console.log("current page",currentPage);
 
   const handleCloseFilter = (columnLabel:string) => {
     setFilters(filters.filter((each) => each !== columnLabel));
@@ -175,7 +172,7 @@ const TableContainer: React.FC = () => {
           <span className="text-sm">Yesterday Leads</span>
         </button>
         </div>
-        <TableFilters setFilter={setFilterState} query={query} setQuery={setQuery} filterState={filterState} assignee={assignee} statusInfo={statusInfo} />
+        <TableFilters rowsCount={tableData.length} setFilter={setFilterState} query={query} setQuery={setQuery} filterState={filterState} assignee={assignee} statusInfo={statusInfo} />
         <DndProvider backend={HTML5Backend}>
         <DynamicTable3 data={tableData} columns={columns} statusInfo={statusInfo} /></DndProvider>
         <Pagination

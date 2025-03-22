@@ -14,9 +14,18 @@ export const callApi = async (url: string, method: API, data?: object | null, sh
     },
   };
   try {
+    // const response =
+    //   method === API.POST ? await Axios.post(uri, data, DEFAULT_HEADER) : API.PATCH ? await Axios.patch(uri,DEFAULT_HEADER):await Axios.get(uri,DEFAULT_HEADER);
+    // return response.data;
     const response =
-      method === API.POST ? await Axios.post(uri, data, DEFAULT_HEADER) : await Axios.get(uri,DEFAULT_HEADER);
-    return response.data;
+  method === API.POST
+    ? await Axios.post(uri, data, DEFAULT_HEADER)
+    : method === API.PATCH
+    ? await Axios.patch(uri, data, DEFAULT_HEADER)
+    : await Axios.get(uri, DEFAULT_HEADER);
+
+return response.data;
+
   } catch (error) {
     return handleError(error as AxiosError, shouldThrowError);
   }

@@ -15,6 +15,7 @@ interface TableFiltersProps {
   setQuery:(query: QueryState | ((prev: QueryState) => QueryState)) => void;
   assignee: IAssignee[];
   statusInfo :IStatus[];
+  rowsCount : Number;
 }
 
 interface DropdownOption {
@@ -32,7 +33,7 @@ const TIME_RANGE_OPTIONS: DropdownOption[] = TIME_RANGE.map(range => ({
 }));
 
 
-const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,query, setQuery,assignee,statusInfo}) => { 
+const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,query, rowsCount,setQuery,assignee,statusInfo}) => { 
 
   const handleStatusChange = (newValues: string[]) => {
     setQuery((prev) => ({
@@ -56,7 +57,6 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,query, 
   };
 
   const handleAssigneeChange = (newValues: string[]) => {
-    console.log("sel Assignee",newValues);
     setQuery((prev) => ({
       ...prev,
       filters: [
@@ -83,10 +83,10 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,query, 
   return (
     <div className="flex items-center justify-between dark:invert mb-2">
       <h2 className="font-semibold text-[20px] font-[300]">
-        Leads <span className="text-gray-500">(All)</span>
+        Leads <span className="text-gray-500">({(Number(rowsCount ?? 0))})</span>
       </h2>
       <div className="flex items-center">
-        <div className="flex space-x-6">
+        <div className="flex space-x-4">
           <SearchBox placeholder="Type and Press Enter" setFilter={setQuery} iconSize={24} responsive
               iconColor="#0D2167"
           />

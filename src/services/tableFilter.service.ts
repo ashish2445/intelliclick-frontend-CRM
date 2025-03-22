@@ -18,7 +18,6 @@ class FilterService{
         page: pagination.page,
         limit: pagination.limit
       };
-      console.log('payyyyy',payload2);
       const payload3 = {
         "logic": "AND",
         "page": 1,

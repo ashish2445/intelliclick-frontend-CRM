@@ -9,6 +9,7 @@ import { FaRegStar, FaStar } from "react-icons/fa6";
 import { formatCamelCase, formatDate, handleError } from "@/utils/helpers";
 import { IStatus } from "@/interfaces/tableFilterTypes";
 import { AxiosError } from "axios";
+import { TableInstance } from "@/services/table.service";
 
 interface TableProps {
   data: ITableFields[];
@@ -71,6 +72,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   const [headerChecked, setHeaderChecked] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [favoriteRows, setFavoriteRows] = useState<Record<string, boolean>>({});
+  const tableRef = useRef<HTMLDivElement | null>(null);
 
 
   useEffect(() => {
@@ -98,7 +100,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
 
   const handleFavoriteToggle = async (rowId: string,favState:boolean) => {
     try{
-      // await TableInstance.toggleFavorite(rowId,favState)
+      const response = await TableInstance.toggleFavorite(rowId,favState);
       setFavoriteRows((prev) => ({
         ...prev,
         [rowId]: !prev[rowId],
@@ -183,8 +185,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="relative overflow-x-auto w-full dark:invert border-l border-r border-t border-gray-300 rounded-t-lg">
-        <div ref={dropdownRef} className="absolute top-2 right-2 cursor-pointer z-30">
-            <div className="sticky top-2">            
+        <div ref={dropdownRef} className="absolute cursor-pointer z-30" style={{top:10, right:10}}>
               <button onClick={() => setDropdownOpen((prev) => !prev)} className="p-2 rounded-full hover:bg-gray-300">
                 <PiDotsThreeOutlineVertical size={20} className="text-gray-600 hover:text-gray-900" />
               </button>
@@ -205,136 +206,137 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                   </ul>
                 </div>
               )}
-            </div>
         </div>
 
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-200 text-left text-sm font-semibold h-12">
-              <th className="sticky left-0 p-3 border-r border-gray-300 w-12 text-center">            
-                <input
-                  type="checkbox"
-                  checked={headerChecked}
-                  onChange={handleHeaderCheckboxChange}
-                />
-              </th>
-              {columnOrder?.map((col, colIndex) => {
-                if (!displayColumns.includes(col)) return null;
-                return (
-                  <th key={col} className="sticky left-10 p-3 border-r text-[12px] font-[400] border-gray-300 min-w-[150px]">
-                    {col.includes('name') ? (
-                      <div className="flex items-center">                        
-                          <span className="text-[14px]">{formatCamelCase(col)}</span>
-                      </div>
-                    ) : (
-                      <span className="text-[14px]">{formatCamelCase(col)}</span>
-                    )}
-                  </th>
-                );
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {data?.map((row, rowIndex) => (
-              <tr key={rowIndex} className="border-b border-gray-200 text-sm">
-                <td className="sticky left-0 p-3 border-r border-gray-300 w-12 text-center">
+        <div className="overflow-auto" ref={tableRef} >
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-gray-200 text-left text-sm font-semibold h-12">
+                <th className="sticky left-0 p-3 border-r border-gray-300 w-12 text-center">            
                   <input
                     type="checkbox"
-                    checked={checkedRows[rowIndex] || false}
-                    onChange={() => handleRowCheckboxChange(rowIndex)}
+                    checked={headerChecked}
+                    onChange={handleHeaderCheckboxChange}
                   />
-                </td>
+                </th>
                 {columnOrder?.map((col, colIndex) => {
                   if (!displayColumns.includes(col)) return null;
                   return (
-                    <td key={col} className={`sticky left-10 p-3 border-r border-gray-300`}>
-                      {col.toLocaleLowerCase() === 'name' ? (
-                        <div className="flex items-center text-[14px] font-[400] gap-2 inline-block whitespace-nowrap">                       
-                          <div onClick={(e) => {
-                              e.stopPropagation();
-                              handleFavoriteToggle(row._id, row.name.favorite);
-                            }}
-                            style={{ cursor: "pointer" }}>
-                            {favoriteRows[row._id] ? <FaStar color="#fcba03" /> : <FaRegStar color="black" />}
-                          </div>
-                          {/* <span className="text-[14px] ml-2" onClick={() => handleNameClick(row._id)} 
-                            style={{ cursor: "pointer", color: "#0D2167", textDecoration: "underline" }}>{row[col]?.name || "-"}</span> */}
-                            <div className="relative group">
-                            <span
-                              className="text-[14px] cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px] inline-block"
-                              onClick={() => handleNameClick(row._id)}
-                              style={{
-                                cursor: "pointer",
-                                color: "#0D2167",
-                                textDecoration: "underline",
-                              }}
-                            >
-                              {row[col]?.name || "-"}
-                            </span>
-                            {/* Tooltip for long names */}
-                            {(() => {
-                              const fullName = row[col]?.name || "-";
-                              const nameParts = fullName.split(" ");
-
-                              if (nameParts.length > 2) {
-                                return (
-                                  <div className="absolute left-0 top-full mt-1 hidden group-hover:block bg-white text-black p-2 rounded-md text-sm z-50 whitespace-nowrap shadow-lg">
-                                    <div className="flex items-center text-[14px] cursor-pointer whitespace-nowrap gap-1">
-                                      <span>{fullName}</span>
-                                    </div>
-                                  </div>
-                                );
-                              }
-                              return null;
-                            })()}
-                          </div>  
+                    <th key={col} className="sticky left-10 p-3 border-r text-[12px] font-[400] border-gray-300 min-w-[150px]">
+                      {col.includes('name') ? (
+                        <div className="flex items-center">                        
+                            <span className="text-[14px]">{formatCamelCase(col)}</span>
                         </div>
-                      ):col.toLowerCase() === "phone" ? (
-                        <span className="flex gap-3 text-[12px] font-[400] ">
-                          <span className="text-[14px]">{typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col] ?? "-"}</span>
-                          <span style={{cursor:'pointer'}}><BsFillTelephoneOutboundFill color='#4287f5' /></span>
-                        </span>
-                      ) :col.toLowerCase() === "updatedat" ? (
-                        <span className="flex gap-3 text-[12px] font-[400] ">
-                          <span className="text-[14px]">{formatDate(row[col])}</span>
-                        </span>
-                      ):col.toLowerCase() === 'leadscore'? (
-                            <div className="flex justify-center">
-                              <div className="px-2 py-1 rounded bg-[#F0FDF4] text-[#15803D] text-[14px] text-sm font-medium">
-                                {isNaN(Number(row[col])) 
-                                  ? row[col] 
-                                  : (Number(row[col]) > 0 ? `+${Number(row[col])}` : Number(row[col]))}
-                              </div>
-                            </div>
-                          ):col.toLowerCase() === 'assignedowner'? (
-                            <div className="h-full flex items-center">
-                              <div className="w-8 h-8 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-medium">
-                                {/* {typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col]?.split(' ').map((n: string) => n[0]).join('')} */}
-                                {typeof row[col] === "object" 
-                                  ? row[col]?.[col]?.split(" ").map((word: string) => word[0]?.toUpperCase()).join("") ?? "-" 
-                                  : row[col]?.split(" ").map((word: string) => word[0]?.toUpperCase()).join("")
-                                }
-                              </div>
-                              <span className="ml-2 text-sm text-gray-800 text-[14px]">{typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col] ?? "-"}</span>
-                            </div>
-                          ):
-                       (
-                        <span
-                          className={`rounded-[8px] text-[14px] font-[400] ${columnStyles[col]}`}
-                          style={col === 'status' ? { background: getStatusColor(row[col]), color: 'white', padding: '5px' } : col.toLowerCase() === 'board' ? {padding:'5px'}: col.toLowerCase() === 'class' ? {padding:'5px'}:undefined}
-                        >
-                          <span className={`text-[14px]`}>
-                            {col === "class" ? extractGrade(row[col]) : col === 'status' ? getStatusLabel(row[col]) : row[col] || "-"}
-                          </span>
-                        </span>
+                      ) : (
+                        <span className="text-[14px]">{formatCamelCase(col)}</span>
                       )}
-                    </td>
+                    </th>
                   );
                 })}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {data?.map((row, rowIndex) => (
+                <tr key={rowIndex} className="border-b border-gray-200 text-sm">
+                  <td className="sticky left-0 p-3 border-r border-gray-300 w-12 text-center">
+                    <input
+                      type="checkbox"
+                      checked={checkedRows[rowIndex] || false}
+                      onChange={() => handleRowCheckboxChange(rowIndex)}
+                    />
+                  </td>
+                  {columnOrder?.map((col, colIndex) => {
+                    if (!displayColumns.includes(col)) return null;
+                    return (
+                      <td key={col} className={`sticky left-10 p-3 border-r border-gray-300`}>
+                        {col.toLocaleLowerCase() === 'name' ? (
+                          <div className="flex items-center text-[14px] font-[400] gap-2 inline-block whitespace-nowrap">                       
+                            <div onClick={(e) => {
+                                e.stopPropagation();
+                                handleFavoriteToggle(row._id, row.name.favorite);
+                              }}
+                              style={{ cursor: "pointer" }}>
+                              {favoriteRows[row._id] ? <FaStar color="#fcba03" /> : <FaRegStar color="black" />}
+                            </div>
+                            {/* <span className="text-[14px] ml-2" onClick={() => handleNameClick(row._id)} 
+                              style={{ cursor: "pointer", color: "#0D2167", textDecoration: "underline" }}>{row[col]?.name || "-"}</span> */}
+                              <div className="relative group">
+                              <span
+                                className="text-[14px] cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px] inline-block"
+                                onClick={() => handleNameClick(row._id)}
+                                style={{
+                                  cursor: "pointer",
+                                  color: "#0D2167",
+                                  textDecoration: "underline",
+                                }}
+                              >
+                                {row[col]?.name || "-"}
+                              </span>
+                              {/* Tooltip for long names */}
+                              {(() => {
+                                const fullName = row[col]?.name || "-";
+                                const nameParts = fullName.split(" ");
+
+                                if (nameParts.length > 2) {
+                                  return (
+                                    <div className="absolute left-0 top-full mt-1 hidden group-hover:block bg-white text-black p-2 rounded-md text-sm z-50 whitespace-nowrap shadow-lg">
+                                      <div className="flex items-center text-[14px] cursor-pointer whitespace-nowrap gap-1">
+                                        <span>{fullName}</span>
+                                      </div>
+                                    </div>
+                                  );
+                                }
+                                return null;
+                              })()}
+                            </div>  
+                          </div>
+                        ):col.toLowerCase() === "phone" ? (
+                          <span className="flex gap-3 text-[12px] font-[400] ">
+                            <span className="text-[14px]">{typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col] ?? "-"}</span>
+                            <span style={{cursor:'pointer'}}><BsFillTelephoneOutboundFill color='#4287f5' /></span>
+                          </span>
+                        ) :col.toLowerCase() === "updatedat" ? (
+                          <span className="flex gap-3 text-[12px] font-[400] ">
+                            <span className="text-[14px]">{formatDate(row[col])}</span>
+                          </span>
+                        ):col.toLowerCase() === 'leadscore'? (
+                              <div className="flex justify-center">
+                                <div className="px-2 py-1 rounded bg-[#F0FDF4] text-[#15803D] text-[14px] text-sm font-medium">
+                                  {isNaN(Number(row[col])) 
+                                    ? row[col] 
+                                    : (Number(row[col]) > 0 ? `+${Number(row[col])}` : Number(row[col]))}
+                                </div>
+                              </div>
+                            ):col.toLowerCase() === 'assignedowner'? (
+                              <div className="h-full flex items-center">
+                                <div className="w-8 h-8 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-medium">
+                                  {/* {typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col]?.split(' ').map((n: string) => n[0]).join('')} */}
+                                  {typeof row[col] === "object" 
+                                    ? row[col]?.[col]?.split(" ").map((word: string) => word[0]?.toUpperCase()).join("") ?? "-" 
+                                    : row[col]?.split(" ").map((word: string) => word[0]?.toUpperCase()).join("")
+                                  }
+                                </div>
+                                <span className="ml-2 text-sm text-gray-800 text-[14px]">{typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col] ?? "-"}</span>
+                              </div>
+                            ):
+                        (
+                          <span
+                            className={`rounded-[8px] text-[14px] font-[400] ${columnStyles[col]}`}
+                            style={col === 'status' ? { background: getStatusColor(row[col]), color: 'white', padding: '5px' } : col.toLowerCase() === 'board' ? {padding:'5px'}: col.toLowerCase() === 'class' ? {padding:'5px'}:undefined}
+                          >
+                            <span className={`text-[14px]`}>
+                              {col === "class" ? extractGrade(row[col]) : col === 'status' ? getStatusLabel(row[col]) : row[col] || "-"}
+                            </span>
+                          </span>
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       {/* {isPanelOpen && (
         <SlideInPanel isOpen={isPanelOpen} setIsOpen={setIsPanelOpen}>

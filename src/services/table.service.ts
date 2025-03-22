@@ -629,7 +629,7 @@ class TableService{
 
     toggleFavorite = async (leadId:string,currentState:boolean) => {
       const url = `api/lead/write/favorite/${leadId}`;
-      return await callApi(url,API.PATCH,{favorite:currentState},true);
+      return await callApi(url,API.PATCH,{"favorite":currentState},true);
     }
 
     getFullDetails = async (userId:string) => {

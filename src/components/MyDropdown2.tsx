@@ -34,8 +34,22 @@ const CustomDropdown2: React.FC<CustomDropdownProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null); // Ref for dropdown
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  console.log("oppptttstat",options);
+  useEffect(() => {
+    const handleResize = () => {
+      // You can adjust this threshold based on your layout needs
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+
+    // Initial check
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   // Automatically select the first option if nothing is selected (only for single select)
   useEffect(() => {
@@ -91,17 +105,17 @@ const CustomDropdown2: React.FC<CustomDropdownProps> = ({
     <div ref={dropdownRef} className="relative inline-block">
       {/* Dropdown Button */}
       <button
-        className="w-fit gap-2 flex justify-between items-center px-4 py-2 border rounded-md shadow-sm bg-white hover:bg-gray-100"
+        className="w-fit gap-2 flex justify-between items-center p-2 border rounded-md shadow-sm bg-white hover:bg-gray-100"
         onClick={() => setIsOpen(!isOpen)}
       >
         {defaultValue === 'Assignee' && <DynamicIcon name={btnIcon ?? "GoPerson"} className="text-gray-600" size={24} />}
-        <span>{displayText}</span>
+        <span>{defaultValue === 'Assignee' && isSmallScreen ? '' : displayText}</span>
         <ChevronDown size={16} />
       </button>
 
       {/* Dropdown List */}
       {isOpen && (
-        <ul className="absolute z-10 w-168 mt-2 bg-white border rounded-md shadow-lg">
+        <ul className="absolute z-10 right-0 w-fit mt-2 bg-white border rounded-md shadow-lg">
           {options.map((option) => {
             const IconComponent = option.icon ? Icons[option.icon] : null;
             const isSelected = selectedValues.includes(option.value.toLocaleString());
