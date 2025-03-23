@@ -90,7 +90,7 @@ const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,query, 
           <SearchBox placeholder="Type and Press Enter" setFilter={setQuery} iconSize={24} responsive
               iconColor="#0D2167"
           />
-          <CustomDropdown2 options={mapAssigneeToDropdownOptions(assignee,{ showCheckbox: false,addDeco:true })} defaultValue="Assignee" selectedValues={query.filters.find(each => each.field === "assignedOwner")?.value || []} onChange={handleAssigneeChange} />
+          <CustomDropdown2 options={mapAssigneeToDropdownOptions(assignee,{ showCheckbox: false,addDeco:true })} defaultValue="Assignee" onChange={handleAssigneeChange} />
           <DateFilter options={[...TIME_RANGE]} setDate={setQuery} />
         
         {/* <MultiSelectDropdown options={statusInfo} selectedOptions={filterState.status} onSelect={(values: string[]) => {

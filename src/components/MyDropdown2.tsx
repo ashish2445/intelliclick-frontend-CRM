@@ -13,7 +13,7 @@ interface DropdownOption {
 
 interface CustomDropdownProps {
   options: DropdownOption[];
-  selectedValues: string[] | string;
+  selectedValues?: string[] | string;
   onChange: (values: string[]) => void;
   multiSelect?: boolean;
   btnIcon?:string;
@@ -53,7 +53,7 @@ const CustomDropdown2: React.FC<CustomDropdownProps> = ({
 
   // Automatically select the first option if nothing is selected (only for single select)
   useEffect(() => {
-    if (!multiSelect && selectedValues.length === 0 && options.length > 0) {
+    if (!multiSelect && selectedValues?.length === 0 && options.length > 0) {
       onChange([options[0].value.toLocaleString()]);
     }
   }, [multiSelect, selectedValues, options, onChange]);
@@ -71,7 +71,9 @@ const CustomDropdown2: React.FC<CustomDropdownProps> = ({
   }, []);
 
   const handleSelect = (value: string) => {
-    let newValues = [...selectedValues];
+    // let newValues = [...selectedValues];
+    let newValues = [...(Array.isArray(selectedValues) ? selectedValues : selectedValues ? [selectedValues] : [])];
+
 
     if (multiSelect) {
       if (newValues.includes(value)) {
@@ -93,12 +95,21 @@ const CustomDropdown2: React.FC<CustomDropdownProps> = ({
   //     ? `Selected (${selectedValues.length})`
   //     :defaultValue?.length > 0 ?defaultValue: options.find((opt) => opt.value === selectedValues[0])?.label;
 
+  // const displayText =
+  // multiSelect && selectedValues?.length > 0
+  //   ? `Selected (${selectedValues?.length})`
+  //   : typeof defaultValue === "string" && defaultValue.length > 0
+  //   ? defaultValue
+  //   : options.find((opt) => opt.value === selectedValues[0])?.label;
   const displayText =
-  multiSelect && selectedValues.length > 0
+  multiSelect && Array.isArray(selectedValues) && selectedValues.length > 0
     ? `Selected (${selectedValues.length})`
     : typeof defaultValue === "string" && defaultValue.length > 0
     ? defaultValue
-    : options.find((opt) => opt.value === selectedValues[0])?.label;
+    : Array.isArray(selectedValues)
+    ? options.find((opt) => opt.value === selectedValues[0])?.label
+    : options.find((opt) => opt.value === selectedValues)?.label;
+
 
 
   return (
@@ -118,7 +129,7 @@ const CustomDropdown2: React.FC<CustomDropdownProps> = ({
         <ul className="absolute z-10 right-0 w-fit mt-2 bg-white border rounded-md shadow-lg">
           {options.map((option) => {
             const IconComponent = option.icon ? Icons[option.icon] : null;
-            const isSelected = selectedValues.includes(option.value.toLocaleString());
+            const isSelected = selectedValues?.includes(option.value.toLocaleString());
 
             return (
               <li

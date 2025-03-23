@@ -266,9 +266,9 @@ class RootService{
   }
 
   getStages = async () => {
-    // const url='api/lead_stage/read/all-stages';
-    // return await callApi(url,API.GET);
-    return stages;
+    const url='api/lead_stage/read/all-stages';
+    return await callApi(url,API.GET);
+    // return stages;
   }
 
   editStatus = async (payload:{
@@ -277,7 +277,11 @@ class RootService{
     "label":String
     }) => {
         const url='api/lead_stage/write/create-update/stage_fresh';
-        return await callApi(url,API.POST,payload,true);
+        return await callApi(url,API.POST,{
+    "statusid":2,
+    "color":"#828278",
+    "label":"newlead"
+},true);
     }
 
   deleteStatus = async (payload:{stageId:String,statusId:String}) => {

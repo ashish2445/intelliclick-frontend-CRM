@@ -31,7 +31,7 @@ export const ActiveStage: React.FC<StageProps> = ({ className,fullObject }) => {
   const [showDeletedItems, setShowDeletedItems] = useState(false);
   const [editingItem, setEditingItem] = useState<string | null>(null);
   const [isAddingNew, setIsAddingNew] = useState(false);
-  const [selectedColor, setSelectedColor] = useState<string>("bg-green-100");
+  const [selectedColor, setSelectedColor] = useState<string>("");
   const [stageName, setStageName] = useState<string>("");
 
   const colorOptions = [
@@ -46,8 +46,8 @@ export const ActiveStage: React.FC<StageProps> = ({ className,fullObject }) => {
   ];
 
   const handleEditClick = (itemId: string, color: string, title: string) => {
-    const response = RootInstance.editStatus({"statusid":itemId,"label":stageName,"color":selectedColor})
-    console.log("editable",itemId,color,title);
+    const response = RootInstance.editStatus({"statusid":itemId,"label":title,"color":color})
+    console.log("editable",response);
     setEditingItem(itemId);
     setSelectedColor(color);
     setStageName(title);
@@ -59,6 +59,10 @@ export const ActiveStage: React.FC<StageProps> = ({ className,fullObject }) => {
   };
 
   const handleSaveChanges = () => {
+    const payllll = {
+      stageName,selectedColor
+    }
+    console.log("saveeee",payllll);
     if (stageName.trim() === "") {
       return; // Don't save if name is empty
     }

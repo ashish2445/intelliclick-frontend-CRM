@@ -220,7 +220,6 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                   />
                 </th>
                 {columnOrder?.map((col, colIndex) => {
-                  console.log("collllll",col);
                   if (!displayColumns.includes(col)) return null;
                   return (
                     <th key={col} className={`${col.includes('name') ? 'sticky left-9 bg-gray-200': ''} ${col.includes('phone') ? 'sticky left-[185px] bg-gray-200': ''} p-3 border-r text-[12px] font-[400] border-gray-300 min-w-[150px]`}>

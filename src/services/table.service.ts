@@ -634,8 +634,8 @@ class TableService{
 
     getFullDetails = async (userId:string) => {
       const url = `api/lead/read/get-lead-by?Id=${userId}`;
-      return rowDetail;
-    //   return await callApi(url,API.GET);
+    //   return rowDetail;
+      return await callApi(url,API.GET);
     } 
 
     createTask = async (taskDetails:IAddTask) => {
@@ -645,8 +645,8 @@ class TableService{
 
     getFormFields = async ():Promise<FormField[]> => {
       const url = 'api/lead_field/read/get-all-fields';
-    //   return await callApi(url,API.GET);
-      return fields;
+      return await callApi(url,API.GET);
+    //   return fields;
     }
 }
 

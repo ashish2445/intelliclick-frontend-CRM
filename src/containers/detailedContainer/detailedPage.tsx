@@ -87,6 +87,7 @@ const DetailedPage: React.FC = () => {
     async function fetchLeadData() {
       try {
         const response = await TableInstance.getFullDetails(id as string);
+        console.log("lead full",response);
         setDetailedRow(response);
         } catch (error) {
         handleError(error as AxiosError, false);
@@ -109,7 +110,7 @@ const DetailedPage: React.FC = () => {
             status="Enroll"
             phone={detailedRow?.phone ?? ""}
             email={detailedRow?.fields?.email ?? ""}
-            location={detailedRow?.region ?? ""}
+            location={detailedRow?.region?.name ?? ""}
             rating={Number(detailedRow?.fields?.percentage) ?? ""}
           />
           <LeadDetails details={leadData} />

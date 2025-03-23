@@ -27,9 +27,7 @@ const TableContainer: React.FC = () => {
     singleDate: undefined,
     dateRange: { startDate: undefined, endDate: undefined },
   });
-
-  console.log("columns",columns);
-  
+    
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(25);
   const [addCondition,setCondition] = useState<boolean>(false);
@@ -60,8 +58,10 @@ const TableContainer: React.FC = () => {
   }
 
    const fetchAssignees = async () => {
+    console.log("adddddssssss");
     try {
       const response = await DropdownInstance.getAssignee(); // Await the API response
+      console.log("assig",assignee);
       setGetAssignee(response);
     } catch (error) {
       handleError(error as AxiosError,false);
@@ -174,7 +174,7 @@ const TableContainer: React.FC = () => {
           <span className="text-sm">Yesterday Leads</span>
         </button>
         </div>
-        <TableFilters rowsCount={tableData.length} setFilter={setFilterState} query={query} setQuery={setQuery} filterState={filterState} assignee={assignee} statusInfo={statusInfo} />
+        <TableFilters rowsCount={tableData?.length} setFilter={setFilterState} query={query} setQuery={setQuery} filterState={filterState} assignee={assignee} statusInfo={statusInfo} />
         <DndProvider backend={HTML5Backend}>
         <DynamicTable3 data={tableData} columns={columns} statusInfo={statusInfo} /></DndProvider>
         <Pagination
