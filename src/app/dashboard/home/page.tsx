@@ -1,68 +1,184 @@
 'use client';
-import React, { useEffect, useState } from "react";
+import React from "react";
 import StatisticsContainer from "@/containers/statisticsContainer";
-import { IOpenTaskData, ITableFields } from "@/interfaces";
-import { handleError } from "@/utils/helpers";
-import { AxiosError } from "axios";
-import { FilterInstance } from "@/services/tableFilter.service";
-import { QueryState } from "@/interfaces/tableFilterTypes";
+import { ITableFields } from "@/interfaces";
 
-// const data:IOpenTaskData[]= [
-//   {
-//     "StudentName": "John Doe",
-//     "Class": "10th Grade",
-//     "PhoneNumber": "123-456-7890",
-//     "Status": "Active",
-//     "CreatedBy": "Admin",
-//     "CreatedAt": "2025-02-24",
-//   },
-//   {
-//     "StudentName": "Jane Smith",
-//     "Class": "9th Grade",
-//     "PhoneNumber": "987-654-3210",
-//     "Status": "Inactive",
-//     "CreatedBy": "Teacher B",
-//     "CreatedAt": "2025-02-23",
-//   },
-// ];
+const tableData = [
+        {
+            "_id": "67ce6b3f4353d8124a10bef1",
+            "name": {
+                "name": "reetesh leadC",
+                "favorite": true
+            },
+            "phone": "9700001868",
+            "assignedAdmin": null,
+            "region": "67cb19be97eb04cf8489c92e",
+            "status": 1,
+            "leadscore": 0,
+            "createdBy": "67cb19dd97eb04cf8489c931",
+            "createdAt": "2025-03-10T04:31:59.037Z",
+            "updatedAt": "2025-03-22T10:40:12.490Z",
+            "__v": 0,
+            "assignedOwner": {
+                "_id": "67cb19be97eb04cf8489c92e",
+                "assignedOwner": "Patlu singh",
+                "email": "manager@gmail.com"
+            },
+            "class": "9th Grade",
+            "board": "CBSE",
+            "address": "123 Main Street",
+            "phoneNumber": "9876543210",
+            "email": "johndoe@example.com",
+            "fatherOccupation": "Engineer",
+            "motherOccupation": "Doctor",
+            "alternativeNumber": "7890123456",
+            "parentName": "Mr. and Mrs. Doe",
+            "schoolName": "ABC High School",
+            "city": "New York",
+            "state": "NY",
+            "percentage": "92%",
+            "interactWith": "Counselor"
+        },
+        {
+            "_id": "67ce69fd7f30e90eb3c6bcb2",
+            "name": {
+                "name": "reetesh leadB",
+                "favorite": true
+            },
+            "phone": "9700001867",
+            "assignedAdmin": "67cb17f097eb04cf8489c914",
+            "region": "67cb186197eb04cf8489c916",
+            "status": 1,
+            "createdBy": "67cb19dd97eb04cf8489c931",
+            "createdAt": "2025-03-10T04:26:37.287Z",
+            "updatedAt": "2025-03-10T04:26:37.287Z",
+            "__v": 0,
+            "assignedOwner": null,
+            "class": "9th Grade",
+            "board": "CBSE",
+            "address": "123 Main Street",
+            "phoneNumber": "9876543210",
+            "email": "johndoe@example.com",
+            "fatherOccupation": "Engineer",
+            "motherOccupation": "Doctor",
+            "alternativeNumber": "7890123456",
+            "parentName": "Mr. and Mrs. Doe",
+            "schoolName": "ABC High School",
+            "city": "New York",
+            "state": "NY",
+            "percentage": "92%",
+            "interactWith": "Counselor"
+        },
+        {
+            "_id": "67ce69567a67c6e824266109",
+            "name": {
+                "name": "reetesh lead",
+                "favorite": true
+            },
+            "phone": "9500001867",
+            "assignedAdmin": "67cb17f097eb04cf8489c914",
+            "region": "67cb186197eb04cf8489c916",
+            "status": 1,
+            "createdBy": "67cb19dd97eb04cf8489c931",
+            "createdAt": "2025-03-10T04:23:50.190Z",
+            "updatedAt": "2025-03-10T04:23:50.190Z",
+            "__v": 0,
+            "assignedOwner": null,
+            "class": "9th Grade",
+            "board": "CBSE",
+            "address": "123 Main Street",
+            "phoneNumber": "9876543210",
+            "email": "johndoe@example.com",
+            "fatherOccupation": "Engineer",
+            "motherOccupation": "Doctor",
+            "alternativeNumber": "7890123456",
+            "parentName": "Mr. and Mrs. Doe",
+            "schoolName": "ABC High School",
+            "city": "New York",
+            "state": "NY",
+            "percentage": "92%",
+            "interactWith": "Counselor"
+        },
+        {
+            "_id": "67cc01a3ec834502a69566f1",
+            "name": {
+                "name": "reeteshB",
+                "favorite": true
+            },
+            "phone": "5500001867",
+            "region": "67c7df011e3e66164e985253",
+            "status": 1,
+            "createdAt": "2025-03-08T08:36:51.962Z",
+            "updatedAt": "2025-03-08T08:38:23.389Z",
+            "__v": 0,
+            "assignedOwner": {
+                "_id": "67cb19dd97eb04cf8489c931",
+                "assignedOwner": "MotuPatlu Jodi",
+                "email": "caller@gmail.com"
+            },
+            "class": "10th Grade",
+            "board": "CBSE",
+            "address": "123 Main Street",
+            "phoneNumber": "9876543210",
+            "email": "johndoe@example.com",
+            "fatherOccupation": "Engineer",
+            "motherOccupation": "Doctor",
+            "alternativeNumber": "7890123456",
+            "parentName": "Mr. and Mrs. Doe",
+            "schoolName": "ABC High School",
+            "city": "New York",
+            "state": "NY",
+            "percentage": "92%",
+            "interactWith": "Counselor"
+        },
+        {
+            "_id": "67c844a1ce78280e8565ea50",
+            "name": {
+                "name": "John j",
+                "favorite": false
+            },
+            "phone": "8900007867",
+            "assignedAdmin": null,
+            "region": "67c7df011e3e66164e985253",
+            "createdAt": "2025-03-05T12:33:37.798Z",
+            "updatedAt": "2025-03-24T06:56:15.377Z",
+            "__v": 0,
+            "createdBy": "67cb19dd97eb04cf8489c931",
+            "leadscore": 0,
+            "status": 1,
+            "assignedOwner": {
+                "_id": "67cb19be97eb04cf8489c92e",
+                "assignedOwner": "Patlu singh",
+                "email": "manager@gmail.com"
+            },
+            "class": "10th Grade",
+            "board": "CBSE",
+            "address": "123 Main Street",
+            "phoneNumber": "9876543210",
+            "email": "johndoe@example.com",
+            "fatherOccupation": "Engineer",
+            "motherOccupation": "Doctor",
+            "alternativeNumber": "7890123456",
+            "parentName": "Mr. and Mrs. Doe",
+            "schoolName": "ABC High School",
+            "city": "New York",
+            "state": "NY",
+            "percentage": "92%",
+            "interactWith": "Counselor"
+        }
+    ];
+
+    const emptyData:ITableFields[] = [];
+
 
 const Home: React.FC = () => {
-
-  const [tableData,setTableData] = useState<ITableFields[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [query, setQuery] = useState<QueryState>({
-    filters:[],
-    logic: "AND",
-    pagination: {
-      page: currentPage,
-      limit: rowsPerPage
-    }
-  });
-
-    const filterData = async () => {
-    try {
-      const filterResponse = await FilterInstance.getFilterResponse(query); // Await the response
-      setTableData(filterResponse?.leads);
-    } catch (error) {
-      handleError(error as AxiosError,false);
-    }
-  };
-
-  useEffect(() => {
-    // if (isInitialRender.current) {
-    //   isInitialRender.current = false;
-    //   return; // Prevents the first execution
-    // }
-    filterData();
-  }, [query, currentPage, rowsPerPage]);
 
   return (
     <div className="grid grid-cols-2 gap-4 p-4">
       <StatisticsContainer data={tableData} title={'My open Task'} />
       <StatisticsContainer data={tableData} title={'My Meeting'} />
       <StatisticsContainer data={tableData} title={'Today Leads'} />
-      <StatisticsContainer title={'My Deals Closing This Month'} />
+      <StatisticsContainer data={emptyData} title={'My Deals Closing This Month'} />
     </div>
   );
 };

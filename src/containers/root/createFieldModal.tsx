@@ -14,7 +14,6 @@ import { AiOutlineImport } from 'react-icons/ai';
 import { BsEyeFill } from 'react-icons/bs';
 import { FaLock } from 'react-icons/fa';
 import { MdOutlineScreenSearchDesktop } from 'react-icons/md';
-import { BsExclamationTriangle } from 'react-icons/bs';
 import { BsInfoCircle } from 'react-icons/bs';
 import { TbArrowsRightLeft } from 'react-icons/tb';
 import { RootInstance } from '@/services/root.service';
@@ -62,14 +61,14 @@ const CreateFieldModal: React.FC<CreateFieldModalProps> = ({ isOpen, onClose, on
   // Find the selected type object
   const selectedType = fieldTypeOptions.find(option => option.value === fieldType);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("form fields",fieldName,fieldType);
-    const payload :any= {name:fieldName,type:fieldType}
-    const response = RootInstance.createLeadField(payload);
-    if (fieldType === "dropdown") {
-      payload.options = selectedProperties; // Assuming selectedProperties holds dropdown options
-    }
+    const payload :{name:string,type:string}= {name:fieldName,type:fieldType}
+    await RootInstance.createLeadField(payload);
+    // if (fieldType === "dropdown") {
+    //   payload.options = selectedProperties; // Assuming selectedProperties holds dropdown options
+    // }
     if (fieldName.trim()) {
       onCreateField(fieldName, fieldType, selectedProperties);
       setFieldName('');

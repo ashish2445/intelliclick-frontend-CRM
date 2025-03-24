@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Select, MenuItem, IconButton, SelectChangeEvent,CircularProgress } from "@mui/material";
-import { CalendarToday, Close, AccessTime } from "@mui/icons-material";
+import { CalendarToday, Close } from "@mui/icons-material";
 import { Filter, QueryState } from "@/interfaces/tableFilterTypes";
 import { handleError } from "@/utils/helpers";
 import { AxiosError } from "axios";

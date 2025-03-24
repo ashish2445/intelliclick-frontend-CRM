@@ -47,7 +47,7 @@ const DateFilter = ({ options, setDate }: DateFilterProps) => {
         ],
       };
     });
-  }, [selectedOption]);
+  }, [selectedOption,setDate]);
 
 
   useEffect(() => {

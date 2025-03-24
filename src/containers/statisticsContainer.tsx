@@ -5,7 +5,7 @@ import SearchBox from "@/components/SearchBox";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Image from "next/image";
-import { IOpenTaskData, ITableFields } from "@/interfaces";
+import { ITableFields } from "@/interfaces";
 
 
 

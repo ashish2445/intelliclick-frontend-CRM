@@ -18,7 +18,6 @@ interface FieldContainerProps {
 const FieldContainer: React.FC<FieldContainerProps> = ({ 
   icon, 
   name, 
-  type, 
   options, 
   isHidden, 
   onEdit, 

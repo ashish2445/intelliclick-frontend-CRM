@@ -8,7 +8,7 @@ import { ITableFields } from "@/interfaces";
 import { FilterState,QueryState, IAssignee, IStatus } from "@/interfaces/tableFilterTypes";
 import { getAllKeys, handleError } from "@/utils/helpers";
 import { AxiosError } from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { DndProvider } from 'react-dnd';
@@ -16,7 +16,6 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { FilterInstance } from "@/services/tableFilter.service";
 import { DropdownInstance } from "@/services/dropdown.service";
 import { columns } from "@/utils/constants";
-import { TableInstance } from "@/services/table.service";
 
 const TableContainer: React.FC = () => {
 
@@ -43,25 +42,12 @@ const TableContainer: React.FC = () => {
   });
   const [assignee, setGetAssignee] = useState<IAssignee[]>([]);
   const [statusInfo, setGetStatus] = useState<IStatus[]>([]);
-  const isInitialRender = useRef(true);
   const totalPages = (totalRows/rowsPerPage);
 
-  const fetchTableData = async () => {
-    try {
-      const data = await TableInstance.getTableData();
-      // const data = responseObject.leads;
-      setTotalRows(data?.total);
-      setTableData(data?.leads);
-    } catch (error) {
-      handleError(error as AxiosError,true);
-    }
-  }
-
-   const fetchAssignees = async () => {
-    console.log("adddddssssss");
+  useEffect(() => {
+     const fetchAssignees = async () => {
     try {
       const response = await DropdownInstance.getAssignee(); // Await the API response
-      console.log("assig",assignee);
       setGetAssignee(response);
     } catch (error) {
       handleError(error as AxiosError,false);
@@ -76,29 +62,23 @@ const TableContainer: React.FC = () => {
       handleError(error as AxiosError,false);
     }
   }
-  
-  useEffect(()=>{
-    // fetchTableData();
     fetchAssignees();
     fetchStatusInfo();
-  },[]);
+  }, []); // Empty dependency array ensures this runs only once on mount
 
-  const filterData = async () => {
+  useEffect(() => {
+     const filterData = async () => {
     try {
       const filterResponse = await FilterInstance.getFilterResponse(query); // Await the response
       setTableData(filterResponse?.leads);
+      setTotalRows(filterResponse?.total);
     } catch (error) {
       handleError(error as AxiosError,false);
     }
   };
-
-  useEffect(() => {
-    // if (isInitialRender.current) {
-    //   isInitialRender.current = false;
-    //   return; // Prevents the first execution
-    // }
     filterData();
-  }, [query, currentPage, rowsPerPage]);
+  }, [query, currentPage, rowsPerPage]); // Runs when these dependencies change
+
 
   const handleCondition = (key:string) => {
     setFilters([...filters,key]);

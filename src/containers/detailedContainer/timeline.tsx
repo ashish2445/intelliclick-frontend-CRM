@@ -64,8 +64,8 @@ const Timeline: React.FC<{ sections: TimelineSection[] }> = ({ sections }) => {
             {section.items.map((item, itemIndex) => {
               const icon = getIcon(item.description);
               const cleanDescription = processDescription(item.description);
-              const isLastItem = itemIndex === section.items.length - 1 && 
-                                 sectionIndex === sections.length - 1;
+              // const isLastItem = itemIndex === section.items.length - 1 && 
+              //                    sectionIndex === sections.length - 1;
               
               return (
                 <div 

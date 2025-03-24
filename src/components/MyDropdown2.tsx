@@ -4,7 +4,7 @@ import DynamicIcon from "./DynamicIcon";
 
 interface DropdownOption {
   label: string;
-  value: string | Number;
+  value: string | number;
   icon?: string; // Icon name as string
   color?: string;
   addDeco?:boolean;

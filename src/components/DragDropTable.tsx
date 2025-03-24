@@ -100,7 +100,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
 
   const handleFavoriteToggle = async (rowId: string,favState:boolean) => {
     try{
-      const response = await TableInstance.toggleFavorite(rowId,favState);
+      await TableInstance.toggleFavorite(rowId,favState);
       setFavoriteRows((prev) => ({
         ...prev,
         [rowId]: !prev[rowId],
@@ -222,7 +222,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                 {columnOrder?.map((col, colIndex) => {
                   if (!displayColumns.includes(col)) return null;
                   return (
-                    <th key={col} className={`${col.includes('name') ? 'sticky left-9 bg-gray-200': ''} ${col.includes('phone') ? 'sticky left-[185px] bg-gray-200': ''} p-3 border-r text-[12px] font-[400] border-gray-300 min-w-[150px]`}>
+                    <th key={colIndex} className={`${col.includes('name') ? 'sticky left-9 bg-gray-200': ''} ${col.includes('phone') ? 'sticky left-[185px] bg-gray-200': ''} p-3 border-r text-[12px] font-[400] border-gray-300 min-w-[150px]`}>
                       {col.includes('Name') || col.includes('Phone') ? (
                         <div className="flex items-center">                        
                             <span className="text-[14px]">{formatCamelCase(col)}</span>
@@ -248,7 +248,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                   {columnOrder?.map((col, colIndex) => {
                     if (!displayColumns.includes(col)) return null;
                     return (
-                      <td key={col} className={`${col.includes('name') ? 'sticky left-9 bg-white': ''} ${col.includes('phone') ? 'sticky left-[185px] bg-white': ''} p-3 border-r border-gray-300`}>
+                      <td key={colIndex} className={`${col.includes('name') ? 'sticky left-9 bg-white': ''} ${col.includes('phone') ? 'sticky left-[185px] bg-white': ''} p-3 border-r border-gray-300`}>
                         {col.toLocaleLowerCase() === 'name' ? (
                           <div className="flex items-center text-[14px] font-[400] gap-2 inline-block whitespace-nowrap">                       
                             <div onClick={(e) => {

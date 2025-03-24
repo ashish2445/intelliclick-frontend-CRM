@@ -1,4 +1,4 @@
-import { Role, StorageKey } from '@/utils/enum';
+import { StorageKey } from '@/utils/enum';
 
 import { TimeRangeType } from "../constants/timeRanges";
 import { IStage } from '@/interfaces/root.interface';
@@ -42,7 +42,7 @@ export function formatToLocalTime(isoDate: string): string {
   return `${day} ${month}, ${year} ${formattedTime}`;
 }
 
-export const getAllKeys = <T extends Record<string, any>>(data: T[]): string[] => {
+export const getAllKeys = <T extends Record<string, unknown>>(data: T[]): string[] => {
   return Array.from(new Set(data.flatMap((row) => Object.keys(row))));
 };
 
@@ -122,7 +122,7 @@ export const formatDate = (isoString: string): string => {
 
 interface DropdownOption {
   label: string;
-  value: string | Number;
+  value: string | number;
   icon?: string; // Icon name as string
   color?: string;
   addDeco?:boolean;
@@ -133,7 +133,7 @@ export const mapStatusToDropdownOptions = (
     statuses: IStatus[],
     options?: { addDeco?: boolean; showCheckbox?: boolean }
 ): DropdownOption[] => {
-    return statuses.map(({ label, _id, color, statusid }) => ({
+    return statuses.map(({ label, color, statusid }) => ({
         label,
         value:statusid,
         color,
@@ -146,7 +146,7 @@ export const mapAssigneeToDropdownOptions = (
   assignee:IAssignee[],
   options?: { addDeco?: boolean; showCheckbox?: boolean }
 ) => {
-  return assignee?.map(({name,email,depth,_id}) => ({
+  return assignee?.map(({name,email}) => ({
     label:name,
     value:email,
     ...options

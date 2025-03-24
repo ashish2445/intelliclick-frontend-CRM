@@ -3,7 +3,7 @@ import { FormField, RegionOption } from "@/interfaces/form.interface";
 import { FormInstance } from "@/services/form.service";
 import { handleError } from "@/utils/helpers";
 import { AxiosError } from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 interface DynamicFormProps {
   fields: FormField[];
@@ -21,9 +21,10 @@ const reg = [
   }
 ];
 
-const DynamicForm: React.FC<DynamicFormProps> = ({ fields, onSubmit }) => {
+const DynamicForm: React.FC<DynamicFormProps> = ({ fields }) => {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [regionOptions, setRegionOptions] = useState<RegionOption[]>([]);
+  console.log("reg Op",regionOptions);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({

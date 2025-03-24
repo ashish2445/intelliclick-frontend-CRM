@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Edit2, MoreVertical, ChevronDown, Plus } from 'lucide-react';
+import { Edit2, MoreVertical, Plus } from 'lucide-react';
 
 interface StageProps {
   className?: string;

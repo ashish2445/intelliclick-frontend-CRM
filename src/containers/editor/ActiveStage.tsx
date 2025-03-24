@@ -1,21 +1,21 @@
 'use client';
 import React, { useState } from 'react';
-import { Edit2, Trash2, ChevronDown, ChevronUp, Plus, Circle, AlertTriangle, Bell, Calendar, Check, ThumbsUp, Star, RefreshCcw } from 'lucide-react';
+import { Edit2, Trash2, ChevronDown, ChevronUp,Circle, RefreshCcw } from 'lucide-react';
 import { IEditableStatusBox } from '@/interfaces/root.interface';
 import { RootInstance } from '@/services/root.service';
 
 interface StageProps {
   className?: string;
-  fullObject:{};
+  fullObject: Record<string, number>;
 }
 
-interface StageItem {
-  id: string;
-  title: string;
-  color: string;
-  icon: React.ReactNode;
-  deleted?: boolean;
-}
+// interface StageItem {
+//   id: string;
+//   title: string;
+//   color: string;
+//   icon: React.ReactNode;
+//   deleted?: boolean;
+// }
 
 export const ActiveStage: React.FC<StageProps> = ({ className,fullObject }) => {
   
@@ -71,7 +71,7 @@ export const ActiveStage: React.FC<StageProps> = ({ className,fullObject }) => {
       // Update existing item
       const updatedItems = stageItems.map(item => {
         if (item.statusid === editingItem) {
-          const iconColor = selectedColor.replace('bg-', 'text-').replace('-100', '-600');
+          // const iconColor = selectedColor.replace('bg-', 'text-').replace('-100', '-600');
           return {
             ...item,
             title: stageName,
@@ -84,7 +84,7 @@ export const ActiveStage: React.FC<StageProps> = ({ className,fullObject }) => {
       setStageItems(updatedItems);
     } else if (isAddingNew) {
       // Add new item
-      const iconColor = selectedColor.replace('bg-', 'text-').replace('-100', '-600');
+      // const iconColor = selectedColor.replace('bg-', 'text-').replace('-100', '-600');
       const newItem = {
         statusid: Date.now().toString(),
         label: stageName,
@@ -98,7 +98,7 @@ export const ActiveStage: React.FC<StageProps> = ({ className,fullObject }) => {
   };
 
   const handleDeleteItem = (stageId: string,statusId:string) => {
-    const response = RootInstance.deleteStatus({stageId,statusId});
+    RootInstance.deleteStatus({stageId,statusId});
     const itemToDelete = stageItems.find(item => item.statusid === stageId);
     if (itemToDelete) {
       // Remove from active items
@@ -108,7 +108,7 @@ export const ActiveStage: React.FC<StageProps> = ({ className,fullObject }) => {
   };
 
   const handleRestoreItem = (stageId:string,statusId: string) => {
-    const response = RootInstance.restoreDeletedStatus({stageId,statusId});
+    RootInstance.restoreDeletedStatus({stageId,statusId});
     const itemToRestore = deletedItems.find(item => item.statusid === statusId);
     if (itemToRestore) {
       // Remove from deleted items

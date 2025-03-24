@@ -1,10 +1,8 @@
 'use client';
 import SearchBox from "@/components/SearchBox";
-import MultiSelectDropdown from "@/components/MultiSelectDropDown";
 import { Filter, FilterState, IAssignee, IStatus, QueryState } from "@/interfaces/tableFilterTypes";
 import DateFilter from "@/components/DateFilter";
 import { TIME_RANGE } from "@/utils/constants/timeRanges";
-import CustomDropdown from "@/components/Dropdown2";
 import CustomDropdown2 from "@/components/MyDropdown2";
 import { mapAssigneeToDropdownOptions, mapStatusToDropdownOptions } from "@/utils/helpers";
 
@@ -15,25 +13,20 @@ interface TableFiltersProps {
   setQuery:(query: QueryState | ((prev: QueryState) => QueryState)) => void;
   assignee: IAssignee[];
   statusInfo :IStatus[];
-  rowsCount : Number;
+  rowsCount : number;
 }
 
-interface DropdownOption {
-  label: string;
-  value: string | Number;
-  icon?: string; // Icon name as string
-  color?: string;
-  addDeco?:boolean;
-  showCheckbox?: boolean;
-}
-
-const TIME_RANGE_OPTIONS: DropdownOption[] = TIME_RANGE.map(range => ({
-  label: range,
-  value: range,
-}));
+// interface DropdownOption {
+//   label: string;
+//   value: string | number;
+//   icon?: string; // Icon name as string
+//   color?: string;
+//   addDeco?:boolean;
+//   showCheckbox?: boolean;
+// }
 
 
-const TableFilters:React.FC<TableFiltersProps> = ({filterState,setFilter,query, rowsCount,setQuery,assignee,statusInfo}) => { 
+const TableFilters:React.FC<TableFiltersProps> = ({query, rowsCount,setQuery,assignee,statusInfo}) => { 
 
   const handleStatusChange = (newValues: string[]) => {
     setQuery((prev) => ({

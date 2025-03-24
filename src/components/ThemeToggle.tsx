@@ -10,7 +10,7 @@ interface ThemeToggleProps {
   hovered: boolean;
 }
 
-const ThemeSwitch = styled(Switch)(({ theme }) => ({
+const ThemeSwitch = styled(Switch)(() => ({
   width: 80,
   height: 50,
   padding: 7,
@@ -44,7 +44,7 @@ const ThemeSwitch = styled(Switch)(({ theme }) => ({
 }));
 
 const ThemeToggle: React.FC<ThemeToggleProps> = ({ hovered }) => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

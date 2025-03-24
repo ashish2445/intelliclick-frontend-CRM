@@ -1,8 +1,6 @@
 import { API } from '@/utils/enum';
 import { callApi } from './http.service';
 import { QueryState } from '@/interfaces/tableFilterTypes';
-import { Pagination } from '@mui/material';
-
 
 class FilterService{
     getFilterResponse = async (payload: QueryState) => {
@@ -17,18 +15,12 @@ class FilterService{
         ...restPayload,
         page: pagination.page,
         limit: pagination.limit
-      };
-      const payload3 = {
-        "logic": "AND",
-        "page": 1,
-        "limit": 10
-      }
-    
+      };    
       const url = 'api/lead/read/leads-without-actions';
       return await callApi(url,API.POST,payload2);
     }
 
-    getColumnData = async (columnLabel:string) => {
+    getColumnData = async () => {
       const url = 'api/lead_field/read/get-all-fields';
       return await callApi(url,API.GET);
     }

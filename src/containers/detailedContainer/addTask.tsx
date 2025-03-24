@@ -5,7 +5,6 @@ import { TableInstance } from '@/services/table.service';
 import { handleError } from '@/utils/helpers';
 import { AxiosError } from 'axios';
 import React, { useState } from 'react';
-import { FiCalendar, FiClock } from 'react-icons/fi';
 
 interface AddTaskProps {
   onSubmit?: (taskData: TaskData) => void;
@@ -24,7 +23,7 @@ export interface TaskData {
   assignedUser: string;
 }
 
-const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel}) => {
+const AddTask: React.FC<AddTaskProps> = ({ onCancel}) => {
 
   const [taskData, setTaskData] = useState<IAddTask>({
     activity: '', // Default to an empty string, assuming it's an ID
@@ -50,7 +49,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel}) => {
 
   const handleAddTask = async () => {
     try {
-      const response = await TableInstance.createTask(taskData);
+      await TableInstance.createTask(taskData);
       // onSubmit?.(taskData); // Pass data to parent if needed
     } catch (error) {
       handleError(error as AxiosError, false);
