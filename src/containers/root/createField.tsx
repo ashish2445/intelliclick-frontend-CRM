@@ -12,7 +12,7 @@ import { AiOutlineForm } from "react-icons/ai";
 import { FaRegUser } from "react-icons/fa";
 import CreateFieldModal from "@/containers/root/createFieldModal";
 import EditFieldModal from "@/containers/root/EditFieldModal";
-import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
 import { MdDragIndicator } from "react-icons/md";
 
 interface Field {
@@ -124,7 +124,7 @@ const FieldsSettingsPage = () => {
   ]);
 
   // Function to handle drag end event
-  const handleDragEnd = (result) => {
+  const handleDragEnd = (result:DropResult) => {
     const { destination, source } = result;
 
     // Return if dropped outside the list or dropped in the same position

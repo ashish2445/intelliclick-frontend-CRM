@@ -1,10 +1,10 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { InitialStage } from './InitialStage';
-import { ActiveStage } from './ActiveStage';
-import { ClosedStage } from './ClosedStage';
+// import { InitialStage } from './InitialStage';
+// import { ActiveStage } from './ActiveStage';
+// import { ClosedStage } from './ClosedStage';
 import { RootInstance } from '@/services/root.service';
-import { getActiveStatusesByStageId, handleError } from '@/utils/helpers';
+import {  handleError } from '@/utils/helpers';
 import { AxiosError } from 'axios';
 import { IStage } from '@/interfaces/root.interface';
 
@@ -15,6 +15,7 @@ interface PipelineDisplayProps {
 const PipelineDisplay: React.FC<PipelineDisplayProps> = ({ className }) => {
 
   const [stages, setStages] = useState<IStage[]>([]);
+  console.log("stages",stages);
 
   const fetchStages = async () => {
     try {
@@ -31,9 +32,10 @@ const PipelineDisplay: React.FC<PipelineDisplayProps> = ({ className }) => {
 
   return (
     <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 ${className}`}>
-      <InitialStage initial={getActiveStatusesByStageId(stages,'stage_fresh')} />
-      <ActiveStage fullObject={getActiveStatusesByStageId(stages,'stage_active')} />
-      <ClosedStage won={getActiveStatusesByStageId(stages,'stage_won')} lost={getActiveStatusesByStageId(stages,'stage_lost')} />
+      hello
+      {/* <InitialStage initial={getActiveStatusesByStageId(stages,'stage_fresh')} /> */}
+      {/* <ActiveStage fullObject={getActiveStatusesByStageId(stages,'stage_active')} /> */}
+      {/* <ClosedStage won={getActiveStatusesByStageId(stages,'stage_won')} lost={getActiveStatusesByStageId(stages,'stage_lost')} /> */}
     </div>
   );
 };

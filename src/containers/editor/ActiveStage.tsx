@@ -61,9 +61,7 @@ export const ActiveStage: React.FC<StageProps> = ({ className,fullObject }) => {
   };
 
   const handleSaveChanges = () => {
-    const payllll = {
-      stageName,selectedColor
-    }
+    
     if (stageName.trim() === "") {
       return; // Don't save if name is empty
     }
