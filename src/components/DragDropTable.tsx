@@ -6,7 +6,7 @@ import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { BsFillTelephoneOutboundFill } from "react-icons/bs";
 import { FaRegStar, FaStar } from "react-icons/fa6";
-import { formatCamelCase, formatDate, handleError } from "@/utils/helpers";
+import { capitalizeFirstLetterOfEachWord, formatCamelCase, formatDate, handleError } from "@/utils/helpers";
 import { IStatus } from "@/interfaces/tableFilterTypes";
 import { AxiosError } from "axios";
 import { TableInstance } from "@/services/table.service";
@@ -184,14 +184,14 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="relative overflow-x-auto w-full dark:invert border-l border-r border-t border-gray-300 rounded-t-lg">
+      <div className="relative overflow-x-auto w-full dark:invert border-l border-r border-t border-gray-800 rounded-t-lg">
         <div ref={dropdownRef} className="absolute cursor-pointer z-30" style={{top:10, right:10}}>
               <button onClick={() => setDropdownOpen((prev) => !prev)} className="p-2 rounded-full hover:bg-gray-300">
                 <PiDotsThreeOutlineVertical size={20} className="text-gray-600 hover:text-gray-900" />
               </button>
 
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-40 p-2">
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-800 rounded-lg shadow-lg z-40 p-2">
                   <ul className="text-sm text-gray-700">
                     {columnOrder?.map((key, index) => (
                       <DraggableItem
@@ -212,7 +212,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-gray-200 text-left text-sm font-semibold h-12">
-                <th className="sticky left-0 p-3 border-r bg-gray-200 border-gray-300 w-12 text-center">            
+                <th className="sticky left-0 p-3 border-r bg-gray-200 border-gray-800 w-12 text-center">            
                   <input
                     type="checkbox"
                     checked={headerChecked}
@@ -222,7 +222,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                 {columnOrder?.map((col, colIndex) => {
                   if (!displayColumns.includes(col)) return null;
                   return (
-                    <th key={colIndex} className={`${col.includes('name') ? 'sticky left-9 bg-gray-200': ''} ${col.includes('phone') ? 'sticky left-[185px] bg-gray-200': ''} p-3 border-r text-[12px] font-[400] border-gray-300 min-w-[150px]`}>
+                    <th key={colIndex} className={`${col.includes('name') ? 'sticky left-9 bg-gray-200': ''} ${col.includes('phone') ? 'sticky left-[185px] bg-gray-200': ''} p-3 border-r text-[12px] font-[800] border-gray-800 min-w-[150px]`}>
                       {col.includes('Name') || col.includes('Phone') ? (
                         <div className="flex items-center">                        
                             <span className="text-[14px]">{formatCamelCase(col)}</span>
@@ -237,8 +237,8 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
             </thead>
             <tbody>
               {data?.map((row, rowIndex) => (
-                <tr key={rowIndex} className="border-b border-gray-200 text-sm">
-                  <td className="sticky left-0 p-3 border-r border-gray-300 bg-white w-12 text-center">
+                <tr key={rowIndex} className="border-b border-gray-800 text-sm">
+                  <td className="sticky left-0 p-3 border-r border-gray-800 bg-white w-12 text-center">
                     <input
                       type="checkbox"
                       checked={checkedRows[rowIndex] || false}
@@ -248,7 +248,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                   {columnOrder?.map((col, colIndex) => {
                     if (!displayColumns.includes(col)) return null;
                     return (
-                      <td key={colIndex} className={`${col.includes('name') ? 'sticky left-9 bg-white': ''} ${col.includes('phone') ? 'sticky left-[185px] bg-white': ''} p-3 border-r border-gray-300`}>
+                      <td key={colIndex} className={`${col.includes('name') ? 'sticky left-9 bg-white': ''} ${col.includes('phone') ? 'sticky left-[185px] bg-white': ''} p-3 border-r border-gray-800`}>
                         {col.toLocaleLowerCase() === 'name' ? (
                           <div className="flex items-center text-[14px] font-[400] gap-2 inline-block whitespace-nowrap">                       
                             <div onClick={(e) => {
@@ -270,7 +270,7 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                                   textDecoration: "underline",
                                 }}
                               >
-                                {row[col]?.name || "-"}
+                                {capitalizeFirstLetterOfEachWord(row[col]?.name) || "-"}
                               </span>
                               {/* Tooltip for long names */}
                               {(() => {

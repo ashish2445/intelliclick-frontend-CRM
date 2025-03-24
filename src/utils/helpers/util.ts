@@ -153,6 +153,10 @@ export const mapAssigneeToDropdownOptions = (
   }))
 }
 
+export function capitalizeFirstLetterOfEachWord(name: string): string {
+  return name.replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
 
 
 
