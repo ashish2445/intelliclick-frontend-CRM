@@ -7,7 +7,6 @@ import { BiPieChartAlt2 } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useTheme } from 'next-themes'
 import ThemeToggle from "@/components/ThemeToggle";
 import { TbLogout } from "react-icons/tb";
 

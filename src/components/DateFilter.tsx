@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 import { default as CustomCalendar } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { Filter, FilterState, QueryState } from "@/interfaces/tableFilterTypes";
+import { Filter, QueryState } from "@/interfaces/tableFilterTypes";
 import { getDateRange } from "@/utils/helpers";
 import { TimeRangeType } from "@/utils/constants/timeRanges";
 

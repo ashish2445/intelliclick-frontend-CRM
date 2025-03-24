@@ -272,9 +272,9 @@ class RootService{
   }
 
   editStatus = async (payload:{
-    "statusid":String,
-    "color":String,
-    "label":String
+    "statusid":string,
+    "color":string,
+    "label":string
     }) => {
         const url='api/lead_stage/write/create-update/stage_fresh';
         return await callApi(url,API.POST,{
@@ -284,17 +284,17 @@ class RootService{
 },true);
     }
 
-  deleteStatus = async (payload:{stageId:String,statusId:String}) => {
+  deleteStatus = async (payload:{stageId:string,statusId:string}) => {
     const url=`api/lead_stage/delete/stage/${payload.stageId}/${payload.statusId}`;
     return await callApi(url,API.POST);
   }
 
-  restoreDeletedStatus = async (payload:{stageId:String,statusId:String}) => {
+  restoreDeletedStatus = async (payload:{stageId:string,statusId:string}) => {
     const url=`api/lead_stage/write/active/${payload.stageId}/${payload.statusId}`;
     return await callApi(url,API.POST);
   }
 
-  createLeadField = async (payload:{name:String,type:String}) => {
+  createLeadField = async (payload:{name:string,type:string}) => {
     const url=`api/lead_field/write/create-or-update`;
     return await callApi(url,API.POST,payload,true);
   }

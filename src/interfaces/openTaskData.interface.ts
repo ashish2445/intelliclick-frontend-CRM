@@ -7,28 +7,8 @@ export interface IOpenTaskData {
     CreatedAt: string;
   }
 
-// export interface ITableFields {
-//   name:Object,
-//   class: string;
-//   board: string;
-//   status: string;
-//   leadScore: number;
-//   address: string;
-//   phoneNumber: string;
-//   email: string;
-//   fatherOccupation: string;
-//   motherOccupation: string;
-//   alternativeNumber: string;
-//   parentName: string;
-//   schoolName: string;
-//   city: string;
-//   state: string;
-//   percentage: string;
-//   interactWith: string;
-// }
-
 export interface ITableFields {
-  [key: string]: any; // Allows any string as a key
+  [key: string]: unknown; // Allows any string as a key
 }
 
 

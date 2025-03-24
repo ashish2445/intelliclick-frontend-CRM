@@ -74,10 +74,7 @@ const Home2: React.FC = () => {
         scrollContainerRef.current.scrollBy({ left: 200, behavior: 'smooth' });
       }
     };
-    // Function to toggle pipeline display
-    const handleLeadStageClick = () => {
-      setShowPipeline(true);
-    };
+    
 
     return (
       <div className="flex flex-col min-h-screen bg-gray-50">

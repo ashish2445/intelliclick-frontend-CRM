@@ -24,7 +24,7 @@ export interface TaskData {
   assignedUser: string;
 }
 
-const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel, leadName = "Nilesh Patel" }) => {
+const AddTask: React.FC<AddTaskProps> = ({ onSubmit, onCancel}) => {
 
   const [taskData, setTaskData] = useState<IAddTask>({
     activity: '', // Default to an empty string, assuming it's an ID

@@ -30,7 +30,7 @@ const Home: React.FC = () => {
 
   const [tableData,setTableData] = useState<ITableFields[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(25);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [query, setQuery] = useState<QueryState>({
     filters:[],
     logic: "AND",
