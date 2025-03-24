@@ -119,7 +119,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
        
         <div
           onClick={() => handleItem("/dashboard/home")}
-          className={`flex justify-center items-center gap-4 min-h-[60px] px-4 cursor-pointer transition-colors duration-300
+          className={`flex justify-start items-start space-x-4 min-h-[60px] px-4 cursor-pointer transition-colors duration-300
             ${clickedItem === "/dashboard/logout"
               ? "bg-[#FBE8FF] text-[#D029D8] font-semibold"
               : "hover:bg-gradient-to-r from-[#D029D8] to-[#519CDF] hover:text-white"

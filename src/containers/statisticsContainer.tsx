@@ -5,12 +5,12 @@ import SearchBox from "@/components/SearchBox";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Image from "next/image";
-import { IOpenTaskData } from "@/interfaces";
+import { IOpenTaskData, ITableFields } from "@/interfaces";
 
 
 
 interface StatisticsContainerProps {
-  data: IOpenTaskData[];
+  data: ITableFields[];
   title:string;
 }
 
