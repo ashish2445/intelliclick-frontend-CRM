@@ -6,7 +6,7 @@ import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { BsFillTelephoneOutboundFill } from "react-icons/bs";
 import { FaRegStar, FaStar } from "react-icons/fa6";
-import { capitalizeFirstLetterOfEachWord, formatCamelCase, formatDate, handleError } from "@/utils/helpers";
+import { capitalizeFirstLetterOfEachWord, formatCamelCase, formatDate, getColumnValue, handleError } from "@/utils/helpers";
 import { IStatus } from "@/interfaces/tableFilterTypes";
 import { AxiosError } from "axios";
 import { TableInstance } from "@/services/table.service";
@@ -83,7 +83,10 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
     const initialFavorites: Record<string, boolean> = {};
 
     data?.forEach((item) => {
-      initialFavorites[item._id] = item.name.favorite;
+      // initialFavorites[item._id as string] = item.name.favorite;
+      if (typeof item.name === "object" && item.name !== null && "favorite" in item.name) {
+        initialFavorites[item._id as string] = (item.name as { favorite: boolean }).favorite;
+      }
     });
 
     setFavoriteRows(initialFavorites);
@@ -253,28 +256,33 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                           <div className="flex items-center text-[14px] font-[400] gap-2 inline-block whitespace-nowrap">                       
                             <div onClick={(e) => {
                                 e.stopPropagation();
-                                handleFavoriteToggle(row._id, row.name.favorite);
+                                // handleFavoriteToggle(row._id, row.name.favorite);
+                                if (typeof row.name === "boolean" && typeof row._id === 'string') {
+                                  handleFavoriteToggle(row._id, row.name);
+                                }
+
                               }}
                               style={{ cursor: "pointer" }}>
-                              {favoriteRows[row._id] ? <FaStar color="#fcba03" /> : <FaRegStar color="black" />}
+                              {favoriteRows[row._id as string] ? <FaStar color="#fcba03" /> : <FaRegStar color="black" />}
                             </div>
                             {/* <span className="text-[14px] ml-2" onClick={() => handleNameClick(row._id)} 
                               style={{ cursor: "pointer", color: "#0D2167", textDecoration: "underline" }}>{row[col]?.name || "-"}</span> */}
                               <div className="relative group">
                               <span
                                 className="text-[14px] cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px] inline-block"
-                                onClick={() => handleNameClick(row._id)}
+                                onClick={() => handleNameClick(row._id as string)}
                                 style={{
                                   cursor: "pointer",
                                   color: "#0D2167",
                                   textDecoration: "underline",
                                 }}
                               >
-                                {capitalizeFirstLetterOfEachWord(row[col]?.name) || "-"}
+                                {/* {capitalizeFirstLetterOfEachWord(row[col]?.name) || "-"} */}
+                                {capitalizeFirstLetterOfEachWord(getColumnValue(row, col)) || "-"}
                               </span>
                               {/* Tooltip for long names */}
                               {(() => {
-                                const fullName = row[col]?.name || "-";
+                                const fullName = getColumnValue(row, col) || "-";
                                 const nameParts = fullName.split(" ");
 
                                 if (nameParts.length > 2) {
@@ -292,19 +300,23 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                           </div>
                         ):col.toLowerCase() === "phone" ? (
                           <span className="flex gap-3 text-[12px] font-[400] ">
-                            <span className="text-[14px]">{typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col] ?? "-"}</span>
+                            <span className="text-[14px]">{getColumnValue(row, col)}</span>
                             <span style={{cursor:'pointer'}}><BsFillTelephoneOutboundFill color='#4287f5' /></span>
                           </span>
                         ) :col.toLowerCase() === "updatedat" ? (
                           <span className="flex gap-3 text-[12px] font-[400] ">
-                            <span className="text-[14px]">{formatDate(row[col])}</span>
+                            <span className="text-[14px]">{formatDate(getColumnValue(row, col))}</span>
                           </span>
                         ):col.toLowerCase() === 'leadscore'? (
                               <div className="flex justify-center">
                                 <div className="px-2 py-1 rounded bg-[#F0FDF4] text-[#15803D] text-[14px] text-sm font-medium">
-                                  {isNaN(Number(row[col])) 
+                                  {/* {isNaN(Number(getColumnValue(row, col))) 
                                     ? row[col] 
-                                    : (Number(row[col]) > 0 ? `+${Number(row[col])}` : Number(row[col]))}
+                                    : (Number(row[col]) > 0 ? `+${Number(row[col])}` : Number(row[col]))} */}
+                                    {isNaN(Number(getColumnValue(row, col))) 
+                                      ? String(getColumnValue(row, col)) // Convert objects to strings safely
+                                      : (Number(getColumnValue(row, col)) > 0 ? `+${Number(getColumnValue(row, col))}` : Number(getColumnValue(row, col)))}
+
                                 </div>
                               </div>
                             ):col.toLowerCase() === 'assignedowner'? (
@@ -312,20 +324,20 @@ const DynamicTable3: React.FC<TableProps> = ({ data, columns,statusInfo }) => {
                                 <div className="w-8 h-8 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-medium">
                                   {/* {typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col]?.split(' ').map((n: string) => n[0]).join('')} */}
                                   {typeof row[col] === "object" 
-                                    ? row[col]?.[col]?.split(" ").map((word: string) => word[0]?.toUpperCase()).join("") ?? "-" 
-                                    : row[col]?.split(" ").map((word: string) => word[0]?.toUpperCase()).join("")
+                                    ? getColumnValue(row, col)?.split(" ").map((word: string) => word[0]?.toUpperCase()).join("") ?? "-" 
+                                    : getColumnValue(row, col)?.split(" ").map((word: string) => word[0]?.toUpperCase()).join("")
                                   }
                                 </div>
-                                <span className="ml-2 text-sm text-gray-800 text-[14px]">{typeof row[col] === "object" ? row[col]?.[col] ?? "-" : row[col] ?? "-"}</span>
+                                <span className="ml-2 text-sm text-gray-800 text-[14px]">{getColumnValue(row, col)}</span>
                               </div>
                             ):
                         (
                           <span
                             className={`rounded-[8px] text-[14px] font-[400] ${columnStyles[col]}`}
-                            style={col === 'status' ? { background: getStatusColor(row[col]), color: 'white', padding: '5px' } : col.toLowerCase() === 'board' ? {padding:'5px'}: col.toLowerCase() === 'class' ? {padding:'5px'}:undefined}
+                            style={col === 'status' ? { background: getStatusColor(Number(getColumnValue(row, col))), color: 'white', padding: '5px' } : col.toLowerCase() === 'board' ? {padding:'5px'}: col.toLowerCase() === 'class' ? {padding:'5px'}:undefined}
                           >
                             <span className={`text-[14px]`}>
-                              {col === "class" ? extractGrade(row[col]) : col === 'status' ? getStatusLabel(row[col]) : row[col] || "-"}
+                              {col === "class" ? extractGrade(getColumnValue(row, col)) : col === 'status' ? getStatusLabel(Number(getColumnValue(row, col))) : getColumnValue(row, col) || "-"}
                             </span>
                           </span>
                         )}

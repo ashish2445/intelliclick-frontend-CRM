@@ -153,9 +153,45 @@ export const mapAssigneeToDropdownOptions = (
   }))
 }
 
-export function capitalizeFirstLetterOfEachWord(name: string): string {
+// export function capitalizeFirstLetterOfEachWord(name: string): string {
+//   console.log("nameee",name);
+//   return name.replace(/\b\w/g, (char) => char.toUpperCase());
+// }
+
+export function capitalizeFirstLetterOfEachWord(name: unknown): string {
+  if (typeof name !== "string") {
+    console.error("Invalid input for capitalizeFirstLetterOfEachWord:", name);
+    return "-"; // Default fallback if name is not a string
+  }
+
   return name.replace(/\b\w/g, (char) => char.toUpperCase());
 }
+
+// export const getColumnValue = (row: Record<string, string | object>, col: string): string => {
+//   const value = row[col];
+
+//   if (typeof value === "object" && value !== null) {
+//     return value[col] ?? "-"; // If object, return the value of its `col` property
+//   }
+
+//   return String(value ?? "-"); // Convert string/other values safely
+// };
+
+export const getColumnValue = (row: Record<string, unknown>, col: string): string => {
+  const value = row[col];
+
+  if (typeof value === "object" && value !== null) {
+    if (col in value) {
+      return String((value as Record<string, unknown>)[col] ?? "-");
+    }
+    return "-"; // Return "-" if the object doesn't contain the expected property
+  }
+
+  return String(value ?? "-");
+};
+
+
+
 
 
 

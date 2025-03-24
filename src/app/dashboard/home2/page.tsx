@@ -14,7 +14,7 @@ import {
 import PipelineDisplay from "@/containers/editor/editContainer";
 
 const Home2: React.FC = () => {
-  const scrollContainerRef = useRef(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const [showLeftScroll, setShowLeftScroll] = useState(false);
   const [showRightScroll, setShowRightScroll] = useState(true);

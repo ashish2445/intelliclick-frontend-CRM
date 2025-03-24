@@ -8,7 +8,7 @@ export interface IOpenTaskData {
   }
 
 export interface ITableFields {
-  [key: string]: unknown; // Allows any string as a key
+  [key: string]: string | object; // Allows any string as a key
 }
 
 

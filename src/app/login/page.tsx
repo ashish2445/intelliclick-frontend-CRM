@@ -18,9 +18,9 @@ export default function LoginPage() {
       return;
     }
     try {
-      const response = LoginInstance.getLoginResponse(inputs)
-      const { token } = response.data;
-      localStorage.setItem("token", token);
+      await LoginInstance.getLoginResponse(inputs)
+      // const { token } = response.data;
+      // localStorage.setItem("token", token);
       router.push("/dashboard");
     } catch (error) {
       handleError(error as AxiosError,true);

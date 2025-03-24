@@ -50,7 +50,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ label,setFiltering, o
   const handleColumnData = async () => {
     setLoading(true);
     try {
-      const response = await FilterInstance.getColumnData(label);
+      const response = await FilterInstance.getColumnData();
       // const data = await response.json();
       setOptions(response);
     } catch (error) {

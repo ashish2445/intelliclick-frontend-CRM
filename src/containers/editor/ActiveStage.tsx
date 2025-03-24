@@ -1,12 +1,12 @@
 'use client';
 import React, { useState } from 'react';
 import { Edit2, Trash2, ChevronDown, ChevronUp,Circle, RefreshCcw } from 'lucide-react';
-import { IEditableStatusBox } from '@/interfaces/root.interface';
+import { IEditStatus, IEditableStatusBox } from '@/interfaces/root.interface';
 import { RootInstance } from '@/services/root.service';
 
 interface StageProps {
   className?: string;
-  fullObject: Record<string, number>;
+  fullObject: Record<string, string | number | boolean | IEditStatus[]>;
 }
 
 // interface StageItem {
@@ -20,6 +20,8 @@ interface StageProps {
 export const ActiveStage: React.FC<StageProps> = ({ className,fullObject }) => {
   
   const [stageItems, setStageItems] = useState<IEditableStatusBox[]>([]);
+
+  console.log("fullObj",fullObject);
 
   // Deleted status items
   const [deletedItems, setDeletedItems] = useState<IEditableStatusBox[]>([
@@ -62,7 +64,6 @@ export const ActiveStage: React.FC<StageProps> = ({ className,fullObject }) => {
     const payllll = {
       stageName,selectedColor
     }
-    console.log("saveeee",payllll);
     if (stageName.trim() === "") {
       return; // Don't save if name is empty
     }
@@ -157,26 +158,26 @@ export const ActiveStage: React.FC<StageProps> = ({ className,fullObject }) => {
         </div>
         
         <div className="space-y-2">
-          {fullObject?.activeStatuses.map((item) => (
+          {Array.isArray(fullObject?.activeStatuses) &&fullObject?.activeStatuses?.map((item) => (
             <div 
               key={item.statusid} 
               className={`flex items-center justify-between p-2 rounded-md relative`}
               style={{ backgroundColor: item.color }}
             >
               <div className="flex items-center space-x-2">
-                {item.icon}
+                {/* {item.icon} */}
                 <span className="font-medium">{item.label}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <button 
                   className="text-gray-500 hover:text-gray-700"
-                  onClick={() => handleEditClick(item.statusid, item.color, item.label)}
+                  onClick={() => handleEditClick(item.statusid.toLocaleString(), item.color, item.label)}
                 >
                   <Edit2 size={16} />
                 </button>
                 <button 
                   className="text-gray-500 hover:text-red-600"
-                  onClick={() => handleDeleteItem(fullObject?.stageid,item.statusid)}
+                  onClick={() => handleDeleteItem(fullObject?.stageid.toLocaleString(),item.statusid.toLocaleString())}
                 >
                   <Trash2 size={16} />
                 </button>
@@ -222,20 +223,20 @@ export const ActiveStage: React.FC<StageProps> = ({ className,fullObject }) => {
                   </div>
                 </div>
               ))} */}
-              {fullObject?.archivedStatuses.map((item) => (
+              {Array.isArray(fullObject?.archivedStatuses) &&fullObject?.archivedStatuses.map((item) => (
                 <div 
                   key={item.statusid} 
                   className="flex items-center justify-between p-2 rounded-md relative opacity-70"
                   style={{ backgroundColor: item.color }} // ✅ Apply background color here
                 >
                   <div className="flex items-center space-x-2">
-                    {item.icon}
+                    {/* {item.icon} */}
                     <span className="font-medium">{item.label}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <button 
                       className="text-gray-500 hover:text-green-600"
-                      onClick={() => handleRestoreItem(fullObject?.stageid,item.statusid)}
+                      onClick={() => handleRestoreItem(fullObject?.stageid.toLocaleString(),item.statusid.toLocaleString())}
                       title="Restore"
                     >
                       <RefreshCcw size={16} />

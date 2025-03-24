@@ -110,7 +110,7 @@ const DetailedPage: React.FC = () => {
             status="Enroll"
             phone={detailedRow?.phone ?? ""}
             email={detailedRow?.fields?.email ?? ""}
-            location={detailedRow?.region?.name ?? ""}
+            location={detailedRow?.region ?? ""}
             rating={Number(detailedRow?.fields?.percentage) ?? ""}
           />
           <LeadDetails details={leadData} />
