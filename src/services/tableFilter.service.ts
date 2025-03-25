@@ -16,7 +16,7 @@ class FilterService{
         page: pagination.page,
         limit: pagination.limit
       };    
-      const url = 'api/lead/read/leads-without-actions';
+      const url = '/api/lead/read/leads-without-actions';
       return await callApi(url,API.POST,payload2);
     }
 
