@@ -5,7 +5,9 @@ import Axios, { AxiosError } from 'axios';
 export const callApi = async (url: string, method: API, data?: object | null, shouldThrowError?: boolean) => {
   // Axios.defaults.headers.common.Authorization = getToken();
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const uri = `${baseUrl}/${url}`;
+  // const uri = `${baseUrl}/${url}`;
+  const uri = `${baseUrl?.replace(/\/$/, '')}/${url.replace(/^\//, '')}`;
+
   console.log("uri",uri);
  
   const DEFAULT_HEADER = {
