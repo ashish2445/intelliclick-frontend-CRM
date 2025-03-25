@@ -21,7 +21,7 @@ class FilterService{
     }
 
     getColumnData = async () => {
-      const url = 'api/lead_field/read/get-all-fields';
+      const url = '/api/lead_field/read/get-all-fields';
       return await callApi(url,API.GET);
     }
 }

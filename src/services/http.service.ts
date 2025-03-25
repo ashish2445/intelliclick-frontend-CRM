@@ -4,13 +4,10 @@ import Axios, { AxiosError } from 'axios';
 
 export const callApi = async (url: string, method: API, data?: object | null, shouldThrowError?: boolean) => {
   // Axios.defaults.headers.common.Authorization = getToken();
-  // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  // const uri = `${baseUrl}/${url}`;
-  // console.log("uri",uri);
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/$/, ""); // Remove trailing slash
-  const formattedUrl = url.startsWith("/") ? url.substring(1) : url; // Remove leading slash from `url`
-  const uri = `${baseUrl}/${formattedUrl}`;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const uri = `${baseUrl}/${url}`;
   console.log("uri",uri);
+ 
   const DEFAULT_HEADER = {
     headers: {
       'Content-Type': 'application/json',

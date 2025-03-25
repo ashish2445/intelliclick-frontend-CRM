@@ -276,22 +276,22 @@ class RootService{
     "color":string,
     "label":string
     }) => {
-        const url='api/lead_stage/write/create-update/stage_fresh';
+        const url='/api/lead_stage/write/create-update/stage_fresh';
         return await callApi(url,API.POST,payload,true);
     }
 
   deleteStatus = async (payload:{stageId:string,statusId:string}) => {
-    const url=`api/lead_stage/delete/stage/${payload.stageId}/${payload.statusId}`;
+    const url=`/api/lead_stage/delete/stage/${payload.stageId}/${payload.statusId}`;
     return await callApi(url,API.POST);
   }
 
   restoreDeletedStatus = async (payload:{stageId:string,statusId:string}) => {
-    const url=`api/lead_stage/write/active/${payload.stageId}/${payload.statusId}`;
+    const url=`/api/lead_stage/write/active/${payload.stageId}/${payload.statusId}`;
     return await callApi(url,API.POST);
   }
 
   createLeadField = async (payload:{name:string,type:string}) => {
-    const url=`api/lead_field/write/create-or-update`;
+    const url=`/api/lead_field/write/create-or-update`;
     return await callApi(url,API.POST,payload,true);
   }
 }

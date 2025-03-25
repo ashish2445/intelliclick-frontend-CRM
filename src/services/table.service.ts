@@ -622,29 +622,29 @@ import { FormField } from '@/interfaces/form.interface';
 class TableService{
  
     getTableData = async () => {
-      const url = 'api/lead/read/leads-without-actions';
+      const url = '/api/lead/read/leads-without-actions';
     //   return responseObject;
       return await callApi(url,API.POST);
     }
 
     toggleFavorite = async (leadId:string,currentState:boolean) => {
-      const url = `api/lead/write/favorite/${leadId}`;
+      const url = `/api/lead/write/favorite/${leadId}`;
       return await callApi(url,API.PATCH,{"favorite":currentState},true);
     }
 
     getFullDetails = async (userId:string) => {
-      const url = `api/lead/read/get-lead-by?Id=${userId}`;
+      const url = `/api/lead/read/get-lead-by?Id=${userId}`;
     //   return rowDetail;
       return await callApi(url,API.GET);
     } 
 
     createTask = async (taskDetails:IAddTask) => {
-      const url = 'api/task/create';
+      const url = '/api/task/create';
       return await callApi(url,API.POST,taskDetails,true);
     }
 
     getFormFields = async ():Promise<FormField[]> => {
-      const url = 'api/lead_field/read/get-all-fields';
+      const url = '/api/lead_field/read/get-all-fields';
       return await callApi(url,API.GET);
     //   return fields;
     }
