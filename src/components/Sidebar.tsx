@@ -53,7 +53,7 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
 
   return (
     <div
-      className={`${isMobile ? "fixed top-0 left-0 h-full z-50" : "h-[calc(100vh-60px)]"} transition-all duration-300 overflow-hidden border-r border-gray-300 shadow-lg
+      className={`${isMobile ? "fixed top-0 left-0 h-full z-50 bg-white dark:bg-black" : "h-[calc(100vh-60px)]"} transition-all duration-300 overflow-hidden border-r border-gray-300 shadow-lg
         ${isMobile ? (isOpen ? "w-64 block" : "hidden") : hovered || isOpen ? "w-[252px]" : "w-20"} md:block`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -62,13 +62,13 @@ function Sidebar({ isOpen, toggleSidebar, isMobile }: SidebarProps) {
         {/* Logo and Close Button */}
         {isOpen && (
           <div className="flex items-center justify-between p-4 border-b">
-            <Image src="./logo.svg" alt="logo" className="h-10 w-auto" width={100} height={100} />
-            {isMobile && <IoClose size={30} onClick={toggleSidebar} className="cursor-pointer" />}
+            <Image src="/logo.svg" alt="logo" className="h-10 w-auto" width={100} height={100} />
+            {isMobile && <IoClose size={30} onClick={toggleSidebar} className="cursor-pointer dark:invert" />}
           </div>
         )}
 
         {/* Main Menu Items */}
-        <ul className="flex flex-col flex-1 dark:invert">
+        <ul className="flex flex-col items-left justify-left flex-1 dark:invert">
           {[
             { icon: <RxDashboard size={30} />, path: "/dashboard/home", label: "Home" },
             { icon: <TbClipboardText size={30} />, path: "/dashboard/table", label: "Leads Management" },
