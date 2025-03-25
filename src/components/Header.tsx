@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { IoMenu } from "react-icons/io5";
 import Image from 'next/image';
 import ClipLoader from 'react-spinners/ClipLoader';
+import { BsAlarm } from "react-icons/bs";
+import { IoIosNotificationsOutline } from "react-icons/io";
 
 export interface IProfileHeaderProps {
   toggleSidebar: () => void;
@@ -37,7 +39,9 @@ function Header({ toggleSidebar, incentive }: IProfileHeaderProps) {
             <span className="text-xl text-purple-700">INR {incentive}</span>
           )}
         </div>
-        <div className="relative flex items-center">
+        <div className="relative flex items-center space-x-4">
+          <BsAlarm size={28} />
+          <IoIosNotificationsOutline size={28} />
           <Image src="/Ellipse.svg" alt="profile-image" width={100} height={100} className="cursor-pointer h-12 w-12 rounded-full dark:invert" onClick={handleProfileClick} />
           {isMenuVisible && (
             <div className="absolute top-12 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-50 w-40">
