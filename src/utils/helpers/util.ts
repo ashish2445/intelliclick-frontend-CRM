@@ -133,7 +133,7 @@ export const mapStatusToDropdownOptions = (
     statuses: IStatus[],
     options?: { addDeco?: boolean; showCheckbox?: boolean }
 ): DropdownOption[] => {
-    return statuses.map(({ label, color, statusid }) => ({
+    return statuses?.map(({ label, color, statusid }) => ({
         label,
         value:statusid,
         color,
