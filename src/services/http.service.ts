@@ -4,11 +4,10 @@ import Axios, { AxiosError } from 'axios';
 
 export const callApi = async (url: string, method: API, data?: object | null, shouldThrowError?: boolean) => {
   // Axios.defaults.headers.common.Authorization = getToken();
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  // const uri = `${baseUrl}/${url}`;
-  const uri = `${baseUrl?.replace(/\/$/, '')}/${url.replace(/^\//, '')}`;
+  // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  // const uri = `${baseUrl}${url}`;
+  // const uri = `${baseUrl?.replace(/\/$/, '')}/${url.replace(/^\//, '')}`;
 
-  console.log("uri",uri);
  
   const DEFAULT_HEADER = {
     headers: {
@@ -22,10 +21,10 @@ export const callApi = async (url: string, method: API, data?: object | null, sh
     // return response.data;
     const response =
   method === API.POST
-    ? await Axios.post(uri, data, DEFAULT_HEADER)
+    ? await Axios.post(url, data, DEFAULT_HEADER)
     : method === API.PATCH
-    ? await Axios.patch(uri, data, DEFAULT_HEADER)
-    : await Axios.get(uri, DEFAULT_HEADER);
+    ? await Axios.patch(url, data, DEFAULT_HEADER)
+    : await Axios.get(url, DEFAULT_HEADER);
 
 return response.data;
 
