@@ -11,3 +11,5 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+    environment:
+      - NEXT_PUBLIC_BASE_URL=https://crm-660080677559.asia-south1.run.app

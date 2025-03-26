@@ -9,6 +9,7 @@ RUN npm ci --legacy-peer-deps
 
 # Copy project files
 COPY . .
+COPY .env.production .env
 
 # Build the Next.js project
 RUN npm run build
@@ -25,3 +26,4 @@ COPY --from=builder /app/node_modules ./node_modules
 EXPOSE 3000
 
 CMD ["npm", "start"]
+
