@@ -43,3 +43,4 @@ const nextConfig = {
 export default nextConfig; // ✅ Ensure this is ES module syntax
 
 
+
