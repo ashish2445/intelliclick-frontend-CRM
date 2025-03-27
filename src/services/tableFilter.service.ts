@@ -17,7 +17,8 @@ class FilterService{
         limit: pagination.limit
       };    
       // const url = '/api/lead/read/leads-without-actions';
-      const url = `/api/lead/read/leads-without-actions`;
+      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/lead/read/leads-without-actions`;
+      console.log("table table");
       console.log("url checking",url);
       return await callApi(url,API.POST,payload2);
     }

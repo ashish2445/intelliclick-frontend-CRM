@@ -7,7 +7,7 @@ export const callApi = async (url: string, method: API, data?: object | null, sh
   // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   // const uri = `${baseUrl}${url}`;
   // const uri = `${baseUrl?.replace(/\/$/, '')}/${url.replace(/^\//, '')}`;
-
+  console.log("api apia api");
  
   const DEFAULT_HEADER = {
     headers: {
