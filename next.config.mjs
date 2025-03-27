@@ -55,6 +55,14 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/dashboard/:path*/api/lead/read/leads-without-actions",
+        destination: "/api/lead/read/leads-without-actions",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
