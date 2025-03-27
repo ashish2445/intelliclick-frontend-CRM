@@ -3,4 +3,3 @@ node_modules
 .next/standalone
 .git
 .DS_Store
-.env
