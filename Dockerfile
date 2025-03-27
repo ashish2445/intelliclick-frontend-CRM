@@ -9,7 +9,7 @@ RUN npm ci --legacy-peer-deps
 
 # Copy project files
 COPY . .
-COPY .env.production .env
+# COPY .env.production .env
 
 RUN npm install next
 
