@@ -43,9 +43,26 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+// export function middleware(req: NextRequest) {
+//   let url = req.nextUrl.clone();
+//   let pathname = url.pathname;
+
+//   console.log("📢 Middleware Triggered! Incoming Request:", pathname);
+
+//   // Match any path before "/api" and remove it
+//   const fixedPathname = pathname.replace(/^\/[^\/]+(\/api\/.*)$/, "$1");
+
+//   if (fixedPathname !== pathname) {
+//     url.pathname = fixedPathname;
+//     url.hostname = "crm-660080677559.asia-south1.run.app"; // Rewrite to backend
+//     return NextResponse.rewrite(url);
+//   }
+
+//   return NextResponse.next();
+// }
 export function middleware(req: NextRequest) {
-  let url = req.nextUrl.clone();
-  let pathname = url.pathname;
+  const url = req.nextUrl.clone();
+  const pathname = url.pathname;
 
   console.log("📢 Middleware Triggered! Incoming Request:", pathname);
 
@@ -60,6 +77,7 @@ export function middleware(req: NextRequest) {
 
   return NextResponse.next();
 }
+
 
 // Apply middleware to all requests containing "/api"
 export const config = {
