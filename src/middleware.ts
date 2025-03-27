@@ -66,16 +66,27 @@ export function middleware(req: NextRequest) {
 
   console.log("📢 Middleware Triggered! Incoming Request:", pathname);
 
-  // Match any path before "/api" and remove it
-  const fixedPathname = pathname.replace(/^\/[^\/]+(\/api\/.*)$/, "$1");
-
-  if (fixedPathname !== pathname) {
-    url.pathname = fixedPathname;
-    url.hostname = "crm-660080677559.asia-south1.run.app"; // Rewrite to backend
-    return NextResponse.rewrite(url);
+  if (pathname === '/dashboard/table'){
+    console.log("urlllll",url);
   }
 
-  return NextResponse.next();
+  // Match any path before "/api" and remove it
+  // const fixedPathname = pathname.replace(/^\/[^\/]+(\/api\/.*)$/, "$1");
+
+  // if (fixedPathname !== pathname) {
+  //   url.pathname = fixedPathname;
+  //   url.hostname = "crm-660080677559.asia-south1.run.app"; // Rewrite to backend
+  //   console.log("url dashboard",url);
+  //   return NextResponse.rewrite(url);
+  // }
+  url.pathname = "/"; // Set the pathname to root "/"
+  url.hostname = "crm-660080677559.asia-south1.run.app"; // Backend URL
+
+  console.log("🚀 Rewriting Request to Backend:", url.href);
+
+  return NextResponse.rewrite(url);
+
+  // return NextResponse.next();
 }
 
 
