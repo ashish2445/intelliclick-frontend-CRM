@@ -27,20 +27,38 @@
 
 // export default nextConfig;
 
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
+//   reactStrictMode: true,
+//   async rewrites() {
+//     return [
+//       {
+//         source: "/",
+//         destination: "/login",
+//         permanent: true,
+//       },
+//     ];
+//   },
+// };
+
+// export default nextConfig; // ✅ Ensure this is ES module syntax
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  async rewrites() {
+  async redirects() {
     return [
       {
-        source: "/api/:path*",
-        destination: `${process.env.NEXT_PUBLIC_BASE_URL}/api/:path*`,
+        source: "/",
+        destination: "/login",
+        permanent: true, // 301 redirect (SEO friendly)
       },
     ];
   },
 };
 
-export default nextConfig; // ✅ Ensure this is ES module syntax
+export default nextConfig;
+
 
 
 
