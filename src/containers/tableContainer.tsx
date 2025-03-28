@@ -7,7 +7,7 @@ import TableFilters from "@/containers/filtersContainer";
 import { ITableFields } from "@/interfaces";
 import { FilterState,QueryState, IAssignee, IStatus } from "@/interfaces/tableFilterTypes";
 import { getAllKeys, handleError } from "@/utils/helpers";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
@@ -69,9 +69,10 @@ const TableContainer: React.FC = () => {
   useEffect(() => {
      const filterData = async () => {
     try {
-      const filterResponse = await FilterInstance.getFilterResponse(query); // Await the response
-      setTableData(filterResponse?.leads);
-      setTotalRows(filterResponse?.total);
+      // const filterResponse = await FilterInstance.getFilterResponse(query); // Await the response
+      const filterResponse = await axios.post("/api/lead/read/leads-without-actions",query); // Await the response
+      setTableData(filterResponse?.data?.leads);
+      setTotalRows(filterResponse?.data?.total);
     } catch (error) {
       handleError(error as AxiosError,false);
     }

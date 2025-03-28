@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { LoginInstance } from "@/services/login.service";
 import { handleError } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
@@ -18,10 +18,12 @@ export default function LoginPage() {
       return;
     }
     try {
-      await LoginInstance.getLoginResponse(inputs)
+      // const loginResponse = await LoginInstance.getLoginResponse(inputs);
+      const loginResponse = await axios.post("/api/auth/user/login",inputs);
+      console.log("loginRepsonse",loginResponse);
       // const { token } = response.data;
       // localStorage.setItem("token", token);
-      router.push("/dashboard");
+      router.push("/dashboard/table");
     } catch (error) {
       handleError(error as AxiosError,true);
     }
