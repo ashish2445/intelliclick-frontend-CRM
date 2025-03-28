@@ -20,13 +20,31 @@ export async function POST(req: Request) {
     // Return the response data to the client
     return NextResponse.json(apiResponse, { status: 200 });
 
-  } catch (error: any) {
-    console.error("❌ Error forwarding request:", error.message);
+  } 
+  // catch (error: unknown) {
+  //   console.error("❌ Error forwarding request:", error.message);
 
-    // Ensure a response is returned on error as well
-    return NextResponse.json(
-      { error: "Failed to communicate with backend", details: error.message },
-      { status: 500 }
-    );
+  //   // Ensure a response is returned on error as well
+  //   return NextResponse.json(
+  //     { error: "Failed to communicate with backend", details: error.message },
+  //     { status: 500 }
+  //   );
+  // }
+
+  catch (error: unknown) {
+  console.error("❌ Error forwarding request:", error);
+
+  let errorMessage = "An unknown error occurred";
+
+  if (error instanceof Error) {
+    errorMessage = error.message;
+  } else if (typeof error === "string") {
+    errorMessage = error;
   }
+
+  return NextResponse.json(
+    { error: "Failed to communicate with backend", details: errorMessage },
+    { status: 500 }
+  );
+}
 }
