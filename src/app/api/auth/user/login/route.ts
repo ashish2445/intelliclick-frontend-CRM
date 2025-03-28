@@ -1,3 +1,4 @@
+import { IAuthResponse } from "@/interfaces";
 import { callApi } from "@/services/http.service";
 import { API } from "@/utils/enum";
 import { NextResponse } from "next/server";
@@ -13,7 +14,7 @@ export async function POST(req: Request) {
     console.log("📊 Forwarding Data to Backend:", requestData);
 
     // Send the request using the callApi function
-    const apiResponse = await callApi(backendUrl, API.POST,requestData);
+    const apiResponse:IAuthResponse = await callApi(backendUrl, API.POST,requestData);
     console.log("api login response",apiResponse);
 
     // Return the response data to the client

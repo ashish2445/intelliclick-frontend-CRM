@@ -13,7 +13,6 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { FilterInstance } from "@/services/tableFilter.service";
 import { DropdownInstance } from "@/services/dropdown.service";
 import { columns } from "@/utils/constants";
 

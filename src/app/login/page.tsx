@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import axios, { AxiosError } from 'axios';
-import { LoginInstance } from "@/services/login.service";
 import { handleError } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 
